@@ -1,0 +1,96 @@
+﻿@page "/ProductSale"
+<div class="row" id="divLoading">
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+        <label for="ProductName">Product Name</label>
+        <select name="ProductName" class="form-select" aria-label="Default select example"
+                @onchange="ProductNameChangeEvent"
+                required="">
+            @foreach (var item in lstProduct)
+            {
+                <option value="@item.product_id">
+                    @item.product_name
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+        <label for="floatingTextarea">Product Price</label>
+        <input type="text" class="form-control t-r" name="Product_price" @bind-value="Model.product_price" disabled="disabled" placeholder="0" />
+    </div>
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+        <label for="floatingTextarea">Product Qty</label>
+        <input type="text" class="form-control t-r"
+               name="Product_qty"
+               @onkeypress="ProdcutQtyKeyPressEvent"
+               placeholder="0" />
+        <p id="ProductQtyError" style="color : red"></p>
+    </div>
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+        <label for="floatingTextarea">Total Amount</label>
+        <input type="text" class="form-control t-r" name="Sale_total_amount" @bind-value="Model.product_total_price" disabled="disabled" placeholder="0" />
+    </div>
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+    </div>
+    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
+        <label for="floatingTextarea">Total Items Amount</label>
+        <input type="text" class="form-control t-r" name="Grand_Total" id="Grand_Total" disabled="disabled" />
+    </div>
+    <div class="col-md-6 mt-5" style="padding-left: 50px">
+        <button type="button" id="btnAdd" class="btn btn-success mt-3">Add</button>
+        <button type="button" id="btnFinish" class="btn btn-success mt-3">Finish</button>
+    </div>
+
+    <div class="col-md-12 mt-5" style="padding-left: 50px">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="tbodySale">
+                @*<tr>
+                <td>
+                <button id="btnEdit" data-item="" type="button" class="btn btn-warning" onclick="Edit(this)">Edit</button>
+                </td>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Qty</td>
+                <td>Amount</td>
+                </tr>*@
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private List<ProductNameListDataModel> lstProduct = new();
+    private ProductSaleDataModel Model = new();
+    private string product_id;
+    private string product_price;
+    protected override async Task OnInitializedAsync()
+    {
+        lstProduct = await db.GetProductNameList();
+    }
+
+    async Task ProductNameChangeEvent(ChangeEventArgs e)
+    {
+        product_id = e.Value.ToString();
+        //var item =  db.GetProduct(new Guid(product_id));
+        Model.product_price = await db.GetProductName(new Guid(product_id));
+    }
+
+    async Task ProdcutQtyKeyPressEvent(KeyboardEventArgs e)
+    {
+        int price = await db.GetProductName(new Guid(product_id));
+        product_price = e.Key.ToString();
+        product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price; 
+        //if (string.IsNullOrEmpty(product_price))
+        //    product_price = "0";
+        Model.product_qty = Convert.ToInt32(product_price);
+        Model.product_total_price = Model.product_qty * price;
+    }
+}

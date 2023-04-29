@@ -109,6 +109,29 @@ namespace POSBlazorWebAssembly.Services
             await localStorage.SetItemAsync("Tbl_ProductCategory", lst);
         }
 
+        public async Task<List<ProductNameListDataModel>> GetProductNameList()
+        {
+            var lst = await GetProductList();
+            lst ??= new();
+            var lstProductName = lst.Select(x => new ProductNameListDataModel
+            {
+                product_id = x.product_id,
+                product_name = x.product_name,
+            }).ToList();
+            lstProductName.Insert(0, new ProductNameListDataModel
+            {
+                product_id = null,
+                product_name = "--Select Product Name--"
+            });
+            return lstProductName;
+        }
 
+        public async Task<int> GetProductName(Guid guid)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductCreationDataModel>>("Tbl_Product");
+            lst ??= new();
+            var result = lst.FirstOrDefault(x => x.product_id == guid);
+            return result.product_sale_price ;
+        }
     }
 }
