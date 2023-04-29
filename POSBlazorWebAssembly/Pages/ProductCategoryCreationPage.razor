@@ -1,0 +1,24 @@
+﻿@page "/ProductCategoryCreation"
+<div class="row" style="padding-left: 50px; padding-right:50px">
+    <div class="col-md-6 mt-10">
+        <label for="floatingTextarea">Product Category Name</label>
+        <input type="text" class="form-control" @bind-value="Model.product_category_name" />
+    </div>
+    <div class="col-md-6 mt-10">
+        <label for="floatingTextarea">Product Category Code</label>
+        <input type="text" class="form-control" @bind-value="Model.product_category_code" />
+    </div>
+    <div class="col-md-12 mt-5">
+        <a class="btn btn-dark mt-3" href="/ProductCategory">Back</a>
+        <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
+    </div>
+</div>
+@code {
+    private ProductCategoryDataModel Model = new();
+
+    async Task Save()
+    {
+        await db.SetProductCategory(Model);
+        Model = new ProductCategoryDataModel();
+    }
+}
