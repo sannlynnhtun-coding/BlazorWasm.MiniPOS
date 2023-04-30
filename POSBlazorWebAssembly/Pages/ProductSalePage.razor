@@ -21,7 +21,7 @@
         <label for="floatingTextarea">Product Qty</label>
         <input type="text" class="form-control t-r"
                name="Product_qty"
-               @onkeypress="ProdcutQtyKeyPressEvent"
+               @onchange="ProductQtyOnChangeEvent"
                placeholder="0" />
         <p id="ProductQtyError" style="color : red"></p>
     </div>
@@ -88,6 +88,17 @@
         int price = await db.GetProductName(new Guid(product_id));
         product_price = e.Key.ToString();
         product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price; 
+        //if (string.IsNullOrEmpty(product_price))
+        //    product_price = "0";
+        Model.product_qty = Convert.ToInt32(product_price);
+        Model.product_total_price = Model.product_qty * price;
+    }
+
+    async Task ProductQtyOnChangeEvent(ChangeEventArgs e)
+    {
+        int price = await db.GetProductName(new Guid(product_id));
+        product_price = e.Value.ToString();
+        product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price;
         //if (string.IsNullOrEmpty(product_price))
         //    product_price = "0";
         Model.product_qty = Convert.ToInt32(product_price);
