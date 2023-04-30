@@ -33,75 +33,115 @@
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
         <label for="floatingTextarea">Total Items Amount</label>
-        <input type="text" class="form-control t-r" name="Grand_Total" id="Grand_Total" disabled="disabled" />
+        <input type="text" class="form-control t-r" name="Grand_Total" @bind-value="grand_total" disabled="disabled" />
     </div>
     <div class="col-md-6 mt-5" style="padding-left: 50px">
-        <button type="button" id="btnAdd" class="btn btn-success mt-3">Add</button>
+        <button type="button" @onclick="Add" class="btn btn-success mt-3">Add</button>
         <button type="button" id="btnFinish" class="btn btn-success mt-3">Finish</button>
     </div>
 
     <div class="col-md-12 mt-5" style="padding-left: 50px">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Action</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Qty</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody id="tbodySale">
-                @*<tr>
-                <td>
-                <button id="btnEdit" data-item="" type="button" class="btn btn-warning" onclick="Edit(this)">Edit</button>
-                </td>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Qty</td>
-                <td>Amount</td>
-                </tr>*@
-            </tbody>
-        </table>
+        
+        @if (lstProductSale != null)
+        {
+            <RecentProductSalePage Model="lstProductSale"
+                               OnDeleteProductSaleClick="DeleteProductSale"
+                               OnEditProductSaleClick="EditProductSale" />
+        }
     </div>
 </div>
 
 @code {
     private List<ProductNameListDataModel> lstProduct = new();
     private ProductSaleDataModel Model = new();
+    private ProductSaleResponseDataModel lstProductSale = new();
     private string product_id;
-    private string product_price;
+    private string product_qty;
+    private int product_price = 0;
+    private string product_name = string.Empty;
+    private int grand_total;
     protected override async Task OnInitializedAsync()
     {
         lstProduct = await db.GetProductNameList();
+        lstProductSale = await db.GetRecentProductSale();
+        grand_total = await db.GetGrandTotal();
     }
 
     async Task ProductNameChangeEvent(ChangeEventArgs e)
     {
         product_id = e.Value.ToString();
         //var item =  db.GetProduct(new Guid(product_id));
-        Model.product_price = await db.GetProductName(new Guid(product_id));
+        var lst = await db.GetProductName(new Guid(product_id));
+        Model.product_price = lst.product_sale_price;
     }
 
-    async Task ProdcutQtyKeyPressEvent(KeyboardEventArgs e)
-    {
-        int price = await db.GetProductName(new Guid(product_id));
-        product_price = e.Key.ToString();
-        product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price; 
-        //if (string.IsNullOrEmpty(product_price))
-        //    product_price = "0";
-        Model.product_qty = Convert.ToInt32(product_price);
-        Model.product_total_price = Model.product_qty * price;
-    }
+    //async Task ProdcutQtyKeyPressEvent(KeyboardEventArgs e)
+    //{
+    //    int price = await db.GetProductName(new Guid(product_id));
+    //    product_price = e.Key.ToString();
+    //    product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price; 
+    //    //if (string.IsNullOrEmpty(product_price))
+    //    //    product_price = "0";
+    //    Model.product_qty = Convert.ToInt32(product_price);
+    //    Model.product_total_price = Model.product_qty * price;
+    //}
 
     async Task ProductQtyOnChangeEvent(ChangeEventArgs e)
     {
-        int price = await db.GetProductName(new Guid(product_id));
-        product_price = e.Value.ToString();
-        product_price = string.IsNullOrEmpty(product_price) ? "0" : product_price;
+        ProductCreationDataModel lst = new();
+        if(product_id != null)
+            lst = await db.GetProductName(new Guid(product_id));
+        product_qty = e.Value.ToString();
+        product_qty = string.IsNullOrEmpty(product_qty) ? "0" : product_qty;
         //if (string.IsNullOrEmpty(product_price))
         //    product_price = "0";
-        Model.product_qty = Convert.ToInt32(product_price);
-        Model.product_total_price = Model.product_qty * price;
+        //Model.product_name = null ? lst.product_name : product_name;
+        Model.product_name = string.IsNullOrEmpty(product_name) ? lst.product_name : product_name;
+        Model.product_qty = Convert.ToInt32(product_qty);
+        if(product_price == 0)
+        {
+            Model.product_total_price = Model.product_qty * lst.product_sale_price;
+        }
+        else
+        {
+            Model.product_total_price = Model.product_qty * product_price;
+        }
+        grand_total = await db.GetGrandTotal();
+        product_name = string.Empty;
+        product_price = 0;
+    }
+
+    async Task Add()
+    {
+        if(await db.CheckIsProductExit(Model.product_sale_id))
+        {
+            await db.UpdateProductSale(Model);
+            grand_total = await db.GetGrandTotal();
+            lstProductSale = await db.GetRecentProductSale();
+        }
+        else
+        {
+            await db.SetSaleProduct(Model);
+            grand_total = await db.GetGrandTotal();
+            Model = new();
+            lstProductSale = await db.GetRecentProductSale();
+        }
+    }
+
+    async Task DeleteProductSale(Guid guid)
+    {
+        await db.DeleteProductSale(guid);
+        //await db.GetRecentExpenses();
+        grand_total = await db.GetGrandTotal();
+        lstProductSale = await db.GetRecentProductSale();
+    }
+
+    async Task EditProductSale(Guid guid)
+    {
+        Model = await db.EditProductSale(guid);
+        product_name = Model.product_name;
+        product_price = Model.product_price;
+        //await db.GetRecentExpenses();
+        lstProductSale = await db.GetRecentProductSale();
     }
 }

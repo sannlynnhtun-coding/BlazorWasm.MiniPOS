@@ -126,12 +126,109 @@ namespace POSBlazorWebAssembly.Services
             return lstProductName;
         }
 
-        public async Task<int> GetProductName(Guid guid)
+        public async Task<ProductCreationDataModel> GetProductName(Guid guid)
         {
             var lst = await localStorage.GetItemAsync<List<ProductCreationDataModel>>("Tbl_Product");
             lst ??= new();
             var result = lst.FirstOrDefault(x => x.product_id == guid);
-            return result.product_sale_price ;
+            return result;
+        }
+
+        public async Task SetSaleProduct(ProductSaleDataModel model)
+        {
+            List<ProductSaleDataModel> lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            lst.Add(model);
+            await localStorage.SetItemAsync("Tbl_ProductSale", lst);
+        }
+
+        public async Task<int> GetGrandTotal()
+        {
+            List<ProductSaleDataModel> lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            return lst.Select(x=> x.product_total_price).Sum();
+        }
+
+        public async Task<ProductSaleResponseDataModel> GetRecentProductSale()
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new List<ProductSaleDataModel>();
+            int count = lst.Count();
+            int rowCount = 5;
+            int totalPageNo = count / rowCount;
+            int result = count % rowCount;
+            if (result > 0)
+                totalPageNo++;
+            return new ProductSaleResponseDataModel
+            {
+                lstProductSale = lst,
+                TotalPageNo = totalPageNo,
+                RowCount = rowCount,
+                TotalRowCount = count,
+                CurrentPageNo = 1,
+            };
+        }
+
+        public async Task<ProductSaleResponseDataModel> ProductSalePagination(int pageNo, int pageSize)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var count = lst.Count;
+            int totalPageNo = count / pageSize;
+            int result = count % pageSize;
+            if (result > 0)
+                totalPageNo++;
+            return new ProductSaleResponseDataModel
+            {
+                CurrentPageNo = pageNo,
+                lstProductSale = lst.ToPage(pageNo, pageSize),
+                RowCount = pageSize,
+                TotalPageNo = totalPageNo,
+                TotalRowCount = count
+            };
+        }
+
+        public async Task DeleteProductSale(Guid guid)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var item = lst.FirstOrDefault(x=> x.product_sale_id == guid);
+            if (item == null) return;
+            lst.Remove(item);
+            await localStorage.SetItemAsync("Tbl_ProductSale", lst);
+        }
+
+        public async Task<ProductSaleDataModel> EditProductSale(Guid guid)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var item = lst.FirstOrDefault(x => x.product_sale_id == guid);
+            if (item == null) return new ProductSaleDataModel();
+            return item;
+        }
+
+        public async Task<bool> CheckIsProductExit(Guid guid)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var item = lst.FirstOrDefault(x => x.product_sale_id == guid);
+            return item != null;
+        }
+
+        public async Task UpdateProductSale(ProductSaleDataModel model)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var result = lst.FirstOrDefault(x => x.product_sale_id == model.product_sale_id);
+            int index = lst.FindIndex(x => x.product_sale_id == result.product_sale_id);
+            result.product_sale_id = model.product_sale_id;
+            result.product_price = model.product_price;
+            result.product_name = model.product_name;
+            result.product_qty = model.product_qty;
+            result.product_total_price = model.product_total_price;
+            //lst.Add(result);
+            lst[index] = result;
+            await localStorage.SetItemAsync("Tbl_ProductSale", lst);
         }
     }
 }
