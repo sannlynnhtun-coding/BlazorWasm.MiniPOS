@@ -6,5 +6,15 @@ namespace POSBlazorWebAssembly.Services
     {
         Task<List<ProductCreationDataModel>> GetProductList();
         Task SetProduct(ProductCreationDataModel model);
+        Task<ProductCreationDataModel> GetProduct(Guid guid);
+        Task ProductUpdate(ProductCreationDataModel model);
+        Task DeleteProduct(Guid guid);
+        Task<List<ProductCategoryDataModel>> GetProductCategoryList();
+        Task SetProductCategory(ProductCategoryDataModel model);
+        Task<ProductCategoryDataModel> GetProductCategory(Guid guid);
+        Task ProductCategoryUpdate(ProductCategoryDataModel model);
+        Task DeleteProductCategory(Guid guid);
+        Task<List<ProductNameListDataModel>> GetProductNameList();
+        Task<int> GetProductName(Guid guid);
     }
 }

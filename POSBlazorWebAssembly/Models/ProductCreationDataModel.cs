@@ -8,6 +8,6 @@
         public int product_category_code { get; set; }
         public int product_sale_price { get; set; }
         public int product_buying_price { get; set; }
-        public DateTime product_cration_date { get; set; } = new DateTime();
+        public DateTime product_cration_date { get; set; } = DateTime.Now;
     }
 }

@@ -22,8 +22,8 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning mt-3" href="/Product/Edit/@(item.product_id)">Edit</a>
-                            <a class="btn btn-warning mt-3" href="/Product/Delete/@(item.product_id)">Delete</a>
+                            <a class="btn btn-warning mt-3" @onclick = "()=> Edit(item)">Edit</a>
+                            <a class="btn btn-warning mt-3" @onclick="()=> Delete(item)">Delete</a>
                         </td>
                         <th scope="row">@(item.product_id)</th>
                         <td>@(item.product_name)</td>
@@ -46,5 +46,16 @@
     {
         var lst = await db.GetProductList();
         Model = lst;
+    }
+
+    void Edit(ProductCreationDataModel product)
+    {
+        nav.NavigateTo($"/ProductEdit/{product.product_id}");
+    }
+
+    async Task Delete(ProductCreationDataModel product)
+    {
+        await db.DeleteProduct(product.product_id);
+        Model = await db.GetProductList();
     }
 }
