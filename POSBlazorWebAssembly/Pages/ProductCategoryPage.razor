@@ -1,33 +1,38 @@
 ﻿@page "/ProductCategory"
 
-<div style="padding-left: 50px; padding-right : 50px">
-    <a class="btn btn-success mt-3" href="/ProductCategoryCreation">Create</a>
+<div class="mb-5">
+    <a class="btn btn-success mt-3 " href="/ProductCategoryCreation">Create</a>
 </div>
-<div style="padding-left: 50px; padding-right : 50px">
-    <table class="table" id="tbDataTable">
+<div>
+    <table class="table table-bordered text-nowrap">
         <thead>
             <tr>
                 <th scope="col">Action</th>
-                <th scope="col">Product Category Id</th>
-                <th scope="col">Product Category Name</th>
+                @*<th scope="col">Product Category Id</th>*@
                 <th scope="col">Product Category Code</th>
+                <th scope="col">Product Category Name</th>
                 <th scope="col">Product Creation Date</th>
             </tr>
         </thead>
         <tbody>
-            @if(Model != null && Model.Count > 0)
+            @if (Model != null && Model.Count > 0)
             {
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning mt-3" @onclick="()=>Edit(item)">Edit</a>
-                            <a class="btn btn-warning mt-3" @onclick="()=>Delete(item)">Delete</a>
-
+                            <a class="btn btn-outline-warning mt-3"
+                       @onclick="()=>Edit(item)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a class="btn btn-outline-danger mt-3"
+                       @onclick="()=>Delete(item)">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
                         </td>
-                        <th scope="row">@(item.product_category_id)</th>
-                        <td>@(item.product_category_name)</td>
+                        @*<th scope="row">@(item.product_category_id)</th>*@
                         <td>@(item.product_category_code)</td>
+                        <td>@(item.product_category_name)</td>
                         <td>@(item.product_category_creation_date)</td>
                     </tr>
                 }
