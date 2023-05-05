@@ -24,5 +24,7 @@ namespace POSBlazorWebAssembly.Services
         Task<ProductSaleDataModel> EditProductSale(Guid guid);
         Task<bool> CheckIsProductExit(Guid guid);
         Task UpdateProductSale(ProductSaleDataModel model);
+        Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime);
+        Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime);
     }
 }

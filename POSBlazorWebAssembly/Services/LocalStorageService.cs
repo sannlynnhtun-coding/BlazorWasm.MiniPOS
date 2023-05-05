@@ -230,5 +230,49 @@ namespace POSBlazorWebAssembly.Services
             lst[index] = result;
             await localStorage.SetItemAsync("Tbl_ProductSale", lst);
         }
+
+        public async Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
+            var saleReport = lst.Where(x => 
+            x.product_sale_date ==
+            searchDate).ToList();
+            int count = saleReport.Count();
+            int rowCount = 5;
+            int totalPageNo = count / rowCount;
+            int result = count % rowCount;
+            if (result > 0)
+                totalPageNo++;
+            return new SaleReportResponseDataModel
+            {
+                lstSaleReport = saleReport,
+                TotalPageNo = totalPageNo,
+                RowCount = rowCount,
+                TotalRowCount = count,
+                CurrentPageNo = 1,
+            };
+        }
+
+        public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime)
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            lst ??= new();
+            var saleReport = lst.Where(x => x.product_sale_date == dateTime).ToList();
+            int count = saleReport.Count();
+            int totalPageNo = count / pageSize;
+            int result = count % pageSize;
+            if (result > 0)
+                totalPageNo++;
+            return new SaleReportResponseDataModel
+            {
+                CurrentPageNo = pageNo,
+                lstSaleReport = saleReport.ToPage(pageNo, pageSize),
+                RowCount = pageSize,
+                TotalPageNo = totalPageNo,
+                TotalRowCount = count
+            };
+        }
     }
 }
