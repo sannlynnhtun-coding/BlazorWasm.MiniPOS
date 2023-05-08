@@ -238,8 +238,7 @@ namespace POSBlazorWebAssembly.Services
             //DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
             DateTime searchDate = dateTime;
             var saleReport = lst.Where(x => 
-            x.product_sale_date ==
-            searchDate).ToList();
+                        x.product_sale_date == searchDate).ToList();
             int count = saleReport.Count();
             int rowCount = 5;
             int totalPageNo = count / rowCount;

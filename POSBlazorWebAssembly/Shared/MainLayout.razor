@@ -1,6 +1,10 @@
 ﻿@inherits LayoutComponentBase
 <MudAppBar Elevation="0" Dense="@dense" Style="@($"background:{Theme.Palette.Dark};")">
-    <MudText Typo="Typo.h6" Class="px-4">Mini POS</MudText>
+    <MudText Typo="Typo.h6" Class="px-4">
+        <NavLink href="/" class="text-white">
+        Mini POS
+        </NavLink>
+    </MudText>
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
     <MudSpacer />
     <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
@@ -18,8 +22,8 @@
                 <MudNavLink Href="/Product" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">New Product</MudNavLink>
                 <MudNavLink Href="/ProductCategory" Icon="@Icons.Material.Filled.Security" IconColor="Color.Inherit">Product Category List</MudNavLink>
             </MudNavGroup>
-            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Sale</MudNavLink>
-            <MudNavLink Href="/SaleReport" Icon="@Icons.Material.Filled.Storage">Sale Report</MudNavLink>
+            @*<MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Sale</MudNavLink>*@
+            <MudNavLink Href="/SaleReport" Icon="@Icons.Material.Filled.Storage" IconColor="Color.Inherit">Sale Report</MudNavLink>
             @*<MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt" Disabled="true">Billing</MudNavLink>*@
         </MudNavMenu>
     </MudDrawer>
