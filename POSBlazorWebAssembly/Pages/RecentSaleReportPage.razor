@@ -1,0 +1,44 @@
+﻿<style>
+    .mud-table {
+        margin-top: 50px;
+    }
+</style>
+<MudSimpleTable Style="overflow-x: auto;" Class="mud-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.lstSaleReport)
+        {
+            dateTime = item.product_sale_date;
+            <tr>
+                <td>@item.product_name</td>
+                <td>@item.product_price.ToString("n2")</td>
+                <td>@item.product_qty</td>
+                <td>@item.product_total_price.ToString("n2")</td>
+                <td>@item.product_sale_date</td>
+            </tr>
+        }
+    </tbody>
+</MudSimpleTable>
+@if (Model != null)
+{
+    <MudPagination SelectedChanged="PageChanged" ShowFirstButton="true" ShowLastButton="true" Count="Model.TotalPageNo" Class="mt-4" />
+}
+@code {
+    [Parameter]
+    public SaleReportResponseDataModel Model { get; set; }
+    private DateTime dateTime { get; set; }
+
+    async Task PageChanged(int pageNo)
+    {
+        var result = await db.SaleReportPagination(pageNo, 5, dateTime);
+        Model = result;
+    }
+}

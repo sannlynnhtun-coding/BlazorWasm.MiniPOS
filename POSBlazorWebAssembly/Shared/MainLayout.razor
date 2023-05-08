@@ -1,34 +1,39 @@
 ﻿@inherits LayoutComponentBase
-<MudLayout>
-    <MudAppBar Elevation="1" Dense="@dense">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
-    </MudAppBar>
+<MudAppBar Elevation="0" Dense="@dense" Style="@($"background:{Theme.Palette.Dark};")">
+    <MudText Typo="Typo.h6" Class="px-4">Mini POS</MudText>
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+    <MudSpacer />
+    <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
+</MudAppBar>
+<MudLayout Class="mt-16">
     <MudDrawer @bind-Open="@open" Elevation="0" Variant="@DrawerVariant.Persistent">
         @*<MudDrawerHeader>
         <MudText Typo="Typo.h6">My App</MudText>
         </MudDrawerHeader>*@
         <MudNavMenu Rounded="true" Color="Color.Primary" Class="mud-width-full">
-            <MudText Typo="Typo.h6" Class="px-4">Material</MudText>
-            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Icons</MudText>
-            <MudDivider Class="my-2" />
-            <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
-            <MudNavLink Href="/servers" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
-            <MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt" Disabled="true">Billing</MudNavLink>
-            <MudNavGroup Title="Settings" Icon="@Icons.Material.Filled.Settings" Expanded="true">
-                <MudNavLink Href="/users" Icon="@Icons.Material.Filled.People" IconColor="Color.Success">Users</MudNavLink>
-                <MudNavLink Href="/security" Icon="@Icons.Material.Filled.Security" IconColor="Color.Info">Security</MudNavLink>
+            @*<MudText Typo="Typo.h6" Class="px-4">Mini POS</MudText>
+            <MudText Typo="Typo.body2" Class="px-4">Blazor Wasm</MudText>
+            <MudDivider Class="my-3" />*@
+            <MudNavGroup Title="Product" Icon="@Icons.Material.Filled.Settings" Expanded="true">
+                <MudNavLink Href="/Product" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">New Product</MudNavLink>
+                <MudNavLink Href="/ProductCategory" Icon="@Icons.Material.Filled.Security" IconColor="Color.Inherit">Product Category List</MudNavLink>
             </MudNavGroup>
+            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" IconColor="Color.Inherit">Sale</MudNavLink>
+            <MudNavLink Href="/SaleReport" Icon="@Icons.Material.Filled.Storage">Sale Report</MudNavLink>
+            @*<MudNavLink Href="/billing" Icon="@Icons.Material.Filled.Receipt" Disabled="true">Billing</MudNavLink>*@
         </MudNavMenu>
     </MudDrawer>
-    <MudMainContent Class="pt-16 px-16">
-        <MudContainer Class="mt-6">
+    <MudMainContent Class="pt-3">
+        <MudContainer Fixed="true">
             @Body
         </MudContainer>
+        @*<MudContainer Class="mt-6">
+        @Body
+        </MudContainer>*@
     </MudMainContent>
 </MudLayout>
 @code {
+    private MudTheme Theme = new MudTheme();
     bool open = true;
     bool dense = false;
     bool preserveOpenState = false;

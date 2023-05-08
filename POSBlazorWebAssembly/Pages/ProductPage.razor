@@ -1,33 +1,39 @@
 ﻿@page "/Product"
-<div style="padding-left: 10px">
+<div class="mb-5">
     <a class="btn btn-success mt-3" href="ProductCreate">Create</a>
 </div>
-<div class="col-sm-12">
-    <table class="table" id="tbDataTable">
+<div>
+    <table class="table table-bordered text-nowrap">
         <thead>
             <tr>
                 <th scope="col">Action</th>
-                <th scope="col">Product Id</th>
-                <th scope="col">Product Name</th>
+                @*<th scope="col">Product Id</th>*@
                 <th scope="col">Product Code</th>
+                <th scope="col">Product Name</th>
                 <th scope="col">Product Category Code</th>
                 <th scope="col">Product Sale Price</th>
                 <th scope="col">Product Buying Price</th>
             </tr>
         </thead>
         <tbody>
-            @if(Model.Count > 0)
+            @if (Model.Count > 0)
             {
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning mt-3" @onclick = "()=> Edit(item)">Edit</a>
-                            <a class="btn btn-warning mt-3" @onclick="()=> Delete(item)">Delete</a>
+                            <a class="btn btn-outline-warning mt-3"
+                       @onclick="()=>Edit(item)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a class="btn btn-outline-danger mt-3"
+                       @onclick="()=>Delete(item)">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
                         </td>
-                        <th scope="row">@(item.product_id)</th>
-                        <td>@(item.product_name)</td>
+                        @*<th scope="row">@(item.product_id)</th>*@
                         <td>@(item.product_code)</td>
+                        <td>@(item.product_name)</td>
                         <td>@(item.product_category_code)</td>
                         <td>@(item.product_sale_price)</td>
                         <td>@(item.product_buying_price)</td>

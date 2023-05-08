@@ -15,6 +15,16 @@ namespace POSBlazorWebAssembly.Services
         Task ProductCategoryUpdate(ProductCategoryDataModel model);
         Task DeleteProductCategory(Guid guid);
         Task<List<ProductNameListDataModel>> GetProductNameList();
-        Task<int> GetProductName(Guid guid);
+        Task<ProductCreationDataModel> GetProductName(Guid guid);
+        Task SetSaleProduct(ProductSaleDataModel model);
+        Task<int> GetGrandTotal();
+        Task<ProductSaleResponseDataModel> GetRecentProductSale();
+        Task<ProductSaleResponseDataModel> ProductSalePagination(int pageNo, int pageSize);
+        Task DeleteProductSale(Guid guid);
+        Task<ProductSaleDataModel> EditProductSale(Guid guid);
+        Task<bool> CheckIsProductExit(Guid guid);
+        Task UpdateProductSale(ProductSaleDataModel model);
+        Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime);
+        Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime);
     }
 }
