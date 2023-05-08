@@ -10,7 +10,7 @@
 @*<MudItem xs="12" sm="6">
     </MudItem>*@
 <MudItem xs="12" sm="6">
-    <MudDatePicker @ref="_picker" Label="With action buttons" @bind-Date="SelectedDate" AutoClose="true">
+    <MudDatePicker @ref="_picker" DateFormat="yyyy/MM/dd" Label="With action buttons" @bind-Date="SelectedDate">
         <PickerActions>
             <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
             <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>

@@ -235,7 +235,8 @@ namespace POSBlazorWebAssembly.Services
         {
             var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new();
-            DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
+            //DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
+            DateTime searchDate = dateTime;
             var saleReport = lst.Where(x => 
             x.product_sale_date ==
             searchDate).ToList();
