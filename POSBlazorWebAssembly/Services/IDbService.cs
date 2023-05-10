@@ -1,4 +1,5 @@
 ﻿using POSBlazorWebAssembly.Models;
+using System;
 
 namespace POSBlazorWebAssembly.Services
 {
@@ -26,5 +27,8 @@ namespace POSBlazorWebAssembly.Services
         Task UpdateProductSale(ProductSaleDataModel model);
         Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime);
         Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime);
+        Task SetVouncher();
+        Task<TodaySaleProductList> PieChartOld();
+        Task<TodaySaleProductListModel[]> PieChart();
     }
 }

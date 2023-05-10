@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-6 mt-5" style="padding-left: 50px">
         <button type="button" @onclick="Add" class="btn btn-success mt-3">Add</button>
-        @*<button type="button" id="btnFinish" class="btn btn-success mt-3">Finish</button>*@
+        <button type="button" @onclick="Finish" class="btn btn-success mt-3">Finish</button>
     </div>
 
     <div class="col-md-12 mt-5" style="padding-left: 50px">
@@ -147,6 +147,12 @@
         grand_total = await db.GetGrandTotal();
         lstProductSale = await db.GetRecentProductSale();
         Model = new();
+    }
+
+    async Task Finish()
+    {
+        await db.SetVouncher();
+        lstProductSale = await db.GetRecentProductSale();
     }
 
     async Task DeleteProductSale(Guid guid)

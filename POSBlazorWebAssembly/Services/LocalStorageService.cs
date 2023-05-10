@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using POSBlazorWebAssembly.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace POSBlazorWebAssembly.Services
 {
@@ -16,7 +17,7 @@ namespace POSBlazorWebAssembly.Services
         {
             List<ProductCreationDataModel> lst = await localStorage.GetItemAsync<List<ProductCreationDataModel>>("Tbl_Product");
             lst ??= new();
-            return lst.OrderByDescending(x=> x.product_cration_date).ToList();
+            return lst.OrderByDescending(x => x.product_cration_date).ToList();
         }
 
         public async Task SetProduct(ProductCreationDataModel model)
@@ -40,7 +41,7 @@ namespace POSBlazorWebAssembly.Services
             var lst = await GetProductList();
             lst ??= new();
             var result = lst.FirstOrDefault(x => x.product_id == model.product_id);
-            int index = lst.FindIndex(x=> x.product_id == result.product_id);
+            int index = lst.FindIndex(x => x.product_id == result.product_id);
             result.product_id = model.product_id;
             result.product_name = model.product_name;
             result.product_code = model.product_code;
@@ -59,7 +60,7 @@ namespace POSBlazorWebAssembly.Services
             var item = lst.FirstOrDefault(x => x.product_id == guid);
             if (item == null) return;
             lst.Remove(item);
-            await localStorage.SetItemAsync("Tbl_Product",lst);
+            await localStorage.SetItemAsync("Tbl_Product", lst);
         }
 
         public async Task<List<ProductCategoryDataModel>> GetProductCategoryList()
@@ -146,7 +147,7 @@ namespace POSBlazorWebAssembly.Services
         {
             List<ProductSaleDataModel> lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new();
-            return lst.Select(x=> x.product_total_price).Sum();
+            return lst.Select(x => x.product_total_price).Sum();
         }
 
         public async Task<ProductSaleResponseDataModel> GetRecentProductSale()
@@ -192,7 +193,7 @@ namespace POSBlazorWebAssembly.Services
         {
             var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new();
-            var item = lst.FirstOrDefault(x=> x.product_sale_id == guid);
+            var item = lst.FirstOrDefault(x => x.product_sale_id == guid);
             if (item == null) return;
             lst.Remove(item);
             await localStorage.SetItemAsync("Tbl_ProductSale", lst);
@@ -233,12 +234,12 @@ namespace POSBlazorWebAssembly.Services
 
         public async Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime)
         {
-            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new();
-            //DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
-            DateTime searchDate = dateTime;
-            var saleReport = lst.Where(x => 
-                        x.product_sale_date == searchDate).ToList();
+            DateTime searchDate = Convert.ToDateTime(dateTime.ToString("MM/dd/yyyy"));
+            //DateTime searchDate = dateTime;
+            var saleReport = lst.Where(x =>
+                        Convert.ToDateTime(x.sale_date.ToString("MM/dd/yyyy")) == searchDate).ToList();
             int count = saleReport.Count();
             int rowCount = 5;
             int totalPageNo = count / rowCount;
@@ -257,9 +258,9 @@ namespace POSBlazorWebAssembly.Services
 
         public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime)
         {
-            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_ProductSale");
             lst ??= new();
-            var saleReport = lst.Where(x => x.product_sale_date == dateTime).ToList();
+            var saleReport = lst.Where(x => x.sale_date == dateTime).ToList();
             int count = saleReport.Count();
             int totalPageNo = count / pageSize;
             int result = count % pageSize;
@@ -273,6 +274,100 @@ namespace POSBlazorWebAssembly.Services
                 TotalPageNo = totalPageNo,
                 TotalRowCount = count
             };
+        }
+
+        public async Task SetSaleVoucherDetail(SaleVoucherDetailDataModel model)
+        {
+            List<SaleVoucherDetailDataModel> lst = await localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new();
+            lst.Add(model);
+            await localStorage.SetItemAsync("Tbl_SaleVoucherDetail", lst);
+        }
+
+        public async Task SetSaleVoucherHead(SaleVoucherHeadDataModel model)
+        {
+            List<SaleVoucherHeadDataModel> lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
+            lst ??= new();
+            lst.Add(model);
+            await localStorage.SetItemAsync("Tbl_SaleVoucherHead", lst);
+        }
+
+        public async Task SetVouncher()
+        {
+            //Guid sale_voucher_detail_id = Guid.NewGuid();
+            Guid sale_voucher_head_id = Guid.NewGuid();
+            SaleVoucherDetailDataModel deatilModel = new();
+            SaleVoucherHeadDataModel headModel = new();
+
+            var getLst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            foreach (var item in getLst)
+            {
+                deatilModel.sale_voucher_detail_id = Guid.NewGuid();
+                deatilModel.product_price = item.product_price;
+                deatilModel.product_qty = item.product_qty;
+                deatilModel.product_name = item.product_name;
+                deatilModel.sale_voucher_head_id = sale_voucher_head_id;
+                deatilModel.detail_date = DateTime.Now;
+                await SetSaleVoucherDetail(deatilModel);
+            }
+
+            headModel.sale_voucher_head_id = sale_voucher_head_id;
+            headModel.sale_total_amount = getLst.Select(x => x.product_total_price).Sum();
+            headModel.sale_date = DateTime.Now;
+            headModel.sale_voucher_no = Guid.NewGuid();
+            await SetSaleVoucherHead(headModel);
+
+            await localStorage.RemoveItemAsync("Tbl_ProductSale");
+        }
+
+        public async Task<TodaySaleProductList> PieChartOld()
+        {
+            var lst = await localStorage.GetItemAsync
+                <List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new();
+            var result = lst.GroupBy(x=> x.product_name).Select(x=>new TodaySaleProductListModel
+            {
+                product_count = x.Count(),
+                product_name = x.First().product_name,
+            }).ToList();
+
+            TodaySaleProductList model = new();
+            model.product_count ??= new();
+            model.product_name ??= new();
+            foreach (var item in result)
+            {
+                model.product_name.Add(item.product_name);
+                model.product_count.Add(item.product_count);
+            }
+            return model;
+        }
+
+        public async Task<TodaySaleProductListModel[]> PieChart()
+        {
+            var lst = await localStorage.GetItemAsync
+                <List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new();
+            var result = lst.GroupBy(x => x.product_name).Select(x => new TodaySaleProductListModel
+            {
+                product_count = x.Sum(x=> x.product_qty),
+                product_name = x.First().product_name,
+            }).ToList();
+            TodaySaleProductListModel[] array = new TodaySaleProductListModel[result.Count];
+            TodaySaleProductList model = new();
+            model.product_count ??= new();
+            model.product_name ??= new();
+            int count = 0;
+            foreach (var item in result)
+            {
+                //model.product_name.Add(item.product_name);
+                //model.product_count.Add(item.product_count);
+                array[count++] = new TodaySaleProductListModel 
+                { 
+                    product_name = item.product_name,
+                    product_count = item.product_count,
+                };
+            }
+            return array;
         }
     }
 }
