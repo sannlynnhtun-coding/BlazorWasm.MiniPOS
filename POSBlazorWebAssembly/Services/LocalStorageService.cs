@@ -7,7 +7,6 @@ namespace POSBlazorWebAssembly.Services
     public class LocalStorageService : IDbService
     {
         private readonly ILocalStorageService localStorage;
-
         public LocalStorageService(ILocalStorageService localStorage)
         {
             this.localStorage = localStorage;
@@ -316,16 +315,22 @@ namespace POSBlazorWebAssembly.Services
             headModel.sale_date = DateTime.Now;
             headModel.sale_voucher_no = Guid.NewGuid();
             await SetSaleVoucherHead(headModel);
-
+        }
+        public async Task ClearProductSale()
+        {
             await localStorage.RemoveItemAsync("Tbl_ProductSale");
         }
-
+        public async Task<List<ProductSaleDataModel>> GetProductSale()
+        {
+            var getLst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            return getLst;
+        }
         public async Task<TodaySaleProductList> PieChartOld()
         {
             var lst = await localStorage.GetItemAsync
                 <List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
             lst ??= new();
-            var result = lst.GroupBy(x=> x.product_name).Select(x=>new TodaySaleProductListModel
+            var result = lst.GroupBy(x => x.product_name).Select(x => new TodaySaleProductListModel
             {
                 product_count = x.Count(),
                 product_name = x.First().product_name,
@@ -349,7 +354,7 @@ namespace POSBlazorWebAssembly.Services
             lst ??= new();
             var result = lst.GroupBy(x => x.product_name).Select(x => new TodaySaleProductListModel
             {
-                product_count = x.Sum(x=> x.product_qty),
+                product_count = x.Sum(x => x.product_qty),
                 product_name = x.First().product_name,
             }).ToList();
             TodaySaleProductListModel[] array = new TodaySaleProductListModel[result.Count];
@@ -361,8 +366,8 @@ namespace POSBlazorWebAssembly.Services
             {
                 //model.product_name.Add(item.product_name);
                 //model.product_count.Add(item.product_count);
-                array[count++] = new TodaySaleProductListModel 
-                { 
+                array[count++] = new TodaySaleProductListModel
+                {
                     product_name = item.product_name,
                     product_count = item.product_count,
                 };

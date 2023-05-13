@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="2">
+      <value>,MySuperUselessVariable,MySuperUselessVariable,YEPP,System.String,Try_x0020_to_x0020_set_x0020_me,False,False,False,False,,e6f6ba08516742a9b447bf40bfcda87d</value>
+      <value>,Variable1,Variable1,,System.Int32,_x0031__x002B_2,False,True,False,False,,bb3b470a30aa4874a4d7649745b97c14</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>d678da2e899644bc85712567341b5426</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="2" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="1">
+        <Text1 Ref="3" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0,7.7,1.6</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Font>Arial,36</Font>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text1</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+          <Text>{MySuperUselessVariable}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>6e23d16f51c54adaa6c2be6db8d9124c</Guid>
+      <Margins>0.39,0.39,0.39,0.39</Margins>
+      <Name>Page1</Name>
+      <PageHeight>11</PageHeight>
+      <PageWidth>8.5</PageWidth>
+      <PaperSize>Letter</PaperSize>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>9/28/2020 3:47:12 PM</ReportChanged>
+  <ReportCreated>9/28/2020 2:06:55 PM</ReportCreated>
+  <ReportFile>E:\Projects\Blazor Samples\Reports\ReportWithVariable.mrt</ReportFile>
+  <ReportGuid>c36c568516164875be12043f0bde601b</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Inches</ReportUnit>
+  <ReportVersion>2020.4.2.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

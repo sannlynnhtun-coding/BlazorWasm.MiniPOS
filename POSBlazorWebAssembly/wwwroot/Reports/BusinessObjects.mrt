@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <CalculationMode>Interpretation</CalculationMode>
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="1">
+      <MyList Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>MyList</Alias>
+        <BusinessObjects isList="true" count="0" />
+        <Category />
+        <Columns isList="true" count="2">
+          <value>Name,System.String</value>
+          <value>Alias,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>8318a4123bbe4662b0119890297bbcac</Guid>
+        <Name>MyList</Name>
+      </MyList>
+    </BusinessObjects>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>49524a268db240eab98e84c14d67e873</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="3" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="1">
+        <DataMyList Ref="4" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid>8318a4123bbe4662b0119890297bbcac</BusinessObjectGuid>
+          <ClientRectangle>0,0.4,19,0.8</ClientRectangle>
+          <Components isList="true" count="2">
+            <DataMyList_Name Ref="5" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,9.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataMyList_Name</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <Text>{MyList.Name}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataMyList_Name>
+            <DataMyList_Alias Ref="6" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>9.6,0,9.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataMyList_Alias</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <Text>{MyList.Alias}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataMyList_Alias>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName isNull="true" />
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataMyList</Name>
+          <Page isRef="3" />
+          <Parent isRef="3" />
+          <Sort isList="true" count="0" />
+        </DataMyList>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>f1f6fa338a744ced830a2b55c8e7a5f8</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>5/18/2021 4:29:17 PM</ReportChanged>
+  <ReportCreated>5/18/2021 4:29:17 PM</ReportCreated>
+  <ReportGuid>7de744ee450c43a295cc04d46cc0a4cd</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2021.3.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+        #endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

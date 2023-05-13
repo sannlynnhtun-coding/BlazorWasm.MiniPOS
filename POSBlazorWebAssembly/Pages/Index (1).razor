@@ -1,0 +1,54 @@
+﻿@page "/reportwithvalue"
+@using Stimulsoft.Base
+@using Stimulsoft.Report
+@using Stimulsoft.Report.Blazor
+@inject HttpClient Http
+
+<div align="center">
+    <input type="text" @bind="NewValueInput" />
+    <button class="alert" @onclick="SetVariable">Set variable</button>
+</div>
+
+<br />
+
+<div align="center">
+    <StiBlazorViewer Report="@Report" />
+</div>
+
+@code
+{
+    private StiReport Report;
+    private string NewValueInput;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        //How to activate
+        //Stimulsoft.Base.StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnO...";
+        //var licenseStream = await Http.GetStreamAsync("Secret/license.key");
+        //Stimulsoft.Base.StiLicense.LoadFromStream(licenseStream);
+
+        //Create empty report object
+        this.Report = new StiReport();
+
+        //Load report template
+        var reportBytes = await Http.GetByteArrayAsync("Reports/ReportWithVariable.mrt");
+        this.Report.Load(reportBytes);
+    }
+
+    private void SetVariable()
+    {
+        //Get a copy of the report into a new report object
+        var report = this.Report.Clone() as StiReport;
+
+        //Set new value
+        report["MySuperUselessVariable"] = NewValueInput;
+
+        //Update view
+        report.Render();
+
+        //Assign new report to the Viewer
+        this.Report = report;
+    }
+}

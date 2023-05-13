@@ -30,5 +30,7 @@ namespace POSBlazorWebAssembly.Services
         Task SetVouncher();
         Task<TodaySaleProductList> PieChartOld();
         Task<TodaySaleProductListModel[]> PieChart();
+        Task<List<ProductSaleDataModel>> GetProductSale();
+        Task ClearProductSale();
     }
 }

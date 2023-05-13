@@ -14,10 +14,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.13" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="6.2.2" />
     <PackageReference Include="Radzen.Blazor" Version="4.10.1" />
+    <PackageReference Include="Stimulsoft.Reports.Blazor" Version="2023.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Reports\" />
   </ItemGroup>
 
 </Project>
