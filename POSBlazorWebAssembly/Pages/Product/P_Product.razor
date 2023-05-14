@@ -50,13 +50,17 @@ else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
 {
     <div class="row" style="padding-left: 50px; padding-right:50px">
         <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Code</label>
+            <input type="text" class="form-control" @bind-value="Model.product_code" />
+        </div>
+        <div class="col-md-6 mt-10">
             <label for="floatingTextarea">Product Name</label>
             <input type="text" class="form-control" @bind-value="Model.product_name" />
         </div>
         <div class="col-md-6 mt-10">
-            <label for="ProductName">Product Name</label>
+            <label for="ProductName">Product Category</label>
             <select name="ProductName" class="form-select"
-                    value="@Model.product_category_code"
+                    @bind="@Model.product_category_code"
                     required="">
                 @foreach (var item in lstProductCategory)
                 {
@@ -65,10 +69,6 @@ else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
                     </option>
                 }
             </select>
-        </div>
-        <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Code</label>
-            <input type="text" class="form-control" @bind-value="Model.product_code" />
         </div>
         <div class="col-md-6 mt-10">
             <label for="floatingTextarea">Product Sale Price</label>

@@ -35,11 +35,13 @@ namespace POSBlazorWebAssembly.Pages.Product
             await db.SetProduct(Model);
             Model = new();
             await List();
+            FormType = EnumFormType.List;
         }
 
         async Task Edit(ProductDataModel product)
         {
             Model = await db.GetProduct(product.product_id);
+            FormType = EnumFormType.Edit;
         }
 
         async Task Update()
@@ -47,12 +49,14 @@ namespace POSBlazorWebAssembly.Pages.Product
             await db.ProductUpdate(Model);
             Model = new();
             await List();
+            FormType = EnumFormType.List;
         }
 
         async Task Delete(ProductDataModel product)
         {
             await db.DeleteProduct(product.product_id);
-            lstProduct = await db.GetProductList();
+            await List();
+            FormType = EnumFormType.List;
         }
 
         void Back()

@@ -1,0 +1,11 @@
+[
+  {
+    "product_id": "7ae785da-3c7c-4044-8adb-cda199981436",
+    "product_name": "Apple",
+    "product_code": "P_00001",
+    "product_category_code": "6b1b70f5-b17f-4a40-b29c-5c3a19831fef",
+    "product_sale_price": 1000,
+    "product_buying_price": 800,
+    "product_cration_date": "2023-05-14T16:41:37.44+06:30"
+  }
+]
