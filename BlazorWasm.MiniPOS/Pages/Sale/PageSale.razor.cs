@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using BlazorWasm.MiniPOS.Models;
-using Stimulsoft.Report.Web;
-using Stimulsoft.Report;
 
 namespace BlazorWasm.MiniPOS.Pages.Sale
 {
