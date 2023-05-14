@@ -2,7 +2,7 @@
 
 namespace BlazorWasm.MiniPOS.Pages.Product
 {
-    public partial class P_Product
+    public partial class PageProduct
     {
         private List<ProductDataModel> lstProduct = new();
         private List<ProductCategoryDataModel> lstProductCategory = new();

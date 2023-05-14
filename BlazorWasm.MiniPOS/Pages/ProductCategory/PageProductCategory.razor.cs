@@ -2,7 +2,7 @@
 
 namespace BlazorWasm.MiniPOS.Pages.ProductCategory
 {
-    public partial class P_ProductCategory
+    public partial class PageProductCategory
     {
         private EnumFormType FormType { get; set; } = EnumFormType.List;
         private List<ProductCategoryDataModel> lstProductCategory = new();
