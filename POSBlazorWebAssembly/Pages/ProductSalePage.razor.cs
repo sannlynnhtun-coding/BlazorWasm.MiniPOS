@@ -107,7 +107,7 @@ namespace POSBlazorWebAssembly.Pages
         async Task Save()
         {
             showReport = 1;
-            await db.SetVouncher();
+            //await db.SetVouncher();
             await PrintReport();
             lstProductSale = await db.GetRecentProductSale();
         }
@@ -143,16 +143,16 @@ namespace POSBlazorWebAssembly.Pages
 
         private async Task<System.Collections.ArrayList> GetBusinessObject()
         {
-            var lst = await db.GetProductSale();
+            //var lst = await db.GetProductSale();
             var list = new System.Collections.ArrayList();
-            foreach (var item in lst)
-            {
-                list.Add(new BusinessEntity(item.product_name, item.product_price.ToString("n2"),
-                item.product_qty.ToString("n2"), item.product_total_price.ToString("n2")));
-            }
-            //list.Add(new BusinessEntity("name11", "alias1"));
-            //list.Add(new BusinessEntity("name22", "alias2"));
-            //list.Add(new BusinessEntity("name33", "alias3"));
+            //foreach (var item in lst)
+            //{
+            //    list.Add(new BusinessEntity(item.product_name, item.product_price.ToString("n2"),
+            //    item.product_qty.ToString("n2"), item.product_total_price.ToString("n2")));
+            //}
+            ////list.Add(new BusinessEntity("name11", "alias1"));
+            ////list.Add(new BusinessEntity("name22", "alias2"));
+            ////list.Add(new BusinessEntity("name33", "alias3"));
 
             return list;
         }

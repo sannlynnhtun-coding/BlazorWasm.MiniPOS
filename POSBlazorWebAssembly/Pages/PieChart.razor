@@ -1,7 +1,5 @@
 ﻿@page "/PieChart"
-
-
-@* <DemoContainer>
+@*<DemoContainer>
         <ApexChart TItem="Order"
                Title="Order Gross Value">
 
@@ -30,35 +28,20 @@
     </div>
 </div>
 @code {
-    //private TodaySaleProductList Orders = new();
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    Orders = await db.PieChart();
-    //}
 
+    bool showDataLabels = false;
+    DataItem[] revenue = new DataItem[] { };
 
-    bool showDataLabels = false; 
-    DataItem[] revenue = new DataItem[] {
-    };
     void OnSeriesClick(SeriesClickEventArgs args)
     {
     }
+
     protected override async Task OnInitializedAsync()
     {
-        //var array = await db.PieChart();
-        //DataItem[] revenue = new DataItem[array.Length];
-        //for (int i = 0; i < array.Length; i++)
-        //{
-        //    revenue[i++] = new DataItem
-        //        {
-        //            product_name = array[i].product_name,
-        //            product_count = array[i].product_count,
-        //        };
-        //}
-         revenue = await DataArray();
-
+        revenue = await DataArray();
     }
-    class DataItem
+
+    public class DataItem
     {
         public string product_name { get; set; }
         public int product_count { get; set; }
@@ -66,19 +49,17 @@
 
     async Task<DataItem[]> DataArray()
     {
-        var array = await db.PieChart();
-        DataItem[] data = new DataItem[array.Length];
-        int length = array.Length;
-        for (int i = 0; i < length; i++)
+        var result = await db.GetRecentProductSale();
+        DataItem[] data = new DataItem[result.lstProductSale.Count];
+        for (int i = 0; i < result.lstProductSale.Count; i++)
         {
+            var item = result.lstProductSale[i];
             data[i] = new DataItem
                 {
-                    product_name = array[i].product_name,
-                    product_count = array[i].product_count,
+                    product_name = item.product_name,
+                    product_count = item.product_qty,
                 };
         }
         return data;
     }
-
-   
 }

@@ -247,7 +247,7 @@ namespace POSBlazorWebAssembly.Services
                 totalPageNo++;
             return new SaleReportResponseDataModel
             {
-                lstSaleReport = saleReport,
+                //lstSaleReport = saleReport,
                 TotalPageNo = totalPageNo,
                 RowCount = rowCount,
                 TotalRowCount = count,
@@ -268,7 +268,7 @@ namespace POSBlazorWebAssembly.Services
             return new SaleReportResponseDataModel
             {
                 CurrentPageNo = pageNo,
-                lstSaleReport = saleReport.ToPage(pageNo, pageSize),
+                //lstSaleReport = saleReport.ToPage(pageNo, pageSize),
                 RowCount = pageSize,
                 TotalPageNo = totalPageNo,
                 TotalRowCount = count
