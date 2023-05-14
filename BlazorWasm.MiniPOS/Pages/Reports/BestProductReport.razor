@@ -1,0 +1,26 @@
+﻿@page "/best-product-report"
+<h3>Best Product Report</h3>
+@if (lstBestProductReport != null)
+{
+    <ApexChart TItem="BestProductReportModel"
+               Title="Best Product Report">
+
+        <ApexPointSeries TItem="BestProductReportModel"
+                         Items="lstBestProductReport"
+                         Name="Best Product Report"
+                         SeriesType="SeriesType.Pie"
+                         XValue="ProductName"
+                         YAggregate="ProductQuantity"
+                         OrderByDescending="e=>e.Y"/>
+    </ApexChart>
+}
+
+@code {
+    private List<BestProductReportModel> lstBestProductReport { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        lstBestProductReport = await db.BestProductReport();
+    }
+
+}

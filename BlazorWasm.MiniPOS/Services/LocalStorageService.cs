@@ -273,5 +273,28 @@ namespace BlazorWasm.MiniPOS.Services
                 TotalRowCount = count
             };
         }
+
+        public async Task<List<BestProductReportModel>> BestProductReport()
+        {
+            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lstProduct = await localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
+            lst ??= new();
+            lstProduct ??= new();
+
+            var groupProducts = lst.Select(x => x.product_id).Distinct().ToList();
+
+            List<BestProductReportModel> lstBestProductReport = new();
+            foreach (var productId in groupProducts)
+            {
+                int totalQty = lst.Where(x=> x.product_id==productId).Sum(x => x.product_qty);
+                lstBestProductReport.Add(new BestProductReportModel()
+                {
+                    ProductName = lstProduct.FirstOrDefault(x=> x.product_id == productId)?.product_name,
+                    ProductQuantity = totalQty
+                });
+            }
+
+            return lstBestProductReport;
+        }
     }
 }

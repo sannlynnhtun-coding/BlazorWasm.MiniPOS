@@ -8,4 +8,10 @@
         public int TotalPageNo { get; set; }
         public int CurrentPageNo { get; set; }
     }
+
+    public class BestProductReportModel
+    {
+        public string ProductName { get; set; }
+        public int ProductQuantity { get; set; }
+    }
 }
