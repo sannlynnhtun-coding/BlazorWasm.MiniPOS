@@ -1,10 +1,9 @@
-﻿@page "/Sale-Old"
+﻿@page "/"
 <div class="row" id="divLoading">
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
         <label for="ProductName">Product Name</label>
         <select name="ProductName" class="form-select" aria-label="Default select example"
-                value="@Model.product_id"
-        @onchange="ProductNameChangeEvent"
+        @onchange="ProductNameChangeEvent" value="@Model.product_id"
                 required="">
             @foreach (var item in lstProduct)
             {
@@ -41,7 +40,6 @@
         <button type="button" @onclick="Add" class="btn btn-success mt-3">Add</button>
         <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
     </div>
-
     <div class="col-md-12 mt-5" style="padding-left: 50px">
 
         @if (lstProductSale != null)
@@ -52,4 +50,3 @@
         }
     </div>
 </div>
-@*<StiBlazorDesigner Report="@Report" OnSaveReport="@OnSaveReport" />*@

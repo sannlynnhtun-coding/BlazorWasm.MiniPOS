@@ -149,21 +149,20 @@ namespace POSBlazorWebAssembly.Services
             return lst.Select(x => x.product_total_price).Sum();
         }
 
-        public async Task<ProductSaleResponseDataModel> GetRecentProductSale()
+        public async Task<ProductSaleResponseDataModel> GetRecentProductSale(int pageNo = 1, int pageSize = 5)
         {
             var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new List<ProductSaleDataModel>();
             int count = lst.Count();
-            int rowCount = 5;
-            int totalPageNo = count / rowCount;
-            int result = count % rowCount;
-            if (result > 0)
+            int totalPageNo = count / pageSize;
+            if (count % pageSize > 0)
                 totalPageNo++;
+            var result = lst.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             return new ProductSaleResponseDataModel
             {
-                lstProductSale = lst,
+                lstProductSale = result,
                 TotalPageNo = totalPageNo,
-                RowCount = rowCount,
+                RowCount = pageSize,
                 TotalRowCount = count,
                 CurrentPageNo = 1,
             };

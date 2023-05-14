@@ -16,7 +16,7 @@ namespace POSBlazorWebAssembly.Services
         Task<List<ProductDataModel>> GetProductList();
         Task<ProductDataModel> GetProductName(Guid guid);
         Task<List<ProductNameListDataModel>> GetProductNameList();
-        Task<ProductSaleResponseDataModel> GetRecentProductSale();
+        Task<ProductSaleResponseDataModel> GetRecentProductSale(int pageNo = 1, int pageSize = 5);
         Task ProductCategoryUpdate(ProductCategoryDataModel model);
         Task<ProductSaleResponseDataModel> ProductSalePagination(int pageNo, int pageSize);
         Task ProductUpdate(ProductDataModel model);
