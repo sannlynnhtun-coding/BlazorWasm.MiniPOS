@@ -2,25 +2,47 @@
 <h3>Best Product Report</h3>
 @if (lstBestProductReport != null)
 {
-    <ApexChart TItem="BestProductReportModel"
-               Title="Best Product Report">
+    @* <ApexChart TItem="BestProductReportModel" *@
+    @*            Title="Best Product Report"> *@
+    @* *@
+    @*     <ApexPointSeries TItem="BestProductReportModel" *@
+    @*                      Items="lstBestProductReport" *@
+    @*                      Name="Best Product Report" *@
+    @*                      SeriesType="SeriesType.Pie" *@
+    @*                      XValue="x => x.ProductName" *@
+    @*                      YAggregate="x => x.ProductQuantity" *@
+    @*                      OrderByDescending="e=>e.Y"/> *@
+    @* </ApexChart> *@
 
-        <ApexPointSeries TItem="BestProductReportModel"
-                         Items="lstBestProductReport"
-                         Name="Best Product Report"
-                         SeriesType="SeriesType.Pie"
-                         XValue="ProductName"
-                         YAggregate="ProductQuantity"
-                         OrderByDescending="e=>e.Y"/>
-    </ApexChart>
+
+    @* <figure class="highcharts-figure"> *@
+    @*     <div id="container"></div> *@
+    @* </figure> *@
+
+    <div id="chart"></div>
 }
 
 @code {
-    private List<BestProductReportModel> lstBestProductReport { get; set; }
+    private List<BestProductReportModel> lstBestProductReport;
 
     protected override async Task OnInitializedAsync()
     {
-        lstBestProductReport = await db.BestProductReport();
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            lstBestProductReport = await db.BestProductReport();
+    // var data = lstBestProductReport.Select(x => new
+    // {
+    //     name = x.ProductName,
+    //     y = x.ProductQuantity
+    // }).ToList();
+            StateHasChanged();
+            var labels = lstBestProductReport.Select(x => x.ProductName).ToList();
+            var series = lstBestProductReport.Select(x => x.ProductQuantity).ToList();
+            await JsRuntime.InvokeVoidAsync("bindPieChart", "chart", labels, series);
+        }
+    }
 }
