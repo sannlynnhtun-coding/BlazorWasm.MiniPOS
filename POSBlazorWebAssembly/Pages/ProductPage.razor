@@ -46,7 +46,7 @@
 
 
 @code {
-    List<ProductCreationDataModel> Model = new();
+    List<ProductDataModel> Model = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,12 +54,12 @@
         Model = lst;
     }
 
-    void Edit(ProductCreationDataModel product)
+    void Edit(ProductDataModel product)
     {
         nav.NavigateTo($"/ProductEdit/{product.product_id}");
     }
 
-    async Task Delete(ProductCreationDataModel product)
+    async Task Delete(ProductDataModel product)
     {
         await db.DeleteProduct(product.product_id);
         Model = await db.GetProductList();

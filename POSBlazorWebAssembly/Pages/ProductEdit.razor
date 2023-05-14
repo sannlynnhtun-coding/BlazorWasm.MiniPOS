@@ -38,7 +38,7 @@
 @code {
     [Parameter]
     public string ProductId { get; set; }
-    private ProductCreationDataModel Product { get; set; } = new();
+    private ProductDataModel Product { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,6 +1,6 @@
 ﻿namespace POSBlazorWebAssembly.Models
 {
-    public class ProductCreationDataModel
+    public class ProductDataModel
     {
         public Guid product_id { get; set; } = Guid.NewGuid();
         public string product_name { get; set; }

@@ -26,11 +26,11 @@
     </div>
 </div>
 @code {
-    private ProductCreationDataModel Product = new();
+    private ProductDataModel Product = new();
 
     async Task Save()
     {
         await db.SetProduct(Product);
-        Product = new ProductCreationDataModel();
+        Product = new ProductDataModel();
     }
 }

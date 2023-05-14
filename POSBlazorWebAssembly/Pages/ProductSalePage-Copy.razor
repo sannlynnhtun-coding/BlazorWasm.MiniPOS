@@ -125,7 +125,7 @@
 
     async Task ProductQtyOnChangeEvent(ChangeEventArgs e)
     {
-        ProductCreationDataModel item = new();
+        ProductDataModel item = new();
         if (Model.product_id != null)
             item = await db.GetProductName(Model.product_id);
         Model.product_qty = Convert.ToInt32(e.Value.ToString());

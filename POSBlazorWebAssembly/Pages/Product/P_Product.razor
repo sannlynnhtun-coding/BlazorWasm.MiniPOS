@@ -1,0 +1,97 @@
+﻿@page "/Setup/Product"
+@if (FormType == EnumFormType.List)
+{
+    <div class="mb-5">
+        <button class="btn btn-success mt-3" @onclick=Create>Create</button>
+    </div>
+    <div>
+        <table class="table table-bordered text-nowrap">
+            <thead>
+                <tr>
+                    <th scope="col">Action</th>
+                    @*<th scope="col">Product Id</th>*@
+                    <th scope="col">Product Code</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Category Code</th>
+                    <th scope="col">Product Sale Price</th>
+                    <th scope="col">Product Buying Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lstProduct.Count > 0)
+                {
+                    @foreach (var item in lstProduct)
+                    {
+                        <tr>
+                            <td>
+                                <a class="btn btn-outline-warning mt-3"
+                                @onclick="()=>Edit(item)">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a class="btn btn-outline-danger mt-3"
+                                @onclick="()=>Delete(item)">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                            @*<th scope="row">@(item.product_id)</th>*@
+                            <td>@(item.product_code)</td>
+                            <td>@(item.product_name)</td>
+                            <td>@(item.product_category_code)</td>
+                            <td>@(item.product_sale_price)</td>
+                            <td>@(item.product_buying_price)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
+{
+    <div class="row" style="padding-left: 50px; padding-right:50px">
+        <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Name</label>
+            <input type="text" class="form-control" @bind-value="Model.product_name" />
+        </div>
+        <div class="col-md-6 mt-10">
+            <label for="ProductName">Product Name</label>
+            <select name="ProductName" class="form-select"
+                    value="@Model.product_category_code"
+                    required="">
+                @foreach (var item in lstProductCategory)
+                {
+                    <option value="@item.product_category_id">
+                        @item.product_category_name
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Code</label>
+            <input type="text" class="form-control" @bind-value="Model.product_code" />
+        </div>
+        <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Sale Price</label>
+            <input type="text" class="form-control" @bind-value="Model.product_sale_price" />
+        </div>
+        <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Buying Price</label>
+            <input type="text" class="form-control" @bind-value="Model.product_buying_price" />
+        </div>
+        <div class="col-md-6 mt-10">
+            <label for="floatingTextarea">Product Crateation Date</label>
+            <input type="text" class="form-control" @bind-value="Model.product_cration_date" />
+        </div>
+        <div class="col-md-6 mt-10">
+            <button class="btn btn-dark mt-3" @onclick=Back>Back</button>
+            @if (FormType == EnumFormType.Create)
+            {
+                <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
+            }
+            else if (FormType == EnumFormType.Edit)
+            {
+                <button type="button" @onclick="Update" class="btn btn-success mt-3">Update</button>
+            }
+        </div>
+    </div>
+}
