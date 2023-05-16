@@ -60,7 +60,8 @@ else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
         <div class="col-md-6 mt-10">
             <label for="ProductName">Product Category</label>
             <select name="ProductName" class="form-select"
-                    @bind="@Model.product_category_code"
+                    value="@ProductCategory.product_category_id"
+                     @onchange="ProductNameChangeEvent"
                     required="">
                 @foreach (var item in lstProductCategory)
                 {

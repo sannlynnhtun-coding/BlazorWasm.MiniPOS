@@ -13,8 +13,8 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
         protected override async Task OnInitializedAsync()
         {
             _lstProduct = await db.GetProductNameList();
-            //lstProductSale = await db.GetRecentProductSale();
-            //grand_total = await db.GetGrandTotal();
+            _lstProductSale = await db.GetRecentProductSale();
+            _grandTotal = await db.GetGrandTotal();
         }
 
         private async Task ProductNameChange(ChangeEventArgs e)
@@ -67,11 +67,13 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
             _model = new();
         }
 
-        private Task Save()
+        private async Task Save()
         {
-            // lstProductSale = await db.GetRecentProductSale();
-            _lstProduct = new();
-            return Task.CompletedTask;
+            await db.SetVouncher();
+            _lstProduct = await db.GetProductNameList();
+            _lstProductSale = await db.GetRecentProductSale();
+            //_lstProduct = new();
+            //return Task.CompletedTask;
         }
 
         private async Task DeleteProductSale(Guid guid)

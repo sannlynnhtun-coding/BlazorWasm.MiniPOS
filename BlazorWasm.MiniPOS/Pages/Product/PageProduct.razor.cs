@@ -1,4 +1,6 @@
 ﻿using BlazorWasm.MiniPOS.Models;
+using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 namespace BlazorWasm.MiniPOS.Pages.Product
 {
@@ -6,6 +8,7 @@ namespace BlazorWasm.MiniPOS.Pages.Product
     {
         private List<ProductDataModel> lstProduct = new();
         private List<ProductCategoryDataModel> lstProductCategory = new();
+        private ProductCategoryDataModel ProductCategory = new();
         private ProductDataModel Model = new();
         private EnumFormType FormType { get; set; } = EnumFormType.List;
 
@@ -27,6 +30,7 @@ namespace BlazorWasm.MiniPOS.Pages.Product
 
         void Create()
         {
+            Model = new();
             FormType = EnumFormType.Create;
         }
 
@@ -41,6 +45,7 @@ namespace BlazorWasm.MiniPOS.Pages.Product
         async Task Edit(ProductDataModel product)
         {
             Model = await db.GetProduct(product.product_id);
+            await ShowProductCategory(null,Model.product_category_code);
             FormType = EnumFormType.Edit;
         }
 
@@ -62,6 +67,28 @@ namespace BlazorWasm.MiniPOS.Pages.Product
         void Back()
         {
             FormType = EnumFormType.List;
+        }
+
+        async Task ProductNameChangeEvent(ChangeEventArgs e)
+        {
+            string str = e.Value.ToString();
+            await ShowProductCategory(new Guid(str));
+        }
+
+        async Task ShowProductCategory(Guid? guid = null, string? productName = null)
+        {
+            lstProductCategory = await db.GetProductCategoryList();
+            foreach (var item in lstProductCategory)
+            {
+                if (item.product_category_id == guid)
+                {
+                    Model.product_category_code = item.product_category_code;
+                }
+                else if(item.product_category_code == productName)
+                {
+                    ProductCategory.product_category_id = item.product_category_id;
+                }
+            }
         }
     }
 }

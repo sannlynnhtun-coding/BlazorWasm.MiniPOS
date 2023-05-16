@@ -1,0 +1,56 @@
+﻿@page "/SaleReport"
+
+@*<MudDatePicker PickerVariant="PickerVariant.Dialog"
+               Label="Date Format" HelperText="For custom cultures"
+               DateFormat="dd/MM/yyyy" Date="@(DateTime.Now)"
+               DateChanged="HandleDateValueChanged" />
+*@
+@*<MudDatePicker  Label="Select a date" DateChanged="HandleDateValueChanged"/>
+*@
+@*<MudItem xs="12" sm="6">
+    </MudItem>*@
+@if(Type == EnumFormType.List)
+{
+    <MudItem xs="12" sm="6">
+        <MudDatePicker @ref="_picker" DateFormat="yyyy/MM/dd" Label="With action buttons" @bind-Date="SelectedDate">
+            <PickerActions>
+                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                <MudButton Color="Color.Primary" OnClick="DatePicker">Ok</MudButton>
+            </PickerActions>
+        </MudDatePicker>
+    </MudItem>
+}
+@if (lstSaleReport != null)
+{
+    <RecentSaleReportPage Model="lstSaleReport" OnDetailClick="Deatil" OnBackClick ="Back"/>
+}
+
+@code {
+    private DateTime? SelectedDate { get; set; } = DateTime.Today;
+    private SaleReportResponseDataModel lstSaleReport = new();
+    MudDatePicker _picker;
+    private EnumFormType Type { get; set; } = EnumFormType.List;
+    //DateTime? date = DateTime.Today;
+    //private async Task HandleDateValueChanged(DateTime? value)
+    //{
+    //    SelectedDate = value.Value;
+    //    Model = await db.SaleReport(SelectedDate);
+    //}
+
+    private async Task DatePicker()
+    {
+        lstSaleReport = await db.SaleReport(Convert.ToDateTime(SelectedDate));
+        _picker.Close();
+    }
+
+    async Task Deatil(SaleVoucherHeadDataModel data)
+    {
+        Type = EnumFormType.Report;
+    }
+
+    async Task Back()
+    {
+        Type = EnumFormType.List;
+    }
+}

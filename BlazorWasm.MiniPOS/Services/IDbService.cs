@@ -27,5 +27,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task SetSaleProduct(ProductSaleDataModel model);
         Task UpdateProductSale(ProductSaleDataModel model);
         Task<List<BestProductReportModel>> BestProductReport();
+        Task SetVouncher();
+        Task<List<SaleVoucherDetailDataModel>> GetVoucherDetail(Guid guid);
     }
 }

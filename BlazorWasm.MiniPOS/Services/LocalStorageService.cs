@@ -232,12 +232,12 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime)
         {
-            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new();
-            //DateTime searchDate = Convert.ToDateTime(dateTime.ToString("dd/MM/yyyy"));
-            DateTime searchDate = dateTime;
+            DateTime searchDate = Convert.ToDateTime(dateTime.ToString("MM/dd/yyyy"));
+            //DateTime searchDate = dateTime;
             var saleReport = lst.Where(x =>
-                        x.product_sale_date == searchDate).ToList();
+                        Convert.ToDateTime(x.sale_date.ToString("MM/dd/yyyy")) == searchDate).ToList();
             int count = saleReport.Count();
             int rowCount = 5;
             int totalPageNo = count / rowCount;
@@ -246,7 +246,7 @@ namespace BlazorWasm.MiniPOS.Services
                 totalPageNo++;
             return new SaleReportResponseDataModel
             {
-                //lstSaleReport = saleReport,
+                lstSaleReport = saleReport,
                 TotalPageNo = totalPageNo,
                 RowCount = rowCount,
                 TotalRowCount = count,
@@ -256,9 +256,11 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime)
         {
-            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new();
-            var saleReport = lst.Where(x => x.product_sale_date == dateTime).ToList();
+            DateTime searchDate = Convert.ToDateTime(dateTime.ToString("MM/dd/yyyy"));
+            var saleReport = lst.Where(x => 
+            Convert.ToDateTime(x.sale_date.ToString("MM/dd/yyyy")) == searchDate).ToList();
             int count = saleReport.Count();
             int totalPageNo = count / pageSize;
             int result = count % pageSize;
@@ -267,7 +269,7 @@ namespace BlazorWasm.MiniPOS.Services
             return new SaleReportResponseDataModel
             {
                 CurrentPageNo = pageNo,
-                //lstSaleReport = saleReport.ToPage(pageNo, pageSize),
+                lstSaleReport = saleReport.ToPage(pageNo, pageSize),
                 RowCount = pageSize,
                 TotalPageNo = totalPageNo,
                 TotalRowCount = count
@@ -276,25 +278,83 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<List<BestProductReportModel>> BestProductReport()
         {
-            var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            //var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
             var lstProduct = await localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
             lst ??= new();
             lstProduct ??= new();
 
-            var groupProducts = lst.Select(x => x.product_id).Distinct().ToList();
+            //var groupProducts = lst.Select(x => x.product_id).Distinct().ToList();
+            var groupProducts = lst.Select(x => x.product_name).Distinct().ToList();
 
             List<BestProductReportModel> lstBestProductReport = new();
             foreach (var productId in groupProducts)
             {
-                int totalQty = lst.Where(x=> x.product_id==productId).Sum(x => x.product_qty);
+                //int totalQty = lst.Where(x=> x.product_id==productId).Sum(x => x.product_qty);
+                int totalQty = lst.Where(x=> x.product_name==productId).Sum(x => x.product_qty);
                 lstBestProductReport.Add(new BestProductReportModel()
                 {
-                    ProductName = lstProduct.FirstOrDefault(x=> x.product_id == productId)?.product_name,
+                    //ProductName = lstProduct.FirstOrDefault(x=> x.product_id == productId)?.product_name,
+                    ProductName = lstProduct.FirstOrDefault(x => x.product_name == productId)?.product_name,
                     ProductQuantity = totalQty
                 });
             }
 
             return lstBestProductReport;
+        }
+
+        public async Task SetSaleVoucherDetail(SaleVoucherDetailDataModel model)
+        {
+            List<SaleVoucherDetailDataModel> lst = await localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new();
+            lst.Add(model);
+            await localStorage.SetItemAsync("Tbl_SaleVoucherDetail", lst);
+        }
+
+        public async Task SetSaleVoucherHead(SaleVoucherHeadDataModel model)
+        {
+            List<SaleVoucherHeadDataModel> lst = await localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
+            lst ??= new();
+            lst.Add(model);
+            await localStorage.SetItemAsync("Tbl_SaleVoucherHead", lst);
+        }
+        public async Task SetVouncher()
+        {
+            //Guid sale_voucher_detail_id = Guid.NewGuid();
+            Guid sale_voucher_head_id = Guid.NewGuid();
+            SaleVoucherDetailDataModel deatilModel = new();
+            SaleVoucherHeadDataModel headModel = new();
+
+            var getLst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
+            getLst ??= new();
+            if(getLst != null && getLst.Count() != 0)
+            {
+                foreach (var item in getLst)
+                {
+                    deatilModel.sale_voucher_detail_id = Guid.NewGuid();
+                    deatilModel.product_price = item.product_price;
+                    deatilModel.product_qty = item.product_qty;
+                    deatilModel.product_name = item.product_name;
+                    deatilModel.sale_voucher_head_id = sale_voucher_head_id;
+                    deatilModel.detail_date = DateTime.Now;
+                    await SetSaleVoucherDetail(deatilModel);
+                }
+
+                headModel.sale_voucher_head_id = sale_voucher_head_id;
+                headModel.sale_total_amount = getLst.Select(x => x.product_total_price).Sum();
+                headModel.sale_date = DateTime.Now;
+                headModel.sale_voucher_no = Guid.NewGuid();
+                await SetSaleVoucherHead(headModel);
+                await localStorage.RemoveItemAsync("Tbl_ProductSale");
+            }
+        }
+
+        public async Task<List<SaleVoucherDetailDataModel>> GetVoucherDetail(Guid guid)
+        {
+            var lst = await localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new();
+            var result = lst.Where(x=> x.sale_voucher_head_id == guid).ToList();
+            return result;
         }
     }
 }
