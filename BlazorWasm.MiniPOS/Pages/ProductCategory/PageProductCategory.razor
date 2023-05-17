@@ -56,7 +56,7 @@ else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
             <input type="text" class="form-control" @bind-value="Model.product_category_name" />
         </div>
         <div class="col-md-12 mt-5">
-            <button class="btn btn-dark mt-3" @onclick=Back>Back</button>
+            <button class="btn btn-dark mt-3" @onclick=Back style="margin-right: 1%;">Back</button>
             @if (FormType == EnumFormType.Create)
             {
                 <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>

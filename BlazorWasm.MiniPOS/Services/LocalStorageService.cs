@@ -17,7 +17,7 @@ namespace BlazorWasm.MiniPOS.Services
             //bool localStorageName = await JsRuntime.InvokeAsync<bool>("Tbl_Product");
             List<ProductDataModel> lst = await localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
             lst ??= new();
-            return lst != null && lst.Count() > 1 ?
+            return lst != null && lst.Count() >= 1 ?
             lst.OrderByDescending(x => x.product_cration_date).ToList() : null;
         }
 
