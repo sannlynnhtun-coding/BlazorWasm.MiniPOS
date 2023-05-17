@@ -16,6 +16,7 @@ namespace BlazorWasm.MiniPOS.Pages.ProductCategory
         async Task List()
         {
             lstProductCategory = await db.GetProductCategoryList();
+            lstProductCategory ??= new();
         }
 
         void Create()

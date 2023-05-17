@@ -1,12 +1,12 @@
 ﻿using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
+using Microsoft.JSInterop;
 
 namespace BlazorWasm.MiniPOS.Services
 {
     public class LocalStorageService : IDbService
     {
         private readonly ILocalStorageService localStorage;
-
         public LocalStorageService(ILocalStorageService localStorage)
         {
             this.localStorage = localStorage;
@@ -14,9 +14,11 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<List<ProductDataModel>> GetProductList()
         {
+            //bool localStorageName = await JsRuntime.InvokeAsync<bool>("Tbl_Product");
             List<ProductDataModel> lst = await localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
             lst ??= new();
-            return lst.OrderByDescending(x => x.product_cration_date).ToList();
+            return lst != null && lst.Count() > 1 ?
+            lst.OrderByDescending(x => x.product_cration_date).ToList() : null;
         }
 
         public async Task SetProduct(ProductDataModel model)
@@ -123,7 +125,8 @@ namespace BlazorWasm.MiniPOS.Services
                 product_id = null,
                 product_name = "--Select Product Name--"
             });
-            return lstProductName;
+            return lstProductName != null && lstProductName.Count() > 1 ? lstProductName : null;
+                
         }
 
         public async Task<ProductDataModel> GetProductName(Guid guid)

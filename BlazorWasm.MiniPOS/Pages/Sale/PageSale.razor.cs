@@ -13,7 +13,11 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
         protected override async Task OnInitializedAsync()
         {
             _lstProduct = await db.GetProductNameList();
+            _lstProduct ??= new();
+            if (_lstProduct == null || _lstProduct.Count() <= 0)
+                nav.NavigateTo("/setup/product");
             _lstProductSale = await db.GetRecentProductSale();
+            _lstProductSale ??= new();
             _grandTotal = await db.GetGrandTotal();
         }
 

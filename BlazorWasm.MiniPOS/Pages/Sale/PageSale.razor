@@ -5,11 +5,14 @@
         <select name="ProductName" class="form-select" aria-label="Default select example"
         @onchange="ProductNameChange" value="@_model.product_id"
                 required="">
-            @foreach (var item in _lstProduct)
+            @if(_lstProduct != null && _lstProduct.Count() > 1)
             {
-                <option value="@item.product_id">
-                    @item.product_name
-                </option>
+                @foreach (var item in _lstProduct)
+                {
+                    <option value="@item.product_id">
+                        @item.product_name
+                    </option>
+                }
             }
         </select>
     </div>

@@ -91,3 +91,7 @@ window.bindPieChart2 = function (id, data) {
         }]
     });
 }
+
+window.getLocalStorageName = function () {
+    return window.localStorage ? window.localStorage.name : null;
+};
