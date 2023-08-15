@@ -211,7 +211,7 @@ else if (Type == EnumFormType.Report)
                         <td>@(++count)</td>
                         <td>@(item.product_name)</td>
                         <td>@(item.product_qty) PC</td>
-                        <td style="text-align: right;">@(item.product_price * item.product_qty) Ks</td>
+                        <td style="text-align: right;">@((item.product_price * item.product_qty).ToString("n0")) Ks</td>
                     </tr>
                 }
 
@@ -224,9 +224,9 @@ else if (Type == EnumFormType.Report)
             <thead>
                 <tr>
                     <th>Total</th>
-                    <th style="text-align: center;">Item (@detail.Select(x=> x.product_qty).Sum())</th>
+                    <th style="text-align: center;">Item (@detail.Select(x=> x.product_qty).Sum().ToString("n0"))</th>
                     <th>&nbsp;</th>
-                    <th style="text-align: right;">@(detail.Select(x=> x.product_qty * x.product_price).Sum()) Ks</th>
+                    <th style="text-align: right;">@(detail.Select(x=> x.product_qty * x.product_price).Sum().ToString("n0")) Ks</th>
 
                 </tr>
             </thead>
@@ -239,7 +239,7 @@ else if (Type == EnumFormType.Report)
             <thead>
                 <tr>
                     <td>Total Saving In Rs: </td>
-                    <td style="text-align: right;">@(detail.Select(x => x.product_qty * x.product_price).Sum()) Ks</td>
+                    <td style="text-align: right;">@(detail.Select(x => x.product_qty * x.product_price).Sum().ToString("n0")) Ks</td>
                 </tr>
                 <tr>
                     <td>Total Saving In %: </td>

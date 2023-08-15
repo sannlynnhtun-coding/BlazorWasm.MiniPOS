@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.13" PrivateAssets="all" />
     <PackageReference Include="MudBlazor" Version="6.2.2" />
-    <PackageReference Include="Radzen.Blazor" Version="4.10.1" />
+    <PackageReference Include="Radzen.Blazor" Version="4.15.4" />
   </ItemGroup>
 
   <ItemGroup>

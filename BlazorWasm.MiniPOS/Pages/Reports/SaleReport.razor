@@ -9,27 +9,31 @@
 *@
 @*<MudItem xs="12" sm="6">
     </MudItem>*@
-@if(Type == EnumFormType.List)
+@if (Type == EnumFormType.List)
 {
     <MudItem xs="12" sm="6">
-        <MudDatePicker @ref="_picker" DateFormat="yyyy/MM/dd" Label="With action buttons" @bind-Date="SelectedDate">
-            <PickerActions>
-                <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
-                <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
-                <MudButton Color="Color.Primary" OnClick="DatePicker">Ok</MudButton>
-            </PickerActions>
-        </MudDatePicker>
+        @*<MudDatePicker @ref="_picker" DateFormat="dd-MM-yyyy" Label="With action buttons" @bind-Date="SelectedDate">
+    <PickerActions>
+    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+    <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+    <MudButton Color="Color.Primary" OnClick="DatePicker">Ok</MudButton>
+    </PickerActions>
+    </MudDatePicker>*@
+        <RadzenDatePicker @bind-Value=@SelectedDate DateFormat="dd-MM-yyyy" />
+        <RadzenButton Variant="Radzen.Variant.Flat"
+                      Shade="Shade.Lighter" Click=@(args => DatePicker())
+                      Text="Search" ButtonStyle="ButtonStyle.Primary" />
     </MudItem>
 }
 @if (lstSaleReport != null)
 {
-    <RecentSaleReportPage Model="lstSaleReport" OnDetailClick="Deatil" OnBackClick ="Back"/>
+    <RecentSaleReportPage Model="lstSaleReport" OnDetailClick="Deatil" OnBackClick="Back" />
 }
 
 @code {
     private DateTime? SelectedDate { get; set; } = DateTime.Today;
     private SaleReportResponseDataModel lstSaleReport = new();
-    MudDatePicker _picker;
+    //MudDatePicker _picker;
     private EnumFormType Type { get; set; } = EnumFormType.List;
     //DateTime? date = DateTime.Today;
     //private async Task HandleDateValueChanged(DateTime? value)
@@ -41,15 +45,15 @@
     private async Task DatePicker()
     {
         lstSaleReport = await db.SaleReport(Convert.ToDateTime(SelectedDate));
-        _picker.Close();
+        //_picker.Close();
     }
 
-    async Task Deatil(SaleVoucherHeadDataModel data)
+    void Deatil(SaleVoucherHeadDataModel data)
     {
         Type = EnumFormType.Report;
     }
 
-    async Task Back()
+    void Back()
     {
         Type = EnumFormType.List;
     }
