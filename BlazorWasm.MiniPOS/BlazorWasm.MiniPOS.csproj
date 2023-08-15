@@ -1308,4 +1308,8 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\lib\Highcharts-11.0.1\themes\sunset.src.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Styles\tailwind.css" />
+  </ItemGroup>
+
 </Project>
