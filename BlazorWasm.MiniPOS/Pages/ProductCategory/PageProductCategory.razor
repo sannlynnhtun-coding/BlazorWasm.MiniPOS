@@ -1,59 +1,66 @@
 ﻿@page "/setup/product-category"
-
 @if (FormType == EnumFormType.List)
 {
     <div class="mb-5">
         <button class="btn btn-success mt-3" @onclick="Create">Create</button>
     </div>
-
     <div>
         <table class="table table-bordered text-nowrap">
             <thead>
-                <tr>
-                    <th scope="col">Action</th>
-                    @*<th scope="col">Product Category Id</th>*@
-                    <th scope="col">Product Category Code</th>
-                    <th scope="col">Product Category Name</th>
-                    <th scope="col">Product Creation Date</th>
-                </tr>
+            <tr>
+                <th scope="col">Action</th>
+                @*<th scope="col">Product Category Id</th>*@
+                <th scope="col">Product Category Code</th>
+                <th scope="col">Product Category Name</th>
+                <th scope="col">Product Creation Date</th>
+            </tr>
             </thead>
             <tbody>
-                @if (lstProductCategory != null && lstProductCategory.Count > 0)
+            @if (_productCategoryResponseModel?.productCategories is {Count: > 0 })
+            {
+                @foreach (var item in _productCategoryResponseModel.productCategories)
                 {
-                    @foreach (var item in lstProductCategory)
-                    {
-                        <tr>
-                            <td>
-                                <a class="btn btn-outline-warning mt-3"
-                                @onclick="()=>Edit(item)">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a class="btn btn-outline-danger mt-3"
-                                @onclick="()=>Delete(item)">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
-                            </td>
-                            @*<th scope="row">@(item.product_category_id)</th>*@
-                            <td>@(item.product_category_code)</td>
-                            <td>@(item.product_category_name)</td>
-                            <td>@(item.product_category_creation_date)</td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>
+                            <a class="btn btn-outline-warning mt-3"
+                               @onclick="() => Edit(item)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a class="btn btn-outline-danger mt-3"
+                               @onclick="() => Delete(item)">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
+                        @*<th scope="row">@(item.product_category_id)</th>*@
+                        <td>@(item.product_category_code)</td>
+                        <td>@(item.product_category_name)</td>
+                        <td>@(item.product_category_creation_date)</td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
+        @if (_productCategoryResponseModel?.productCategories is {Count: > 0 })
+        {
+            <div class="d-flex flex-column align-center">
+                <MudPagination BoundaryCount="2" MiddleCount="5"
+                               Count="@_productCategoryResponseModel.pageSetting.pageCount"
+                               SelectedChanged="(pageNo) => List(pageNo)"
+                               Class="mt-4"/>
+            </div>
+        }
     </div>
 }
-else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
+else if (FormType is EnumFormType.Create or EnumFormType.Edit)
 {
     <div class="row" style="padding-left: 50px; padding-right:50px">
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Category Code</label>
-            <input type="text" class="form-control" @bind-value="Model.product_category_code" />
+            <label>Product Category Code</label>
+            <input type="text" class="form-control" @bind-value="_model.product_category_code"/>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Category Name</label>
-            <input type="text" class="form-control" @bind-value="Model.product_category_name" />
+            <label>Product Category Name</label>
+            <input type="text" class="form-control" @bind-value="_model.product_category_name"/>
         </div>
         <div class="col-md-12 mt-5">
             <button class="btn btn-dark mt-3" @onclick=Back style="margin-right: 1%;">Back</button>

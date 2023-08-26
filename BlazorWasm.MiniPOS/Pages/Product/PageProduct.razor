@@ -1,69 +1,77 @@
 ﻿@page "/setup/product"
+
 @if (FormType == EnumFormType.List)
 {
     <div class="mb-5">
-        <button class="btn btn-success mt-3" @onclick=Create>Create</button>
+        <MudButton Variant="Variant.Outlined" OnClick="Create" Color="Color.Success">Create</MudButton>
     </div>
     <div>
         <table class="table table-bordered text-nowrap">
             <thead>
-                <tr>
-                    <th scope="col">Action</th>
-                    @*<th scope="col">Product Id</th>*@
-                    <th scope="col">Product Code</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Category Code</th>
-                    <th scope="col">Product Sale Price</th>
-                    <th scope="col">Product Buying Price</th>
-                </tr>
+            <tr>
+                <th scope="col">Action</th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Category Code</th>
+                <th scope="col">Product Sale Price</th>
+                <th scope="col">Product Buying Price</th>
+            </tr>
             </thead>
             <tbody>
-                @if (lstProduct.Count > 0)
+            @if (_productResponseModel?.products is {Count: > 0 })
+            {
+                @foreach (var item in _productResponseModel.products)
                 {
-                    @foreach (var item in lstProduct)
-                    {
-                        <tr>
-                            <td>
-                                <a class="btn btn-outline-warning mt-3"
-                                @onclick="()=>Edit(item)">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                                <a class="btn btn-outline-danger mt-3"
-                                @onclick="()=>Delete(item)">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </a>
-                            </td>
-                            @*<th scope="row">@(item.product_id)</th>*@
-                            <td>@(item.product_code)</td>
-                            <td>@(item.product_name)</td>
-                            <td>@(item.product_category_code)</td>
-                            <td>@(item.product_sale_price)</td>
-                            <td>@(item.product_buying_price)</td>
-                        </tr>
-                    }
+                    <tr>
+                        <td>
+                            <a class="btn btn-outline-warning mt-3"
+                               @onclick="() => Edit(item)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a class="btn btn-outline-danger mt-3"
+                               @onclick="() => Delete(item)">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
+                        <td>@(item.product_code)</td>
+                        <td>@(item.product_name)</td>
+                        <td>@(item.product_category_code)</td>
+                        <td>@(item.product_sale_price)</td>
+                        <td>@(item.product_buying_price)</td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
+        @if (_productResponseModel?.products is {Count: > 0 })
+        {
+            <div class="d-flex flex-column align-center">
+                <MudPagination BoundaryCount="2" MiddleCount="5"
+                               Count="@_productResponseModel.pageSetting.pageCount"
+                               SelectedChanged="(pageNo) => List(pageNo)"
+                               Class="mt-4"/>
+            </div>
+        }
     </div>
 }
-else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
+else if (FormType is EnumFormType.Create or EnumFormType.Edit)
 {
     <div class="row" style="padding-left: 50px; padding-right:50px">
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Code</label>
-            <input type="text" class="form-control" @bind-value="Model.product_code" />
+            <label>Product Code</label>
+            <input type="text" class="form-control" @bind-value="_model.product_code"/>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Name</label>
-            <input type="text" class="form-control" @bind-value="Model.product_name" />
+            <label>Product Name</label>
+            <input type="text" class="form-control" @bind-value="_model.product_name"/>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="ProductName">Product Category</label>
-            <select name="ProductName" class="form-select"
-                    value="@ProductCategory.product_category_id"
-                     @onchange="ProductNameChangeEvent"
+            <label>Product Category</label>
+            <select class="form-select"
+                    value="@_productCategory.product_category_id"
+                    @onchange="ProductNameChangeEvent"
                     required="">
-                @foreach (var item in lstProductCategory)
+                @foreach (var item in _lstProductCategory)
                 {
                     <option value="@item.product_category_id">
                         @item.product_category_name
@@ -72,26 +80,27 @@ else if (FormType == EnumFormType.Create || FormType == EnumFormType.Edit)
             </select>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Sale Price</label>
-            <input type="text" class="form-control" @bind-value="Model.product_sale_price" />
+            <label>Product Sale Price</label>
+            <input type="text" class="form-control" @bind-value="_model.product_sale_price"/>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Buying Price</label>
-            <input type="text" class="form-control" @bind-value="Model.product_buying_price" />
+            <label>Product Buying Price</label>
+            <input type="text" class="form-control" @bind-value="_model.product_buying_price"/>
         </div>
         <div class="col-md-6 mt-10">
-            <label for="floatingTextarea">Product Crateation Date</label>
-            <input type="text" class="form-control" @bind-value="Model.product_cration_date" />
+            <label>Product Creation Date</label>
+            <input type="text" class="form-control" @bind-value="_model.product_creation_date"/>
         </div>
         <div class="col-md-6 mt-10">
             <button class="btn btn-dark mt-3" @onclick=Back style="margin-right: 1%;">Back</button>
-            @if (FormType == EnumFormType.Create)
+            @switch (FormType)
             {
-                <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
-            }
-            else if (FormType == EnumFormType.Edit)
-            {
-                <button type="button" @onclick="Update" class="btn btn-success mt-3">Update</button>
+                case EnumFormType.Create:
+                    <button type="button" @onclick="@Save" class="btn btn-success mt-3">Save</button>
+                    break;
+                case EnumFormType.Edit:
+                    <button type="button" @onclick="@Update" class="btn btn-success mt-3">Update</button>
+                    break;
             }
         </div>
     </div>

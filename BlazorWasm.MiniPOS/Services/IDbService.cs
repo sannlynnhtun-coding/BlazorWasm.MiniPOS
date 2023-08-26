@@ -14,7 +14,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<ProductCategoryDataModel> GetProductCategory(Guid guid);
         Task<List<ProductCategoryDataModel>> GetProductCategoryList();
         Task<List<ProductDataModel>> GetProductList();
-        Task<ProductDataModel> GetProductName(Guid guid);
+        Task<ProductDataModel?> GetProductName(Guid guid);
         Task<List<ProductNameListDataModel>> GetProductNameList();
         Task<ProductSaleResponseDataModel> GetRecentProductSale(int pageNo = 1, int pageSize = 5);
         Task ProductCategoryUpdate(ProductCategoryDataModel model);
@@ -27,7 +27,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task SetSaleProduct(ProductSaleDataModel model);
         Task UpdateProductSale(ProductSaleDataModel model);
         Task<List<BestProductReportModel>> BestProductReport();
-        Task SetVouncher();
+        Task SetVoucher();
         Task<List<SaleVoucherDetailDataModel>> GetVoucherDetail(Guid guid);
     }
 }

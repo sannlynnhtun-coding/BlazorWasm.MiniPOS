@@ -94,7 +94,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="sm:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pb-3 pt-2">
@@ -106,7 +105,6 @@
             </div>
         </div>
     </nav>
-
     <header class="bg-white shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold tracking-tight text-gray-900">@InsertSpacesBeforeCapitals(Page.ToString())</h1>
@@ -120,8 +118,6 @@
         </div>
     </main>
 </div>
-
-
 @code {
     private bool isShowProfileMenu = false;
     private EnumPage Page = EnumPage.Sale;
@@ -167,8 +163,8 @@
 
     static string InsertSpacesBeforeCapitals(string input)
     {
-        string pattern = @"(?<!^)(?=[A-Z])"; // Positive lookahead for capital letters
-        string replaced = Regex.Replace(input, pattern, " ");
+        var pattern = @"(?<!^)(?=[A-Z])"; // Positive lookahead for capital letters
+        var replaced = Regex.Replace(input, pattern, " ");
         return replaced;
     }
 }

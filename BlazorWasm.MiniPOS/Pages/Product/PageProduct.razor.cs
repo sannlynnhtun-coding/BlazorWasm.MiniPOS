@@ -1,15 +1,15 @@
 ﻿using BlazorWasm.MiniPOS.Models;
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 
 namespace BlazorWasm.MiniPOS.Pages.Product
 {
     public partial class PageProduct
     {
-        private List<ProductDataModel> lstProduct = new();
-        private List<ProductCategoryDataModel> lstProductCategory = new();
-        private ProductCategoryDataModel ProductCategory = new();
-        private ProductDataModel Model = new();
+        private ProductResponseModel? _productResponseModel;
+        private List<ProductCategoryDataModel> _lstProductCategory = new();
+        private ProductCategoryDataModel _productCategory = new ProductCategoryDataModel();
+        private ProductDataModel _model = new();
+
         private EnumFormType FormType { get; set; } = EnumFormType.List;
 
         protected override async Task OnInitializedAsync()
@@ -20,40 +20,59 @@ namespace BlazorWasm.MiniPOS.Pages.Product
 
         async Task BindProductCategory()
         {
-            lstProductCategory = await db.GetProductCategoryList();
+            _lstProductCategory = await db.GetProductCategoryList();
         }
 
-        async Task List()
+        async Task List(int pageNo = 1, int pageSize = 10)
         {
-            lstProduct = await db.GetProductList();
-            lstProduct ??= new();
+            var lst = await db.GetProductList();
+            var pageCount = lst.Count / pageSize;
+            if (lst.Count % pageSize > 0)
+            {
+                pageCount++;
+            }
+
+            var pageSetting = new PageSettingModel()
+            {
+                pageCount = pageCount,
+                pageSize = pageSize,
+                pageNo = pageNo
+            };
+            _productResponseModel = new ProductResponseModel()
+            {
+                products = lst
+                    .Skip((pageNo - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList(),
+                pageSetting = pageSetting
+            };
         }
 
         void Create()
         {
-            Model = new();
+            _model = new();
             FormType = EnumFormType.Create;
         }
 
         async Task Save()
         {
-            await db.SetProduct(Model);
-            Model = new();
+            await db.SetProduct(_model);
+            _model = new();
             await List();
             FormType = EnumFormType.List;
         }
 
         async Task Edit(ProductDataModel product)
         {
-            Model = await db.GetProduct(product.product_id);
-            await ShowProductCategory(null,Model.product_category_code);
+            _model = await db.GetProduct(product.product_id);
+            await ShowProductCategory(null, _model.product_category_code);
             FormType = EnumFormType.Edit;
         }
 
         async Task Update()
         {
-            await db.ProductUpdate(Model);
-            Model = new();
+            await db.ProductUpdate(_model);
+            _model = new();
             await List();
             FormType = EnumFormType.List;
         }
@@ -72,22 +91,22 @@ namespace BlazorWasm.MiniPOS.Pages.Product
 
         async Task ProductNameChangeEvent(ChangeEventArgs e)
         {
-            string str = e.Value.ToString();
-            await ShowProductCategory(new Guid(str));
+            var str = e.Value?.ToString();
+            if (str != null) await ShowProductCategory(new Guid(str));
         }
 
         async Task ShowProductCategory(Guid? guid = null, string? productName = null)
         {
-            lstProductCategory = await db.GetProductCategoryList();
-            foreach (var item in lstProductCategory)
+            _lstProductCategory = await db.GetProductCategoryList();
+            foreach (var item in _lstProductCategory)
             {
                 if (item.product_category_id == guid)
                 {
-                    Model.product_category_code = item.product_category_code;
+                    _model.product_category_code = item.product_category_code;
                 }
-                else if(item.product_category_code == productName)
+                else if (item.product_category_code == productName)
                 {
-                    ProductCategory.product_category_id = item.product_category_id;
+                    _productCategory.product_category_id = item.product_category_id;
                 }
             }
         }

@@ -1,47 +1,54 @@
 ﻿@page "/"
 <div class="row" id="divLoading">
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label for="ProductName">Product Name</label>
-        <select name="ProductName" class="form-select" aria-label="Default select example"
-        @onchange="ProductNameChange" value="@_model.product_id"
-                required="">
-            @if(_lstProduct != null && _lstProduct.Count() > 1)
-            {
-                @foreach (var item in _lstProduct)
-                {
-                    <option value="@item.product_id">
-                        @item.product_name
-                    </option>
-                }
-            }
-        </select>
+        <label>Product Name</label>
+        @* <select class="form-select" aria-label="Default select example" *@
+        @*         @onchange="ProductNameChange" value="@_model.product_id" *@
+        @*         required=""> *@
+        @*     @if(_lstProduct != null && _lstProduct.Count() > 1) *@
+        @*     { *@
+        @*         @foreach (var item in _lstProduct) *@
+        @*         { *@
+        @*             <option value="@item.product_id"> *@
+        @*                 @item.product_name *@
+        @*             </option> *@
+        @*         } *@
+        @*     } *@
+        @* </select> *@
+        <div>
+            <RadzenDropDownDataGrid @bind-Value="@_model.product_id"
+                                    Change="ProductNameChange"
+                                    Data="@_lstProduct"
+                                    TextProperty="product_name"
+                                    ValueProperty="product_id"/>
+        </div>
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label for="floatingTextarea">Product Price</label>
-        <input type="text" class="form-control t-r" name="Product_price" @bind-value="_model.product_price" disabled="disabled" placeholder="0" />
+        <label>Product Price</label>
+        <input type="text" class="form-control t-r" name="Product_price" @bind-value="_model.product_price" disabled="disabled" placeholder="0"/>
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label for="floatingTextarea">Product Qty</label>
+        <label>Product Qty</label>
         <input type="text" class="form-control t-r"
                name="Product_qty"
                value="@_model.product_qty"
-        @onchange="ProductQtyOnChangeEvent"
-               placeholder="0" />
+               @onchange="ProductQtyOnChangeEvent"
+               placeholder="0"/>
         <p id="ProductQtyError" style="color : red"></p>
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label for="floatingTextarea">Total Amount</label>
-        <input type="text" class="form-control t-r" name="Sale_total_amount" @bind-value="_model.product_total_price" disabled="disabled" placeholder="0" />
+        <label>Total Amount</label>
+        <input type="text" class="form-control t-r" name="Sale_total_amount" @bind-value="_model.product_total_price" disabled="disabled" placeholder="0"/>
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
     </div>
     <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label for="floatingTextarea">Total Items Amount</label>
-        <input type="text" class="form-control t-r" name="Grand_Total" @bind-value="_grandTotal" disabled="disabled" />
+        <label>Total Items Amount</label>
+        <input type="text" class="form-control t-r" name="Grand_Total" @bind-value="_grandTotal" disabled="disabled"/>
     </div>
     <div class="col-md-6 mt-5" style="padding-left: 50px">
-        <button type="button" @onclick="Add" class="btn btn-success mt-3">Add</button>
-        <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
+        <MudButton Variant="Variant.Outlined" OnClick="Add" Color="Color.Default">Add</MudButton>
+        <MudButton Variant="Variant.Outlined" OnClick="Save" Color="Color.Success">Save</MudButton>
     </div>
     <div class="col-md-12 mt-5" style="padding-left: 50px">
 
@@ -49,7 +56,7 @@
         {
             <RecentProductSalePage Model="_lstProductSale"
                                    OnDeleteProductSaleClick="DeleteProductSale"
-                                   OnEditProductSaleClick="EditProductSale" />
+                                   OnEditProductSaleClick="EditProductSale"/>
         }
     </div>
 </div>
