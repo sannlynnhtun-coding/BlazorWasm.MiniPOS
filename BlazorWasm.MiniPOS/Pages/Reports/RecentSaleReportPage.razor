@@ -28,8 +28,8 @@
     }
 
     .img {
-        margin-left: "auto";
-        margin-top: "auto";
+        margin-left: auto;
+        margin-top: auto;
         height: 30px;
     }
 
@@ -114,39 +114,39 @@
 {
     <MudSimpleTable Style="overflow-x: auto;" Class="mud-table">
         <thead>
-            <tr>
-                <th>Voucher No</th>
-                <th>Total Amount</th>
-                <th>Date</th>
-                <th>Detail</th>
-            </tr>
+        <tr>
+            <th>Voucher No</th>
+            <th>Total Amount</th>
+            <th>Date</th>
+            <th>Detail</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.lstSaleReport)
-            {
-                dateTime = item.sale_date;
-                <tr>
-                    <td>@item.sale_voucher_no</td>
-                    <td>@item.sale_total_amount.ToString("n2")</td>
-                    <td>@item.sale_date</td>
-                    <td>
-                        <a class="btn btn-outline-primary mt-3"
-                   @onclick="()=>Deatil(item)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z" />
-                                <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z" />
-                            </svg>
-                        </a>
-                    </td>
-                    @*<td>@item.product_total_price.ToString("n2")</td>
+        @foreach (var item in Model.lstSaleReport)
+        {
+            DateTime = item.sale_date;
+            <tr>
+                <td>@item.sale_voucher_no</td>
+                <td>@item.sale_total_amount.ToString("n2")</td>
+                <td>@item.sale_date</td>
+                <td>
+                    <a class="btn btn-outline-primary mt-3"
+                       @onclick="() => Deatil(item)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M6.364 13.5a.5.5 0 0 0 .5.5H13.5a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 1h-10A1.5 1.5 0 0 0 2 2.5v6.636a.5.5 0 1 0 1 0V2.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H6.864a.5.5 0 0 0-.5.5z"/>
+                            <path fill-rule="evenodd" d="M11 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793l-8.147 8.146a.5.5 0 0 0 .708.708L10 6.707V10.5a.5.5 0 0 0 1 0v-5z"/>
+                        </svg>
+                    </a>
+                </td>
+                @*<td>@item.product_total_price.ToString("n2")</td>
             <td>@item.product_sale_date</td>*@
-                </tr>
-            }
+            </tr>
+        }
         </tbody>
     </MudSimpleTable>
     if (Model != null)
     {
-        <MudPagination SelectedChanged="PageChanged" ShowFirstButton="true" ShowLastButton="true" Count="Model.TotalPageNo" Class="mt-4" />
+        <MudPagination SelectedChanged="PageChanged" ShowFirstButton="true" ShowLastButton="true" Count="Model.TotalPageNo" Class="mt-4"/>
     }
 }
 else if (Type == EnumFormType.Report)
@@ -193,27 +193,26 @@ else if (Type == EnumFormType.Report)
         </div>
         <table style="width: 100%; table-layout: fixed">
             <thead>
-                <tr>
-                    <th style="width: 50px; padding-left: 0;">Sn.</th>
-                    <th style="width: 220px;">Item Name</th>
-                    <th>QTY</th>
-                    <th style="text-align: right; padding-right: 0;">Price</th>
-                </tr>
+            <tr>
+                <th style="width: 50px; padding-left: 0;">Sn.</th>
+                <th style="width: 220px;">Item Name</th>
+                <th>QTY</th>
+                <th style="text-align: right; padding-right: 0;">Price</th>
+            </tr>
             </thead>
             <tbody>
-                @{
-                    var count = 0;
-                }
-                @foreach (var item in detail)
-                {
-                    
-                    <tr class="invoice-items">
-                        <td>@(++count)</td>
-                        <td>@(item.product_name)</td>
-                        <td>@(item.product_qty) PC</td>
-                        <td style="text-align: right;">@((item.product_price * item.product_qty).ToString("n0")) Ks</td>
-                    </tr>
-                }
+            @{
+                var count = 0;
+            }
+            @foreach (var item in Detail)
+            {
+                <tr class="invoice-items">
+                    <td>@(++count)</td>
+                    <td>@(item.product_name)</td>
+                    <td>@(item.product_qty) PC</td>
+                    <td style="text-align: right;">@((item.product_price * item.product_qty).ToString("n0")) Ks</td>
+                </tr>
+            }
 
             </tbody>
         </table>
@@ -222,13 +221,13 @@ else if (Type == EnumFormType.Report)
               background: #fcbd024f;
               border-radius: 4px;">
             <thead>
-                <tr>
-                    <th>Total</th>
-                    <th style="text-align: center;">Item (@detail.Select(x=> x.product_qty).Sum().ToString("n0"))</th>
-                    <th>&nbsp;</th>
-                    <th style="text-align: right;">@(detail.Select(x=> x.product_qty * x.product_price).Sum().ToString("n0")) Ks</th>
+            <tr>
+                <th>Total</th>
+                <th style="text-align: center;">Item (@Detail.Select(x => x.product_qty).Sum().ToString("n0"))</th>
+                <th>&nbsp;</th>
+                <th style="text-align: right;">@(Detail.Select(x => x.product_qty * x.product_price).Sum().ToString("n0")) Ks</th>
 
-                </tr>
+            </tr>
             </thead>
         </table>
 
@@ -237,53 +236,30 @@ else if (Type == EnumFormType.Report)
               border: 1px dashed #00cd00;
               border-radius: 3px;">
             <thead>
-                <tr>
-                    <td>Total Saving In Rs: </td>
-                    <td style="text-align: right;">@(detail.Select(x => x.product_qty * x.product_price).Sum().ToString("n0")) Ks</td>
-                </tr>
-                <tr>
-                    <td>Total Saving In %: </td>
-                    <td style="text-align: right;">0%</td>
-                </tr>
+            <tr>
+                <td>Total Saving In Rs: </td>
+                <td style="text-align: right;">@(Detail.Select(x => x.product_qty * x.product_price).Sum().ToString("n0")) Ks</td>
+            </tr>
+            <tr>
+                <td>Total Saving In %: </td>
+                <td style="text-align: right;">0%</td>
+            </tr>
             </thead>
 
         </table>
-        <button type="button" @onclick="Back" class="btn btn-success mt-3">Back</button>
+        <MudButton Variant="Variant.Outlined" OnClick="Back" Color="Color.Default">Back</MudButton>
     </section>
-    
 }
 
-<!-- Button trigger modal -->
-@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-</button>*@
-<!-- Modal -->
-@*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>*@
-
 @code {
+
     [Parameter]
-    public SaleReportResponseDataModel Model { get; set; }
-    private List<SaleVoucherDetailDataModel> detail { get; set; } = new();
+    public SaleReportResponseDataModel? Model { get; set; }
+
+    private List<SaleVoucherDetailDataModel>? Detail { get; set; } = new();
     private EnumFormType Type { get; set; } = EnumFormType.List;
-    private DateTime dateTime { get; set; }
+    private DateTime DateTime { get; set; }
+
     [Parameter]
     public EventCallback<SaleVoucherHeadDataModel> OnDetailClick { get; set; }
 
@@ -292,14 +268,14 @@ else if (Type == EnumFormType.Report)
 
     async Task PageChanged(int pageNo)
     {
-        var result = await db.SaleReportPagination(pageNo, 5, dateTime);
+        var result = await db.SaleReportPagination(pageNo, 5, DateTime);
         Model = result;
     }
 
     async Task Deatil(SaleVoucherHeadDataModel data)
     {
         Type = EnumFormType.Report;
-        detail = await db.GetVoucherDetail(data.sale_voucher_head_id);
+        Detail = await db.GetVoucherDetail(data.sale_voucher_head_id);
         await OnDetailClick.InvokeAsync(data);
     }
 
@@ -308,4 +284,5 @@ else if (Type == EnumFormType.Report)
         Type = EnumFormType.List;
         await OnBackClick.InvokeAsync();
     }
+
 }

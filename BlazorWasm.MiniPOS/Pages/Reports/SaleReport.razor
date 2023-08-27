@@ -1,4 +1,4 @@
-﻿@page "/SaleReport"
+﻿@page "/sale-report"
 
 @*<MudDatePicker PickerVariant="PickerVariant.Dialog"
                Label="Date Format" HelperText="For custom cultures"
@@ -21,18 +21,18 @@
     </MudDatePicker>*@
         <RadzenDatePicker @bind-Value=@SelectedDate DateFormat="dd-MM-yyyy" />
         <RadzenButton Variant="Radzen.Variant.Flat"
-                      Shade="Shade.Lighter" Click=@(args => DatePicker())
+                      Shade="Shade.Lighter" Click="DatePicker"
                       Text="Search" ButtonStyle="ButtonStyle.Primary" />
     </MudItem>
 }
-@if (lstSaleReport != null)
+@if (_saleReport != null)
 {
-    <RecentSaleReportPage Model="lstSaleReport" OnDetailClick="Deatil" OnBackClick="Back" />
+    <RecentSaleReportPage Model="_saleReport" OnDetailClick="Detail" OnBackClick="Back" />
 }
 
 @code {
     private DateTime? SelectedDate { get; set; } = DateTime.Today;
-    private SaleReportResponseDataModel lstSaleReport = new();
+    private SaleReportResponseDataModel? _saleReport = new();
     //MudDatePicker _picker;
     private EnumFormType Type { get; set; } = EnumFormType.List;
     //DateTime? date = DateTime.Today;
@@ -44,11 +44,11 @@
 
     private async Task DatePicker()
     {
-        lstSaleReport = await db.SaleReport(Convert.ToDateTime(SelectedDate));
+        _saleReport = await db.SaleReport(Convert.ToDateTime(SelectedDate));
         //_picker.Close();
     }
 
-    void Deatil(SaleVoucherHeadDataModel data)
+    void Detail(SaleVoucherHeadDataModel data)
     {
         Type = EnumFormType.Report;
     }

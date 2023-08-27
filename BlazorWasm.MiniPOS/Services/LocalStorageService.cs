@@ -189,8 +189,6 @@ namespace BlazorWasm.MiniPOS.Services
         {
             var lst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
             lst ??= new List<ProductDataModel>();
-            lst.Capacity = 0;
-            lst.Capacity = 0;
             var result = lst.FirstOrDefault(x => x.product_id == guid);
             return result ?? throw new InvalidOperationException();
         }
@@ -281,13 +279,18 @@ namespace BlazorWasm.MiniPOS.Services
             lst ??= new();
             var result = lst.FirstOrDefault(x => x.product_sale_id == model.product_sale_id);
             var index = lst.FindIndex(x => x.product_sale_id == result.product_sale_id);
-            result.product_sale_id = model.product_sale_id;
-            result.product_price = model.product_price;
-            result.product_name = model.product_name;
-            result.product_qty = model.product_qty;
-            result.product_total_price = model.product_total_price;
-            //lst.Add(result);
-            lst[index] = result;
+            if (result != null)
+            {
+                result.product_sale_id = model.product_sale_id;
+                result.product_price = model.product_price;
+                result.product_id = model.product_id;
+                result.product_name = model.product_name;
+                result.product_qty = model.product_qty;
+                result.product_total_price = model.product_total_price;
+                //lst.Add(result);
+                lst[index] = result;
+            }
+
             await _localStorage.SetItemAsync("Tbl_ProductSale", lst);
         }
 
@@ -340,24 +343,33 @@ namespace BlazorWasm.MiniPOS.Services
         public async Task<List<BestProductReportModel>> BestProductReport()
         {
             //var lst = await localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
-            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
-            var lstProduct = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
+            var lst = await _localStorage
+                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            var lstProduct = await _localStorage
+                .GetItemAsync<List<ProductDataModel>>("Tbl_Product");
             lst ??= new();
             lstProduct ??= new();
 
             //var groupProducts = lst.Select(x => x.product_id).Distinct().ToList();
-            var groupProducts = lst.Select(x => x.product_name).Distinct().ToList();
+            var groupProducts = lst.Select(x => x.product_id)
+                .Distinct()
+                .ToList();
 
             List<BestProductReportModel> lstBestProductReport = new();
             foreach (var productId in groupProducts)
             {
                 //int totalQty = lst.Where(x=> x.product_id==productId).Sum(x => x.product_qty);
-                var totalQty = lst.Where(x => x.product_name == productId).Sum(x => x.product_qty);
+                var totalQty = lst
+                    .Where(x => x.product_id == productId)
+                    .Sum(x => x.product_qty);
                 lstBestProductReport.Add(new BestProductReportModel()
                 {
                     //ProductName = lstProduct.FirstOrDefault(x=> x.product_id == productId)?.product_name,
                     ProductName = lstProduct
-                                      .FirstOrDefault(x => x.product_name == productId)?.product_name ??
+                                      .FirstOrDefault(
+                                          x =>
+                                              x.product_id == new Guid(productId))
+                                      ?.product_name ??
                                   throw new InvalidOperationException(),
                     ProductQuantity = totalQty
                 });
@@ -400,6 +412,7 @@ namespace BlazorWasm.MiniPOS.Services
                         product_price = item.product_price,
                         product_qty = item.product_qty,
                         product_name = item.product_name,
+                        product_id = item.product_id.ToString(),
                         sale_voucher_head_id = saleVoucherHeadId,
                         detail_date = DateTime.Now
                     };

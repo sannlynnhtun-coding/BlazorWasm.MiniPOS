@@ -1,48 +1,30 @@
 ﻿@page "/best-product-report"
 <h3>Best Product Report</h3>
-@if (lstBestProductReport != null)
+@if (_lstBestProductReport is not null)
 {
-    @* <ApexChart TItem="BestProductReportModel" *@
-    @*            Title="Best Product Report"> *@
-    @* *@
-    @*     <ApexPointSeries TItem="BestProductReportModel" *@
-    @*                      Items="lstBestProductReport" *@
-    @*                      Name="Best Product Report" *@
-    @*                      SeriesType="SeriesType.Pie" *@
-    @*                      XValue="x => x.ProductName" *@
-    @*                      YAggregate="x => x.ProductQuantity" *@
-    @*                      OrderByDescending="e=>e.Y"/> *@
-    @* </ApexChart> *@
-
-
-    @* <figure class="highcharts-figure"> *@
-    @*     <div id="container"></div> *@
-    @* </figure> *@
-
     <div id="chart"></div>
 }
 
 @code {
-    private List<BestProductReportModel> lstBestProductReport;
-
-    protected override async Task OnInitializedAsync()
-    {
-    }
+    private List<BestProductReportModel>? _lstBestProductReport;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            lstBestProductReport = await db.BestProductReport();
-    // var data = lstBestProductReport.Select(x => new
-    // {
-    //     name = x.ProductName,
-    //     y = x.ProductQuantity
-    // }).ToList();
+            _lstBestProductReport = await db.BestProductReport();
             StateHasChanged();
-            var labels = lstBestProductReport.Select(x => x.ProductName).ToList();
-            var series = lstBestProductReport.Select(x => x.ProductQuantity).ToList();
-            await JsRuntime.InvokeVoidAsync("bindPieChart", "chart", labels, series);
+            var labels = _lstBestProductReport
+                .Select(x => x.ProductName)
+                .ToList();
+            var series = _lstBestProductReport
+                .Select(x => x.ProductQuantity)
+                .ToList();
+            await JsRuntime.InvokeVoidAsync(
+                "bindPieChart", 
+                "chart", 
+                labels, 
+                series);
         }
     }
 }

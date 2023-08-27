@@ -7,7 +7,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
     {
         private List<ProductNameListDataModel>? _lstProduct = new();
         private ProductSaleDataModel _model = new();
-        private ProductSaleResponseDataModel _lstProductSale = new();
+        private ProductSaleResponseDataModel? _lstProductSale = new();
         private int _grandTotal;
         private bool _isEdit = false;
 

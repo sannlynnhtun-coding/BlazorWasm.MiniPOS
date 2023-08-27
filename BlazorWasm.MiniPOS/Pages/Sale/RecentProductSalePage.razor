@@ -26,7 +26,7 @@
             }
         </tbody>
     </table>
-    @if (Model != null)
+    @if (Model is not null)
     {
         <MudPagination SelectedChanged="PageChanged" ShowFirstButton="true" ShowLastButton="true" Count="Model.TotalPageNo" Class="mt-4" />
     }
@@ -34,7 +34,7 @@
 
 @code {
     [Parameter]
-    public ProductSaleResponseDataModel Model { get; set; }
+    public ProductSaleResponseDataModel? Model { get; set; }
 
     [Parameter]
     public EventCallback<Guid> OnDeleteProductSaleClick { get; set; }

@@ -16,7 +16,7 @@
         @*     } *@
         @* </select> *@
         <div>
-            <RadzenDropDownDataGrid @bind-Value="@_model.product_id"
+            <RadzenDropDownDataGrid style="width: 100%;" @bind-Value="@_model.product_id"
                                     Change="ProductNameChange"
                                     Data="@_lstProduct"
                                     TextProperty="product_name"
@@ -52,7 +52,7 @@
     </div>
     <div class="col-md-12 mt-5" style="padding-left: 50px">
 
-        @if (_lstProductSale != null)
+        @if (_lstProductSale is not null)
         {
             <RecentProductSalePage Model="_lstProductSale"
                                    OnDeleteProductSaleClick="DeleteProductSale"
