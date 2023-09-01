@@ -34,22 +34,33 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="javascript:void(0);" 
+                            <a href="javascript:void(0);"
                             @onclick="() => ChangeUrl(EnumPage.Sale)"
-                               aria-current="page" 
+                               aria-current="page"
                                class="@IsActive(EnumPage.Sale)">
                                 Sale
                             </a>
-                            <a href="javascript:void(0);" 
+                            <a href="javascript:void(0);"
                             @onclick="() => ChangeUrl(EnumPage.Product)"
                                class="@IsActive(EnumPage.Product)">
                                 Product
                             </a>
-                            <a href="javascript:void(0);" 
+                            <a href="javascript:void(0);"
                             @onclick="() => ChangeUrl(EnumPage.ProductCategory)"
                                class="@IsActive(EnumPage.ProductCategory)">
                                 Product Category
                             </a>
+                            <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+                                <ActivatorContent>
+                                    <MudChip Icon="@Icons.Material.Filled.Mouse" Color="Color.Primary">Mouse over</MudChip>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    <MudMenuItem>Profile</MudMenuItem>
+                                    <MudMenuItem>Theme</MudMenuItem>
+                                    <MudMenuItem>Usage</MudMenuItem>
+                                    <MudMenuItem>Sign Out</MudMenuItem>
+                                </ChildContent>
+                            </MudMenu>
                         </div>
                     </div>
                 </div>
@@ -142,8 +153,8 @@
 
     private string IsActive(EnumPage page)
     {
-        return page == Page ? 
-        "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" : 
+        return page == Page ?
+        "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" :
         "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium";
     }
 
@@ -155,11 +166,11 @@
 
     private static List<PageUrlModel> PageList
     => new List<PageUrlModel>
-                        {
+                            {
                 new PageUrlModel{ Page = EnumPage.Sale, Url = "" },
                 new PageUrlModel{ Page = EnumPage.Product, Url = "setup/product"},
                 new PageUrlModel{ Page = EnumPage.ProductCategory, Url = "setup/product-category"},
-                        };
+                            };
 
     static string InsertSpacesBeforeCapitals(string input)
     {
