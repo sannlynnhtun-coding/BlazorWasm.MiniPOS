@@ -50,15 +50,16 @@
                                class="@IsActive(EnumPage.ProductCategory)">
                                 Product Category
                             </a>
-                            <MudMenu FullWidth="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+                            <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
                                 <ActivatorContent>
-                                    <MudChip Icon="@Icons.Material.Filled.Mouse" Color="Color.Primary">Mouse over</MudChip>
+                                    <a href="javascript:void(0);"
+                                       class="@IsActive(EnumPage.Default)">
+                                        Reports
+                                    </a>
                                 </ActivatorContent>
                                 <ChildContent>
-                                    <MudMenuItem>Profile</MudMenuItem>
-                                    <MudMenuItem>Theme</MudMenuItem>
-                                    <MudMenuItem>Usage</MudMenuItem>
-                                    <MudMenuItem>Sign Out</MudMenuItem>
+                                    <MudMenuItem OnClick="() => ChangeUrl(EnumPage.BestProductReport)">Best Product Report</MudMenuItem>
+                                    <MudMenuItem OnClick="() => ChangeUrl(EnumPage.SaleReport)">Sale Report</MudMenuItem>
                                 </ChildContent>
                             </MudMenu>
                         </div>
@@ -118,20 +119,30 @@
     </nav>
     <header class="bg-white shadow">
         <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">@InsertSpacesBeforeCapitals(Page.ToString())</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                @InsertSpacesBeforeCapitals(Page.ToString()) 
+                @* [ @(nav.Uri) ] *@
+            </h1>
         </div>
     </header>
     <main>
         <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <!-- Your content -->
-            <p>@(nav.Uri)</p>
-            @Body
+            @if (isLoading)
+            {
+                <Loading />
+            }
+            else
+            {
+                @Body
+            }
         </div>
     </main>
 </div>
 @code {
     private bool isShowProfileMenu = false;
     private EnumPage Page = EnumPage.Sale;
+    private bool isLoading = false;
 
     private void ShowProfileMenu()
     {
@@ -140,9 +151,12 @@
 
     private enum EnumPage
     {
+        Default,
         Sale,
         Product,
-        ProductCategory
+        ProductCategory,
+        BestProductReport,
+        SaleReport
     }
 
     private class PageUrlModel
@@ -158,19 +172,24 @@
         "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium";
     }
 
-    private void ChangeUrl(EnumPage page)
+    private async Task ChangeUrl(EnumPage page)
     {
         Page = page;
+        isLoading = true;
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        isLoading = false;
         nav.NavigateTo(PageList.FirstOrDefault(x => x.Page == page)?.Url ?? "");
     }
 
     private static List<PageUrlModel> PageList
     => new List<PageUrlModel>
-                            {
+                                        {
                 new PageUrlModel{ Page = EnumPage.Sale, Url = "" },
                 new PageUrlModel{ Page = EnumPage.Product, Url = "setup/product"},
                 new PageUrlModel{ Page = EnumPage.ProductCategory, Url = "setup/product-category"},
-                            };
+                new PageUrlModel{ Page = EnumPage.BestProductReport, Url = "best-product-report"},
+                new PageUrlModel{ Page = EnumPage.SaleReport, Url = "sale-report"},
+                                        };
 
     static string InsertSpacesBeforeCapitals(string input)
     {

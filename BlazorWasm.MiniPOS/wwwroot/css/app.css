@@ -62,3 +62,7 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+p.mud-typography.mud-typography-body1 {
+    font-size: 0.85rem;
+}
