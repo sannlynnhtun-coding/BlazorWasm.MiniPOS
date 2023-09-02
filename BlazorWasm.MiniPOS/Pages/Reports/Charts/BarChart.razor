@@ -18,6 +18,9 @@
         </div>
         <div id="BarRaceChart"></div>
     </div>
+    <div class="col-md-6">
+        <div id="ColumnDrillDown"></div>
+    </div>
 </div>
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -28,6 +31,7 @@
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
+            await JsRuntime.InvokeVoidAsync("columnDrillDown");
         }
     }
 }
