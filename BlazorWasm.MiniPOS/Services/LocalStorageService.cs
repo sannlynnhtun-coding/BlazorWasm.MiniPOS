@@ -400,6 +400,7 @@ namespace BlazorWasm.MiniPOS.Services
             //Guid sale_voucher_detail_id = Guid.NewGuid();
             var saleVoucherHeadId = Guid.NewGuid();
             SaleVoucherHeadDataModel headModel = new();
+            DateTime voucherDate = DateTime.Now;
 
             var getLst = await _localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             getLst ??= new();
@@ -415,14 +416,15 @@ namespace BlazorWasm.MiniPOS.Services
                         product_name = item.product_name,
                         product_id = item.product_id.ToString(),
                         sale_voucher_head_id = saleVoucherHeadId,
-                        detail_date = DateTime.Now
+                        detail_date = item.product_sale_date
                     };
                     await SetSaleVoucherDetail(detail);
+                    voucherDate = item.product_sale_date;
                 }
 
                 headModel.sale_voucher_head_id = saleVoucherHeadId;
                 headModel.sale_total_amount = getLst.Select(x => x.product_total_price).Sum();
-                headModel.sale_date = DateTime.Now;
+                headModel.sale_date = voucherDate;
                 headModel.sale_voucher_no = Guid.NewGuid();
                 await SetSaleVoucherHead(headModel);
                 await _localStorage.RemoveItemAsync("Tbl_ProductSale");
