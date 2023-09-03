@@ -15,6 +15,7 @@ public partial class GenerateData
         
         while (_startDate >= _endDate)
         {
+            // Console.WriteLine($"Start Date or Current Date {_startDate} -- End Date {_endDate}");
             for (int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -41,7 +42,10 @@ public partial class GenerateData
                     {
                         await db.SetSaleProduct(_model);
                     }
+                    // Console.WriteLine($"model => {_model.product_name}");
                 }
+                await db.SetVoucher();
+                // Console.WriteLine($"{i}  Voucher set!!!!!");
             }
             _startDate = _startDate.AddDays(-1);
         }
