@@ -77,6 +77,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
 
             _grandTotal = await db.GetGrandTotal();
             _lstProductSale = await db.GetRecentProductSale();
+            _lstProduct = await db.GetProductNameList();
             _model = new ProductSaleDataModel();
         }
 
