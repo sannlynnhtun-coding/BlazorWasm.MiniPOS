@@ -5,7 +5,7 @@ namespace BlazorWasm.MiniPOS.Pages.GenerateData;
 public partial class GenerateData
 {
     private DateTime _startDate = DateTime.Now;
-    private DateTime _endDate = DateTime.Now.AddYears(-2);
+    private DateTime _endDate = DateTime.Now.AddYears(-5);
     private List<ProductNameListDataModel>? _lstProduct = new();
     private ProductSaleDataModel _model = new();
     private async Task GenerateDataByDate()
