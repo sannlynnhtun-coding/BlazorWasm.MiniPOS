@@ -29,5 +29,6 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<BestProductReportModel>> BestProductReport();
         Task SetVoucher();
         Task<List<SaleVoucherDetailDataModel>> GetVoucherDetail(Guid guid);
+        Task YearOverYearChart(DateTime dateTime);
     }
 }

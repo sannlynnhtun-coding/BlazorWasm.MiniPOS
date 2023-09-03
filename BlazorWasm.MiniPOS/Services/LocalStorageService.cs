@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
+using BlazorWasm.MiniPOS.Pages.Reports.Charts;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -435,7 +436,21 @@ namespace BlazorWasm.MiniPOS.Services
             var result = lst.Where(x => x.sale_voucher_head_id == guid).ToList();
             return result;
         }
-
+        public async Task<List<SaleVoucherHeadDataModel>> GetSaleVoucherHead()
+        {
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
+            lst ??= new List<SaleVoucherHeadDataModel>();
+            return lst;
+        }
+        public async Task YearOverYearChart(DateTime dateTime)
+        {
+            var year = dateTime.Year;
+            var pastThreeYear = year - 3;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x=> x.sale_date.Year >= pastThreeYear 
+                && x.sale_date.Year <= year).ToList();
+        }
         private string[] GetProductCategory()
         {
             return new[]

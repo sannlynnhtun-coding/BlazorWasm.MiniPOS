@@ -35,6 +35,12 @@
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="javascript:void(0);"
+                            @onclick="() => ChangeUrl(EnumPage.Dashboard)"
+                               aria-current="page"
+                               class="@IsActive(EnumPage.Dashboard)">
+                                Dashboard
+                            </a>
+                            <a href="javascript:void(0);"
                                @onclick="() => ChangeUrl(EnumPage.Sale)"
                                aria-current="page"
                                class="@IsActive(EnumPage.Sale)">
@@ -163,7 +169,8 @@
         ProductCategory,
         BestProductReport,
         GenerateData,
-        SaleReport
+        SaleReport,
+        Dashboard
     }
 
     private class PageUrlModel
@@ -197,6 +204,7 @@
             new PageUrlModel { Page = EnumPage.BestProductReport, Url = "best-product-report" },
             new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
             new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
+            new PageUrlModel { Page = EnumPage.Dashboard, Url = "/Dashboard" },
         };
 
     static string InsertSpacesBeforeCapitals(string input)

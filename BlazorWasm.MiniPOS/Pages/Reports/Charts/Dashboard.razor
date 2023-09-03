@@ -1,4 +1,4 @@
-﻿@page "/chart"
+﻿@page "/Dashboard"
 
 <h3>BarChart</h3>
 <div class="row">
@@ -21,6 +21,9 @@
     <div class="col-md-6">
         <div id="ColumnDrillDown"></div>
     </div>
+    <div class="col-md-6">
+        <div id="YearOverYear"></div>
+    </div>
 </div>
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -32,6 +35,8 @@
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
+            await JsRuntime.InvokeVoidAsync("yearOverYear");
+            await db.YearOverYearChart(DateTime.Now);
         }
     }
 }
