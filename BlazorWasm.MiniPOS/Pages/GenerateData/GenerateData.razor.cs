@@ -13,7 +13,7 @@ public partial class GenerateData
         _lstProduct = await db.GetProductNameList();
         _lstProduct ??= new List<ProductNameListDataModel>();
         
-        while (_startDate > _endDate)
+        while (_startDate >= _endDate)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -43,6 +43,7 @@ public partial class GenerateData
                     }
                 }
             }
+            _startDate = _startDate.AddDays(-1);
         }
     }
 }
