@@ -6,6 +6,8 @@ using BlazorWasm.MiniPOS.Models;
 using BlazorWasm.MiniPOS.Pages.Reports.Charts;
 using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
 using System.Linq;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -34,7 +36,8 @@ namespace BlazorWasm.MiniPOS.Services
                 count++;
                 var product = new ProductDataModel()
                 {
-                    product_buying_price = r.Next(1000, 100000),
+                    //product_buying_price = r.Next(1000, 100000),
+                    product_buying_price = r.Next(10, 100),
                     product_category_code = "PC0001",
                     product_code = "P" + count.ToString().PadLeft(4, '0'),
                     product_creation_date = DateTime.Now,
@@ -481,13 +484,13 @@ namespace BlazorWasm.MiniPOS.Services
             return returnModel;
         }
 
-        public async Task<List<DataInfo>> PastFiveYearV1(DateTime date)
+        public async Task<PastFiveYearModel> PastFiveYearV1(DateTime date)
         {
             var year = date.Year;
-            var pastThreeYear = year - 5;
+            var pastFiveYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
                 .GroupBy(s => s.sale_date.Year).Select(s => new
                 {
                     Year = s.Key,
@@ -508,21 +511,25 @@ namespace BlazorWasm.MiniPOS.Services
 
                 data.Add(dataInfo);
             }
-            return data;
+            returnModel.data = data;
+            return returnModel;
         }
-        public async Task<List<DataReturnInfo>> PastFiveYear(DateTime date)
+        public async Task<DataReturnInfo> PastFiveYear(DateTime date)
         {
             var year = date.Year;
-            var pastThreeYear = year - 5;
+            var pastFiveYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
                 .GroupBy(s => s.sale_date.Year).Select(s => new
                 {
                     Year = s.Key,
-                    TotalPrice = s.Sum(sale => sale.sale_total_amount)
+                    Amount = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
-            List<DataReturnInfo> dataReturn = new();
+
+            var totalPrice = dataList.Select(x=> x.Amount).Sum();
+            
+            //List<DataReturnInfo> dataReturn = new();
             var data = new DataReturnInfo
             {
                 arrayObject = new object[dataList.Count][]
@@ -534,16 +541,22 @@ namespace BlazorWasm.MiniPOS.Services
                 //    dataList[index].Year.ToString(),
                 //    dataList[index].TotalPrice
                 //};
-                
+                //var yearlyAmount = 100 * (totalPrice / dataList[index].Amount);
+                var yearlyAmount = 7;
                 data.arrayObject[index] = new object[] {
                     dataList[index].Year.ToString(),
-                    dataList[index].TotalPrice
+                    yearlyAmount
                 };
             }
-            dataReturn.Add(data);
+            //dataReturn.Add(data);
 
+            return data;
+        }
 
-            return dataReturn;
+        public async Task<DonutChartResponseModel> DonutChart()
+        {
+            var data = JsonConvert.DeserializeObject<DonutChartResponseModel>(JsonData.str);
+            return await Task.FromResult(data);
         }
 
         public async Task GenerateYearOverYear()

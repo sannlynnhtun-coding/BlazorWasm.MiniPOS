@@ -40,9 +40,9 @@
 
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
-            await db.GenerateYearOverYear();
-            /*var result = await db.YearOverYearChart(DateTime.Now);*/
+            var result = await db.YearOverYearChart(DateTime.Now);
             var pastFiveYear = await db.PastFiveYear(DateTime.Now);
+            // var pastFiveYear =await db.DonutChart();
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");

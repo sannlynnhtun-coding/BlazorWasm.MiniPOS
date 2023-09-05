@@ -31,4 +31,55 @@
     {
         public object[][] arrayObject { get; set; }
     }
+	public class DonutChartResponseModel
+	{
+		public List<DonutChartModel> data { get; set; }
+	}
+	public class DonutChartModel
+	{
+		public string name { get; set; }
+		public int value { get; set; }
+	}
+	public static class JsonData
+	{
+		public static string str { get; } = @" {""data"":[
+		{
+			""name""  :""Norway"",
+			""value"" :16
+		},
+		{
+			""name""  :""Germany"",
+			""value"" :12
+		},
+		{
+			""name""  :""USA"",
+			""value"" :8
+		},
+		{
+			""name""  :""Sweden"",
+			""value"" :8
+		},
+		{
+			""name""  :""Netherlands"",
+			""value"" :8
+		},
+		{
+			""name""  :""ROC"",
+			""value"" :6
+		},
+		{
+			""name""  :""Austria"",
+			""value"" :7
+		},
+		{
+			""name""  :""Canada"",
+			""value"" :4
+		},
+		{
+			""name""  :""Japan"",
+			""value"" :3
+		}
+	]
+}";
+    }
 }
