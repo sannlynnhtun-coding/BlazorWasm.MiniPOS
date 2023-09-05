@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using BlazorWasm.MiniPOS.Models;
+using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
 
 namespace BlazorWasm.MiniPOS.Pages.Sale
 {
@@ -10,6 +11,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
         private ProductSaleResponseDataModel? _lstProductSale = new();
         private int _grandTotal;
         private bool _isEdit = false;
+        private List<TopFiveProducts> _topFiveProducts = new();
 
         protected override async Task OnInitializedAsync()
         {

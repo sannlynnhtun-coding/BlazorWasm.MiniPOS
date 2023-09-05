@@ -1,7 +1,10 @@
-﻿using ApexCharts;
+﻿using System.Globalization;
+using System.Text.Json;
+using ApexCharts;
 using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
 using BlazorWasm.MiniPOS.Pages.Reports.Charts;
+using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
 using System.Linq;
 
 namespace BlazorWasm.MiniPOS.Services
@@ -440,18 +443,23 @@ namespace BlazorWasm.MiniPOS.Services
             var result = lst.Where(x => x.sale_voucher_head_id == guid).ToList();
             return result;
         }
+
         public async Task<List<SaleVoucherHeadDataModel>> GetSaleVoucherHead()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new List<SaleVoucherHeadDataModel>();
             return lst;
         }
+
+        public async Task YearOverYearChart(DateTime dateTime)
         public async Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime)
         {
             var year = dateTime.Year;
             var pastThreeYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
+                .Where(x => x.sale_date.Year >= pastThreeYear
+                            && x.sale_date.Year <= year).ToList();
                 .Where(x => x.sale_date.Year <=year && x.sale_date.Year >= pastThreeYear)
                 .GroupBy(s=> s.sale_date.Year).Select(s=> new YearOverYearResponseModel
                 {
@@ -520,6 +528,51 @@ namespace BlazorWasm.MiniPOS.Services
                 _startDate = _startDate.AddYears(-1);
             }
         }
+
+        public async Task<List<ProductInfo>> CurrentYearTopFiveProductsByMonth()
+        {
+            /*List<TopFiveProducts> topFiveProductLst =
+                new List<TopFiveProducts>();*/
+            List<ProductInfo> topFiveProductLst = new();
+            var lst = await _localStorage
+                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+
+            int currentYear = DateTime.Now.Year;
+            var currentYearData = lst.Where(d => d.detail_date.Year == currentYear).ToList();
+
+            var topUniqueProductsOfYear = currentYearData
+                .GroupBy(s => s.product_name)
+                .Select(group => new
+                {
+                    ProductName = group.Key,
+                    TotalQty = group.Sum(s => s.product_qty)
+                })
+                .OrderByDescending(s => s.TotalQty)
+                .Take(5)
+                .ToList();
+
+            for (int i = 0; i < topUniqueProductsOfYear.Count; i++)
+            {
+                var productInfo = new ProductInfo
+                {
+                    name = topUniqueProductsOfYear[i].ProductName,
+                    data = new int[12] 
+                };
+                
+                for (int j = 0; j < 12; j++)
+                {
+                    var result = currentYearData
+                        .Where(s => s.product_name == topUniqueProductsOfYear[i].ProductName)
+                        .Where(s => s.detail_date.Month == j + 1)
+                        .Sum(s => s.product_qty);
+
+                    productInfo.data[j] = result;
+                }
+                topFiveProductLst.Add(productInfo);
+            }
+            return topFiveProductLst;
+        }
+
         private string[] GetProductCategory()
         {
             return new[]

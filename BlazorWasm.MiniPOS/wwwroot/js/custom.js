@@ -24,7 +24,7 @@
 }
 
 window.bindPieChart2 = function (id, data) {
-    console.log({ id, data });
+    console.log({id, data});
     // data = [{
     //     name: 'Chrome',
     //     y: 70.67,
@@ -151,16 +151,16 @@ window.columnChart = function () {
     });
 }
 
-window.basicColumnChart = function (dataCategories, dataSeries) {
+window.basicColumnChart = function (series) {
     Highcharts.chart('BasicColumnChart', {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Monthly Average Rainfall'
+            text: 'Top 5 selling products of current Year by each Month'
         },
         subtitle: {
-            text: 'Source: WorldClimate.com'
+            text: ''
         },
         xAxis: {
             categories: dataCategories,
@@ -169,24 +169,24 @@ window.basicColumnChart = function (dataCategories, dataSeries) {
         yAxis: {
             min: 0,
             title: {
-                text: 'Rainfall (mm)'
+                text: 'Quantity'
             }
         },
-        //tooltip: {
-        //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        //        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-        //    footerFormat: '</table>',
-        //    shared: true,
-        //    useHTML: true
-        //},
-        //plotOptions: {
-        //    column: {
-        //        pointPadding: 0.2,
-        //        borderWidth: 0
-        //    }
-        //},
-        series: dataSeries
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} qty</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: series
     });
 }
 
@@ -322,23 +322,23 @@ window.barRaceChart = function () {
                 this.points.forEach(point =>
                     (point.dataLabels || []).forEach(
                         label =>
-                        (label.attr = function (hash) {
-                            if (
-                                hash &&
-                                hash.text !== undefined &&
-                                chart.isResizing === 0
-                            ) {
-                                const text = hash.text;
+                            (label.attr = function (hash) {
+                                if (
+                                    hash &&
+                                    hash.text !== undefined &&
+                                    chart.isResizing === 0
+                                ) {
+                                    const text = hash.text;
 
-                                delete hash.text;
+                                    delete hash.text;
 
-                                return this
-                                    .attr(hash)
-                                    .animate({ text });
-                            }
-                            return attr.apply(this, arguments);
+                                    return this
+                                        .attr(hash)
+                                        .animate({text});
+                                }
+                                return attr.apply(this, arguments);
 
-                        })
+                            })
                     )
                 );
             }
