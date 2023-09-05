@@ -33,7 +33,8 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<ProductInfo>> CurrentYearTopFiveProductsByMonth();
         Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime);
         Task GenerateYearOverYear();
-        Task<List<DataInfo>> PastFiveYearV1(DateTime date);
-        Task<List<DataReturnInfo>> PastFiveYear(DateTime date);
+        Task GenerateDataByMonth();
+      	Task<List<DataInfo>> PastFiveYearV1(DateTime date);
+        Task<object[][]> PastFiveYear(DateTime date);
     }
 }
