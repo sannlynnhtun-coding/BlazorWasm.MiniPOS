@@ -619,6 +619,48 @@ namespace BlazorWasm.MiniPOS.Services
             }
             return topFiveProductLst;
         }
+
+        public async Task<List<ProductInfo>> QtyOfTopFiveProductsByYear()
+        {
+            List<ProductInfo> topFiveProductLst = new();
+            var startYear = DateTime.Now.Year;
+            var endYear = startYear - 4;
+            
+            var lst = await _localStorage
+                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            
+            var topUniqueProducts = lst
+                .GroupBy(s => s.product_name)
+                .Select(group => new
+                {
+                    ProductName = group.Key,
+                    TotalQty = group.Sum(s => s.product_qty)
+                })
+                .OrderByDescending(s => s.TotalQty)
+                .Take(5)
+                .ToList();
+
+            for (int i = startYear; i < endYear; i--)
+            {
+                var productInfo = new ProductInfo
+                {
+                    name = startYear + " Year",
+                    data = new int[startYear-endYear] 
+                };
+                
+                for (int j = 0; j < 4; j++)
+                {
+                    var result = lst
+                        .Where(s => s.product_name == topUniqueProducts[i].ProductName)
+                        .Where(s => s.detail_date.Year == startYear)
+                        .Sum(s => s.product_qty);
+                    productInfo.data[j] = result;
+                }
+                topFiveProductLst.Add(productInfo);
+            }
+            return topFiveProductLst;
+        }
+
         
         public async Task GenerateDataByMonth()
         {
