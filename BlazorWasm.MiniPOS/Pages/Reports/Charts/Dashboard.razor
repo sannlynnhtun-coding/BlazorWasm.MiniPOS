@@ -35,8 +35,8 @@
         if (firstRender)
         {
             var data = await db.CurrentYearTopFiveProductsByMonth();
-
-            await JsRuntime.InvokeVoidAsync("basicColumnChart", data);
+            var series = data != null ? data : new List<ProductInfo>();
+            await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
