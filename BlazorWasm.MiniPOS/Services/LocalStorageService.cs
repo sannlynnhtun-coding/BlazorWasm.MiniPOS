@@ -488,7 +488,8 @@ namespace BlazorWasm.MiniPOS.Services
             var lst = await GetSaleVoucherHead();
             var dataList = lst
                 .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
-                .GroupBy(s => s.sale_date.Year).Select(s => new YearOverYearResponseModel
+                .GroupBy(s => s.sale_date.Year)
+                .Select(s => new YearOverYearResponseModel
                 {
                     Year = s.Key,
                     TotalPrice = s.Sum(sale => sale.sale_total_amount)
@@ -518,7 +519,6 @@ namespace BlazorWasm.MiniPOS.Services
             ProductSaleDataModel _model = new();
             var _lstProduct = await GetProductNameList();
             _lstProduct ??= new List<ProductNameListDataModel>();
-
             while (_startDate >= _endDate)
             {
                 for (int i = 0; i < 1; i++)
@@ -558,8 +558,6 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<List<ProductInfo>> CurrentYearTopFiveProductsByMonth()
         {
-            /*List<TopFiveProducts> topFiveProductLst =
-                new List<TopFiveProducts>();*/
             List<ProductInfo> topFiveProductLst = new();
             var lst = await _localStorage
                 .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
