@@ -487,7 +487,7 @@ namespace BlazorWasm.MiniPOS.Services
             var pastFiveYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
                 .GroupBy(s => s.sale_date.Year).Select(s => new
                 {
                     Year = s.Key,
