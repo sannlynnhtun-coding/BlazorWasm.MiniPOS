@@ -474,22 +474,21 @@ namespace BlazorWasm.MiniPOS.Services
                 yearData.Add(new YearOverYearModel
                 {
                     Year = dataList[i].Year.ToString(),
-                    Data = new List<int> { dataList[0].TotalPrice, dataList[i].TotalPrice } 
+                    Data = new List<long> { Convert.ToInt64(dataList[0].TotalPrice), Convert.ToInt64(dataList[i].TotalPrice) } 
                 });
             }
             returnModel.YearData = yearData;
             return returnModel;
         }
 
-        public async Task<List<DataInfo>> PastFiveYear(DateTime date)
+        public async Task<List<DataInfo>> PastFiveYearV1(DateTime date)
         {
             var year = date.Year;
             var pastThreeYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
                 .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
-                .GroupBy(s => s.sale_date.Year)
-                .Select(s => new YearOverYearResponseModel
+                .GroupBy(s => s.sale_date.Year).Select(s => new 
                 {
                     Year = s.Key,
                     TotalPrice = s.Sum(sale => sale.sale_total_amount)
@@ -509,6 +508,29 @@ namespace BlazorWasm.MiniPOS.Services
 
                 data.Add(dataInfo);
             }
+            return data;
+        }
+        public async Task<object[][]> PastFiveYear(DateTime date)
+        {
+            var year = date.Year;
+            var pastThreeYear = year - 5;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                    TotalPrice = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            object[][] data = new object[dataList.Count][];
+            foreach(var item in dataList)
+            {
+                data = new object[][]
+                {
+                    new object[] { item.Year.ToString(), item.TotalPrice }
+                };
+            }
+
             return data;
         }
 

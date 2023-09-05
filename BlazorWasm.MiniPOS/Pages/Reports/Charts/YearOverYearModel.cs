@@ -3,7 +3,7 @@
     public class YearOverYearModel
     {
         public string Year { get; set; }
-        public List<int>? Data { get; set; }
+        public List<long>? Data { get; set; }
     }
     public class YearOverYearReturnModel
     {
@@ -13,7 +13,7 @@
     public class YearOverYearResponseModel
     {
         public int Year { get; set; }
-        public int TotalPrice { get; set; }
+        public long TotalPrice { get; set; }
     }
 
     public class PastFiveYearModel
@@ -25,5 +25,11 @@
     public class DataInfo
     {
        public object[] array { get; set; }
+    }
+
+    public class DataReturnInfo
+    {
+        public string year { get; set; }
+        public int price { get; set; }
     }
 }
