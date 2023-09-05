@@ -35,8 +35,9 @@
     {
         if (firstRender)
         {
-            var testData = await db.QtyOfTopFiveProductsByYear();
             await db.GenerateDataByMonth();
+            var testData = await db.QtyOfTopFiveProductsByYear();
+
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             await db.GenerateYearOverYear();

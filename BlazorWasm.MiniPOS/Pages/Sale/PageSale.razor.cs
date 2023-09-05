@@ -68,7 +68,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
         private async Task Add()
         {
             _model.product_id = _model.product_id;
-            if (await db.CheckIsProductExit(_model.product_sale_id))
+            if (await db.CheckIsProductExit(_model.product_id))
             {
                 await db.UpdateProductSale(_model);
             }

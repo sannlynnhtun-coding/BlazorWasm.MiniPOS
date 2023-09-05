@@ -640,7 +640,7 @@ namespace BlazorWasm.MiniPOS.Services
             
             var lst = await _localStorage
                 .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
-            
+            if (lst is null) return new List<ProductInfo>();
             var topUniqueProducts = lst
                 .GroupBy(s => s.product_name)
                 .Select(group => new
@@ -652,19 +652,19 @@ namespace BlazorWasm.MiniPOS.Services
                 .Take(5)
                 .ToList();
 
-            for (int i = startYear; i < endYear; i--)
+            for (int i = endYear; i <= startYear; i++)
             {
                 var productInfo = new ProductInfo
                 {
-                    name = startYear + " Year",
-                    data = new int[startYear-endYear] 
+                    name = i + " Year",
+                    data = new int[4] 
                 };
                 
                 for (int j = 0; j < 4; j++)
                 {
                     var result = lst
-                        .Where(s => s.product_name == topUniqueProducts[i].ProductName)
-                        .Where(s => s.detail_date.Year == startYear)
+                        .Where(s => s.product_name == topUniqueProducts[j].ProductName)
+                        .Where(s => s.detail_date.Year == i)
                         .Sum(s => s.product_qty);
                     productInfo.data[j] = result;
                 }
