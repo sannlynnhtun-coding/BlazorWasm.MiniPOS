@@ -152,6 +152,7 @@ window.columnChart = function () {
 }
 
 window.basicColumnChart = function (series) {
+    console.log({ series });
     Highcharts.chart('BasicColumnChart', {
         chart: {
             type: 'column'
@@ -1015,6 +1016,39 @@ window.yearOverYear = function () {
             name: 'France',
             data: [564, 562, 582, 571, 533],
             stack: 'Europe'
+        }]
+    });
+
+}
+
+window.pastFiveYear = function (data) {
+    console.log(data);
+    // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
+    Highcharts.chart('PastFiveYear', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        title: {
+            text: 'Beijing 2022 gold medals by country',
+            align: 'left'
+        },
+        subtitle: {
+            text: '3D donut in Highcharts',
+            align: 'left'
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 100,
+                depth: 45
+            }
+        },
+        series: [{
+            name: 'Medals',
+            data: data
         }]
     });
 

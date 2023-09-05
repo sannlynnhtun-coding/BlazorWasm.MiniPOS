@@ -481,6 +481,36 @@ namespace BlazorWasm.MiniPOS.Services
             return returnModel;
         }
 
+        public async Task<List<DataInfo>> PastFiveYear(DateTime date)
+        {
+            var year = date.Year;
+            var pastThreeYear = year - 5;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new YearOverYearResponseModel
+                {
+                    Year = s.Key,
+                    TotalPrice = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            PastFiveYearModel returnModel = new();
+            List<DataInfo> data = new();
+            returnModel.name = "TotalPrice";
+            
+            foreach (var item in dataList)
+            {
+                var dataInfo = new DataInfo
+                {
+                    array = new object[2]
+                };
+                dataInfo.array[0] = item.Year.ToString();
+                dataInfo.array[1] = item.TotalPrice;
+
+                data.Add(dataInfo);
+            }
+            return data;
+        }
+
         public async Task GenerateYearOverYear()
         {
             DateTime _startDate = DateTime.Now;
