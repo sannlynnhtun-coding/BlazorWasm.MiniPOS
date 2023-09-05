@@ -15,7 +15,7 @@
                         Menu open: "hidden", Menu closed: "block"
                         -->
                         <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                         <!--
                         Icon when menu is open.
@@ -23,7 +23,7 @@
                         Menu open: "block", Menu closed: "hidden"
                         -->
                         <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -41,23 +41,23 @@
                                 Dashboard
                             </a>
                             <a href="javascript:void(0);"
-                               @onclick="() => ChangeUrl(EnumPage.Sale)"
+                            @onclick="() => ChangeUrl(EnumPage.Sale)"
                                aria-current="page"
                                class="@IsActive(EnumPage.Sale)">
                                 Sale
                             </a>
                             <a href="javascript:void(0);"
-                               @onclick="() => ChangeUrl(EnumPage.Product)"
+                            @onclick="() => ChangeUrl(EnumPage.Product)"
                                class="@IsActive(EnumPage.Product)">
                                 Product
                             </a>
                             <a href="javascript:void(0);"
-                               @onclick="() => ChangeUrl(EnumPage.ProductCategory)"
+                            @onclick="() => ChangeUrl(EnumPage.ProductCategory)"
                                class="@IsActive(EnumPage.ProductCategory)">
                                 Product Category
                             </a>
                             <a href="javascript:void(0);"
-                               @onclick="() => ChangeUrl(EnumPage.GenerateData)"
+                            @onclick="() => ChangeUrl(EnumPage.GenerateData)"
                                class="@IsActive(EnumPage.GenerateData)">
                                 Generate Data
                             </a>
@@ -81,7 +81,7 @@
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">View notifications</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                         </svg>
                     </button>
 
@@ -141,7 +141,7 @@
             <!-- Your content -->
             @if (isLoading)
             {
-                <Loading/>
+                <Loading />
             }
             else
             {
@@ -155,6 +155,11 @@
     private bool isShowProfileMenu = false;
     private EnumPage Page = EnumPage.Sale;
     private bool isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await db.GenerateYearOverYear();
+    }
 
     private void ShowProfileMenu()
     {
@@ -197,7 +202,7 @@
 
     private static List<PageUrlModel> PageList
         => new List<PageUrlModel>
-        {
+            {
             new PageUrlModel { Page = EnumPage.Sale, Url = "" },
             new PageUrlModel { Page = EnumPage.Product, Url = "setup/product" },
             new PageUrlModel { Page = EnumPage.ProductCategory, Url = "setup/product-category" },
@@ -205,7 +210,7 @@
             new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
             new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
             new PageUrlModel { Page = EnumPage.Dashboard, Url = "/Dashboard" },
-        };
+            };
 
     static string InsertSpacesBeforeCapitals(string input)
     {

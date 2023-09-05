@@ -151,7 +151,7 @@ window.columnChart = function () {
     });
 }
 
-window.basicColumnChart = function () {
+window.basicColumnChart = function (dataCategories, dataSeries) {
     Highcharts.chart('BasicColumnChart', {
         chart: {
             type: 'column'
@@ -163,20 +163,7 @@ window.basicColumnChart = function () {
             text: 'Source: WorldClimate.com'
         },
         xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-            ],
+            categories: dataCategories,
             crosshair: true
         },
         yAxis: {
@@ -185,41 +172,21 @@ window.basicColumnChart = function () {
                 text: 'Rainfall (mm)'
             }
         },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-                194.1, 95.6, 54.4]
-
-        }, {
-            name: 'New York',
-            data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5,
-                106.6, 92.3]
-
-        }, {
-            name: 'London',
-            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3,
-                51.2]
-
-        }, {
-            name: 'Berlin',
-            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8,
-                51.1]
-
-        }]
+        //tooltip: {
+        //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        //        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        //    footerFormat: '</table>',
+        //    shared: true,
+        //    useHTML: true
+        //},
+        //plotOptions: {
+        //    column: {
+        //        pointPadding: 0.2,
+        //        borderWidth: 0
+        //    }
+        //},
+        series: dataSeries
     });
 }
 
@@ -964,77 +931,78 @@ window.columnDrillDown = function () {
     });
 }
 
-window.yearOverYear = function () {
-    // Data retrieved from https://yearbook.enerdata.net/electricity/world-electricity-production-statistics.html
+window.yearOverYear = function (dataCategories,dataSeries) {
+    // // Data retrieved from: https://www.uefa.com/uefachampionsleague/history/
+    console.log({ dataCategories });
+    console.log({ dataSeries });
     Highcharts.chart('YearOverYear', {
         chart: {
-            type: 'column',
-            options3d: {
-                enabled: true,
-                alpha: 15,
-                beta: 15,
-                viewDistance: 25,
-                depth: 40
-            }
+            type: 'column'
         },
-
         title: {
-            text: ' Electricity production in countries, grouped by continent',
-            align: 'left'
+            text: 'UEFA CL most assists by season'
         },
-
         xAxis: {
-            labels: {
-                skew3d: true,
-                style: {
-                    fontSize: '16px'
-                }
-            }
+            categories: dataCategories
         },
-
         yAxis: {
-            allowDecimals: false,
             min: 0,
             title: {
-                text: 'TWh',
-                skew3d: true,
-                style: {
-                    fontSize: '16px'
-                }
+                text: 'Assists'
             }
         },
-
         tooltip: {
-            headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+            shared: true
         },
-
         plotOptions: {
-            series: {
-                pointStart: 2016
-            },
             column: {
-                stacking: 'normal',
-                depth: 40
+                stacking: 'percent'
             }
         },
+        series: dataSeries
+    });
+}
 
+
+window.pastFiveYears = function () {
+    // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
+    Highcharts.chart('PastFiveYears', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        title: {
+            text: 'Beijing 2022 gold medals by country',
+            align: 'left'
+        },
+        subtitle: {
+            text: '3D donut in Highcharts',
+            align: 'left'
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 100,
+                depth: 45
+            }
+        },
         series: [{
-            name: 'South Korea',
-            data: [563, 567, 590, 582, 571],
-            stack: 'Asia'
-        }, {
-            name: 'Germany',
-            data: [650, 654, 643, 612, 572],
-            stack: 'Europe'
-        }, {
-            name: 'Saudi Arabia',
-            data: [368, 378, 378, 367, 363],
-            stack: 'Asia'
-        }, {
-            name: 'France',
-            data: [564, 562, 582, 571, 533],
-            stack: 'Europe'
+            name: 'Medals',
+            data: [
+                ['Norway', 16],
+                ['Germany', 12],
+                ['USA', 8],
+                ['Sweden', 8],
+                ['Netherlands', 8],
+                ['ROC', 6],
+                ['Austria', 7],
+                ['Canada', 4],
+                ['Japan', 3]
+
+            ]
         }]
     });
 

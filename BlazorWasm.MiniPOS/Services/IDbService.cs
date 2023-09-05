@@ -1,4 +1,5 @@
 ﻿using BlazorWasm.MiniPOS.Models;
+using BlazorWasm.MiniPOS.Pages.Reports.Charts;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -29,6 +30,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<BestProductReportModel>> BestProductReport();
         Task SetVoucher();
         Task<List<SaleVoucherDetailDataModel>> GetVoucherDetail(Guid guid);
-        Task YearOverYearChart(DateTime dateTime);
+        Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime);
+        Task GenerateYearOverYear();
     }
 }

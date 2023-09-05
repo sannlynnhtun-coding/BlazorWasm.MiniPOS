@@ -1,6 +1,8 @@
-﻿using Blazored.LocalStorage;
+﻿using ApexCharts;
+using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
 using BlazorWasm.MiniPOS.Pages.Reports.Charts;
+using System.Linq;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -270,7 +272,7 @@ namespace BlazorWasm.MiniPOS.Services
         {
             var lst = await _localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new();
-            var item = lst.FirstOrDefault(x => x.product_sale_id == guid);
+            var item = lst.FirstOrDefault(x => x.product_id == guid);
             return item != null;
         }
 
@@ -279,7 +281,7 @@ namespace BlazorWasm.MiniPOS.Services
             var lst = await _localStorage.GetItemAsync<List<ProductSaleDataModel>>("Tbl_ProductSale");
             lst ??= new();
             var result = lst.FirstOrDefault(x => x.product_sale_id == model.product_sale_id);
-            var index = lst.FindIndex(x => x.product_sale_id == result.product_sale_id);
+            var index = lst.FindIndex(x => x.product_sale_id == result?.product_sale_id);
             if (result != null)
             {
                 result.product_sale_id = model.product_sale_id;
@@ -444,14 +446,79 @@ namespace BlazorWasm.MiniPOS.Services
             lst ??= new List<SaleVoucherHeadDataModel>();
             return lst;
         }
-        public async Task YearOverYearChart(DateTime dateTime)
+        public async Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime)
         {
             var year = dateTime.Year;
-            var pastThreeYear = year - 3;
+            var pastThreeYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x=> x.sale_date.Year >= pastThreeYear 
-                && x.sale_date.Year <= year).ToList();
+                .Where(x => x.sale_date.Year <=year && x.sale_date.Year >= pastThreeYear)
+                .GroupBy(s=> s.sale_date.Year).Select(s=> new YearOverYearResponseModel
+                {
+                    Year = s.Key, 
+                    TotalPrice = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            
+            YearOverYearReturnModel returnModel = new();
+            List<YearOverYearModel> yearData = new();
+            for (var i = 1; i < dataList.Count; i++)
+            {
+                returnModel.Year.Add(dataList[0].Year.ToString() +"/"+ 
+                    dataList[i].Year.ToString());
+
+                yearData.Add(new YearOverYearModel
+                {
+                    Year = dataList[i].Year.ToString(),
+                    Data = new List<int> { dataList[0].TotalPrice, dataList[i].TotalPrice } 
+                });
+            }
+            returnModel.YearData = yearData;
+            return returnModel;
+        }
+
+        public async Task GenerateYearOverYear()
+        {
+            DateTime _startDate = DateTime.Now;
+            DateTime _endDate = DateTime.Now.AddYears(-5);
+            ProductSaleDataModel _model = new();
+            var _lstProduct = await GetProductNameList();
+            _lstProduct ??= new List<ProductNameListDataModel>();
+
+            while (_startDate >= _endDate)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Random random = new Random();
+                        int quantity = random.Next(1, 11);
+                        int randomIndex = random.Next(0, _lstProduct.Count);
+                        ProductNameListDataModel selectedProduct = _lstProduct[randomIndex];
+                        var item = await GetProductName(selectedProduct.product_id);
+                        if (item is not null)
+                        {
+                            _model.product_price = item.product_sale_price;
+                            _model.product_id = selectedProduct.product_id;
+                            _model.product_name = selectedProduct.product_name;
+                            _model.product_qty = quantity;
+                            _model.product_total_price = quantity * item.product_sale_price;
+                            _model.product_sale_date = _startDate;
+                            _model.product_sale_id = Guid.NewGuid();
+                        }
+
+                        if (await CheckIsProductExit(_model.product_id))
+                        {
+                            await UpdateProductSale(_model);
+                        }
+                        else
+                        {
+                            await SetSaleProduct(_model);
+                        }
+                    }
+                    await SetVoucher();
+                }
+                _startDate = _startDate.AddYears(-1);
+            }
         }
         private string[] GetProductCategory()
         {

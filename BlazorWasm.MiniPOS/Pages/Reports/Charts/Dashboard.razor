@@ -24,18 +24,26 @@
     <div class="col-md-6">
         <div id="YearOverYear"></div>
     </div>
+    <div class="col-md-6">
+        <div id="PastFiveYears"></div>
+    </div>
 </div>
 @code {
+    private YearOverYearReturnModel yearOverYear = new();
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JsRuntime.InvokeVoidAsync("basicColumnChart");
+            yearOverYear = await db.YearOverYearChart(DateTime.Now);
+            await JsRuntime.InvokeVoidAsync("basicColumnChart", yearOverYear.Year,
+            yearOverYear.YearData);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
-            await JsRuntime.InvokeVoidAsync("yearOverYear");
+            await JsRuntime.InvokeVoidAsync("yearOverYear",yearOverYear.Year,
+            yearOverYear.YearData);
+            await JsRuntime.InvokeVoidAsync("pastFiveYears");
         }
     }
 }
