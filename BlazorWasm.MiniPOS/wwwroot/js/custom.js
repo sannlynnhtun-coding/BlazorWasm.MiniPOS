@@ -1022,7 +1022,17 @@ window.yearOverYear = function () {
 }
 
 window.pastFiveYear = function (data) {
-    console.log({ data });
+    console.log(data );
+    let lst = [];
+    const result = data;
+    //result.each(function (index, element) {
+    //    lst.push(["'" + element.name + "'", element.value])
+    //    console.log("Element at index " + index + ": " + $(element).text());
+    //});
+    //$.each(data, function (index, element) {
+    //    lst.push(["'" + element.name + "'", element.value])
+    //});
+
     // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
     Highcharts.chart('PastFiveYear', {
         chart: {
@@ -1048,7 +1058,7 @@ window.pastFiveYear = function (data) {
         },
         series: [{
             name: 'Year',
-            data: data
+            data: [data]
         }]
     });
 
