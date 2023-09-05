@@ -26,6 +26,9 @@
     <div class="col-md-6">
         <div id="YearOverYear"></div>
     </div>
+    <div class="col-md-6">
+        <div id="PastFiveYear"></div>
+    </div>
 </div>
 @code {
 
@@ -36,12 +39,16 @@
         {
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
+            await db.GenerateYearOverYear();
+            var result = await db.YearOverYearChart(DateTime.Now);
+            var pastFiveYear = await db.PastFiveYear(DateTime.Now);
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
             await JsRuntime.InvokeVoidAsync("yearOverYear");
+            await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
         }
     }
 }

@@ -16,4 +16,14 @@
         public int TotalPrice { get; set; }
     }
 
+    public class PastFiveYearModel
+    {
+        public string name { get; set; }
+        public List<DataInfo> data { get; set; } = new();
+    }
+
+    public class DataInfo
+    {
+       public object[] array { get; set; }
+    }
 }
