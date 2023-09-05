@@ -561,6 +561,9 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task GenerateYearOverYear()
         {
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
+            if (lst.Count > 0) return;
+
             DateTime _startDate = DateTime.Now;
             DateTime _endDate = DateTime.Now.AddYears(-5);
             ProductSaleDataModel _model = new();

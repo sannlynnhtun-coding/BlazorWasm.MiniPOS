@@ -1022,16 +1022,69 @@ window.yearOverYear = function () {
 }
 
 window.pastFiveYear = function (data) {
-    console.log(data );
+    console.log(data);
+
+    data = [
+        {
+            "name": "Norway",
+            "value": 16
+        },
+        {
+            "name": "Germany",
+            "value": 12
+        },
+        {
+            "name": "USA",
+            "value": 8
+        },
+        {
+            "name": "Sweden",
+            "value": 8
+        },
+        {
+            "name": "Netherlands",
+            "value": 8
+        },
+        {
+            "name": "ROC",
+            "value": 6
+        },
+        {
+            "name": "Austria",
+            "value": 7
+        },
+        {
+            "name": "Canada",
+            "value": 4
+        },
+        {
+            "name": "Japan",
+            "value": 3
+        }
+    ];
+
     let lst = [];
-    const result = data;
+    //const result = data;
     //result.each(function (index, element) {
     //    lst.push(["'" + element.name + "'", element.value])
     //    console.log("Element at index " + index + ": " + $(element).text());
     //});
-    //$.each(data, function (index, element) {
-    //    lst.push(["'" + element.name + "'", element.value])
-    //});
+    $.each(data, function (index, element) {
+        lst.push([element.name, element.value])
+    });
+
+    console.log(lst);
+    console.log([
+        ['Norway', 16],
+        ['Germany', 12],
+        ['USA', 8],
+        ['Sweden', 8],
+        ['Netherlands', 8],
+        ['ROC', 6],
+        ['Austria', 7],
+        ['Canada', 4],
+        ['Japan', 3]
+    ]);
 
     // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
     Highcharts.chart('PastFiveYear', {
@@ -1057,9 +1110,19 @@ window.pastFiveYear = function (data) {
             }
         },
         series: [{
-            name: 'Year',
-            data: [data]
+            name: 'Medals',
+            data: lst
+            //data: [
+            //    ['Norway', 16],
+            //    ['Germany', 12],
+            //    ['USA', 8],
+            //    ['Sweden', 8],
+            //    ['Netherlands', 8],
+            //    ['ROC', 6],
+            //    ['Austria', 7],
+            //    ['Canada', 4],
+            //    ['Japan', 3]
+            //]
         }]
     });
-
 }

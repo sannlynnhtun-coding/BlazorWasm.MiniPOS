@@ -43,12 +43,12 @@
             var result = await db.YearOverYearChart(DateTime.Now);
             var pastFiveYear = await db.PastFiveYear(DateTime.Now);
             // var pastFiveYear =await db.DonutChart();
-            await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
-            await JsRuntime.InvokeVoidAsync("columnChart");
-            await JsRuntime.InvokeVoidAsync("barBasicChart");
-            await JsRuntime.InvokeVoidAsync("barRaceChart");
-            await JsRuntime.InvokeVoidAsync("columnDrillDown");
-            await JsRuntime.InvokeVoidAsync("yearOverYear");
+            // await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
+            // await JsRuntime.InvokeVoidAsync("columnChart");
+            // await JsRuntime.InvokeVoidAsync("barBasicChart");
+            // await JsRuntime.InvokeVoidAsync("barRaceChart");
+            // await JsRuntime.InvokeVoidAsync("columnDrillDown");
+            // await JsRuntime.InvokeVoidAsync("yearOverYear");
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
         }
     }
