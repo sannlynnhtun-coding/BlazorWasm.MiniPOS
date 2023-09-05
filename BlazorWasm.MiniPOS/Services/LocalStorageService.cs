@@ -481,10 +481,10 @@ namespace BlazorWasm.MiniPOS.Services
             return returnModel;
         }
 
-        public async Task<List<DataInfo>> PastFiveYearV1(DateTime date)
+        public async Task<PastFiveYearModel> PastFiveYear(DateTime date)
         {
             var year = date.Year;
-            var pastThreeYear = year - 5;
+            var pastFiveYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
                 .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
@@ -508,9 +508,10 @@ namespace BlazorWasm.MiniPOS.Services
 
                 data.Add(dataInfo);
             }
-            return data;
+            returnModel.data = data;
+            return returnModel;
         }
-        public async Task<List<DataReturnInfo>> PastFiveYear(DateTime date)
+        public async Task<List<DataReturnInfo>> PastFiveYearV1(DateTime date)
         {
             var year = date.Year;
             var pastThreeYear = year - 5;
