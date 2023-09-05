@@ -539,7 +539,34 @@ namespace BlazorWasm.MiniPOS.Services
 
             return model;
         }
+        public async Task<DataReturnInfo> PastFiveYearV2(DateTime date)
+        {
+            var year = date.Year;
+            var pastFiveYear = year - 5;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
 
+            var totalPrice = dataList.Select(x => x.Amount).Sum();
+
+            var data = new DataReturnInfo
+            {
+                arrayObject = new object[dataList.Count][]
+            };
+            for (int index = 0; index < dataList.Count; index++)
+            {
+                data.arrayObject[index] = new object[] {
+             dataList[index].Year.ToString(),
+             dataList[index].Amount
+         };
+            }
+            return data;
+        }
         public async Task<DonutChartResponseModel> DonutChart()
         {
             var data = JsonConvert.DeserializeObject<DonutChartResponseModel>(JsonData.str);
@@ -549,47 +576,48 @@ namespace BlazorWasm.MiniPOS.Services
         public async Task GenerateYearOverYear()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
-            if (lst.Count > 0) return;
-
-            DateTime _startDate = DateTime.Now;
-            DateTime _endDate = DateTime.Now.AddYears(-5);
-            ProductSaleDataModel _model = new();
-            var _lstProduct = await GetProductNameList();
-            _lstProduct ??= new List<ProductNameListDataModel>();
-            while (_startDate >= _endDate)
+            if (lst is null)
             {
-                for (int i = 0; i < 1; i++)
+                DateTime _startDate = DateTime.Now;
+                DateTime _endDate = DateTime.Now.AddYears(-5);
+                ProductSaleDataModel _model = new();
+                var _lstProduct = await GetProductNameList();
+                _lstProduct ??= new List<ProductNameListDataModel>();
+                while (_startDate >= _endDate)
                 {
-                    for (int j = 0; j < 3; j++)
+                    for (int i = 0; i < 1; i++)
                     {
-                        Random random = new Random();
-                        int quantity = random.Next(1, 11);
-                        int randomIndex = random.Next(0, _lstProduct.Count);
-                        ProductNameListDataModel selectedProduct = _lstProduct[randomIndex];
-                        var item = await GetProductName(selectedProduct.product_id);
-                        if (item is not null)
+                        for (int j = 0; j < 3; j++)
                         {
-                            _model.product_price = item.product_sale_price;
-                            _model.product_id = selectedProduct.product_id;
-                            _model.product_name = selectedProduct.product_name;
-                            _model.product_qty = quantity;
-                            _model.product_total_price = quantity * item.product_sale_price;
-                            _model.product_sale_date = _startDate;
-                            _model.product_sale_id = Guid.NewGuid();
-                        }
+                            Random random = new Random();
+                            int quantity = random.Next(1, 11);
+                            int randomIndex = random.Next(0, _lstProduct.Count);
+                            ProductNameListDataModel selectedProduct = _lstProduct[randomIndex];
+                            var item = await GetProductName(selectedProduct.product_id);
+                            if (item is not null)
+                            {
+                                _model.product_price = item.product_sale_price;
+                                _model.product_id = selectedProduct.product_id;
+                                _model.product_name = selectedProduct.product_name;
+                                _model.product_qty = quantity;
+                                _model.product_total_price = quantity * item.product_sale_price;
+                                _model.product_sale_date = _startDate;
+                                _model.product_sale_id = Guid.NewGuid();
+                            }
 
-                        if (await CheckIsProductExit(_model.product_id))
-                        {
-                            await UpdateProductSale(_model);
+                            if (await CheckIsProductExit(_model.product_id))
+                            {
+                                await UpdateProductSale(_model);
+                            }
+                            else
+                            {
+                                await SetSaleProduct(_model);
+                            }
                         }
-                        else
-                        {
-                            await SetSaleProduct(_model);
-                        }
+                        await SetVoucher();
                     }
-                    await SetVoucher();
+                    _startDate = _startDate.AddYears(-1);
                 }
-                _startDate = _startDate.AddYears(-1);
             }
         }
 

@@ -1025,11 +1025,13 @@ window.pastFiveYear = function (data) {
     console.log(data);
 
     data = data.data;
+    /*data = data.arrayObject;*/
 
     let lst = [];
     $.each(data, function (index, element) {
         lst.push([element.name, element.value])
     });
+    console.log(lst);
 
     // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
     Highcharts.chart('PastFiveYear', {
@@ -1041,7 +1043,7 @@ window.pastFiveYear = function (data) {
             }
         },
         title: {
-            text: 'Beijing 2022 gold medals by country',
+            text: 'Past Five Years Sale Record',
             align: 'left'
         },
         subtitle: {
@@ -1055,7 +1057,7 @@ window.pastFiveYear = function (data) {
             }
         },
         series: [{
-            name: 'Medals',
+            name: 'Year',
             data: lst
         }]
     });
