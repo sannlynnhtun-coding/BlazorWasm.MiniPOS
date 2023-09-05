@@ -34,6 +34,6 @@ namespace BlazorWasm.MiniPOS.Services
         Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime);
         Task GenerateYearOverYear();
         Task<List<DataInfo>> PastFiveYearV1(DateTime date);
-        Task<object[][]> PastFiveYear(DateTime date);
+        Task<List<DataReturnInfo>> PastFiveYear(DateTime date);
     }
 }
