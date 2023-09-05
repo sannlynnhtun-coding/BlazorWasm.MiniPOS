@@ -1024,6 +1024,8 @@ window.yearOverYear = function () {
 window.pastFiveYear = function (data) {
     console.log(data);
 
+    data = data.data;
+
     let lst = [];
     $.each(data, function (index, element) {
         lst.push([element.name, element.value])

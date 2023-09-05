@@ -514,8 +514,10 @@ namespace BlazorWasm.MiniPOS.Services
             returnModel.data = data;
             return returnModel;
         }
-        public async Task<DataReturnInfo> PastFiveYear(DateTime date)
+
+        public async Task<DonutChartResponseModel> PastFiveYear(DateTime date)
         {
+            DonutChartResponseModel model = new DonutChartResponseModel();
             var year = date.Year;
             var pastFiveYear = year - 5;
             var lst = await GetSaleVoucherHead();
@@ -527,30 +529,15 @@ namespace BlazorWasm.MiniPOS.Services
                     Amount = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
 
-            var totalPrice = dataList.Select(x=> x.Amount).Sum();
-            
-            //List<DataReturnInfo> dataReturn = new();
-            var data = new DataReturnInfo
-            {
-                arrayObject = new object[dataList.Count][]
-            };
-            //object[][] data = new object[dataList.Count][];
-            for (int index = 0; index < dataList.Count; index++)
-            {
-                //data[index] = new object[] {
-                //    dataList[index].Year.ToString(),
-                //    dataList[index].TotalPrice
-                //};
-                //var yearlyAmount = 100 * (totalPrice / dataList[index].Amount);
-                var yearlyAmount = 7;
-                data.arrayObject[index] = new object[] {
-                    dataList[index].Year.ToString(),
-                    yearlyAmount
-                };
-            }
-            //dataReturn.Add(data);
+            var totalPrice = dataList.Select(x => x.Amount).Sum();
 
-            return data;
+            model.data = dataList.Select(x => new DonutChartModel
+            {
+                name = x.Year.ToString(),
+                value = x.Amount
+            }).ToList();
+
+            return model;
         }
 
         public async Task<DonutChartResponseModel> DonutChart()
@@ -653,7 +640,7 @@ namespace BlazorWasm.MiniPOS.Services
             List<ProductInfo> topFiveProductLst = new();
             var startYear = DateTime.Now.Year;
             var endYear = startYear - 4;
-            
+
             var lst = await _localStorage
                 .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
             if (lst is null) return new List<ProductInfo>();
@@ -673,9 +660,9 @@ namespace BlazorWasm.MiniPOS.Services
                 var productInfo = new ProductInfo
                 {
                     name = i + " Year",
-                    data = new int[4] 
+                    data = new int[4]
                 };
-                
+
                 for (int j = 0; j < 4; j++)
                 {
                     var result = lst
@@ -689,7 +676,7 @@ namespace BlazorWasm.MiniPOS.Services
             return topFiveProductLst;
         }
 
-        
+
         public async Task GenerateDataByMonth()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
@@ -699,8 +686,8 @@ namespace BlazorWasm.MiniPOS.Services
                 List<ProductNameListDataModel>? _lstProduct = await GetProductNameList();
                 _lstProduct ??= new List<ProductNameListDataModel>();
                 ProductSaleDataModel _model = new();
-                Random random = new(); 
-            
+                Random random = new();
+
                 var startDate = new DateTime(2023, 12, 1);
                 var endDate = new DateTime(2023, 1, 1);
                 while (startDate >= endDate)
@@ -716,7 +703,7 @@ namespace BlazorWasm.MiniPOS.Services
                             var item = await GetProductName(selectedProduct.product_id);
                             if (item is not null)
                                 _model.product_price = item.product_sale_price;
-                        
+
                             _model.product_id = selectedProduct.product_id;
                             _model.product_name = selectedProduct.product_name;
                             _model.product_qty = quantity;
