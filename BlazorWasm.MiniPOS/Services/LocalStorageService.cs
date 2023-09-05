@@ -569,6 +569,58 @@ namespace BlazorWasm.MiniPOS.Services
             }
             return topFiveProductLst;
         }
+        
+        public async Task GenerateDataByMonth()
+        {
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new List<SaleVoucherDetailDataModel>();
+            if (lst.Count == 0)
+            {
+                List<ProductNameListDataModel>? _lstProduct = await GetProductNameList();
+                _lstProduct ??= new List<ProductNameListDataModel>();
+                ProductSaleDataModel _model = new();
+                Random random = new(); 
+            
+                var startDate = new DateTime(2023, 12, 1);
+                var endDate = new DateTime(2023, 1, 1);
+                while (startDate >= endDate)
+                {
+                    Console.WriteLine($"Start Date {startDate} -- End Date {endDate}");
+                    for (int i = 0; i < 4; i++)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            int quantity = random.Next(1, 11);
+                            int randomIndex = random.Next(0, _lstProduct.Count);
+                            ProductNameListDataModel selectedProduct = _lstProduct[randomIndex];
+                            var item = await GetProductName(selectedProduct.product_id);
+                            if (item is not null)
+                                _model.product_price = item.product_sale_price;
+                        
+                            _model.product_id = selectedProduct.product_id;
+                            _model.product_name = selectedProduct.product_name;
+                            _model.product_qty = quantity;
+                            _model.product_total_price = quantity * item.product_sale_price;
+                            _model.product_sale_date = startDate;
+
+                            if (await CheckIsProductExit(_model.product_sale_id))
+                            {
+                                await UpdateProductSale(_model);
+                            }
+                            else
+                            {
+                                await SetSaleProduct(_model);
+                            }
+                            Console.WriteLine($"model => {_model.product_name}");
+                        }
+                        await SetVoucher();
+                        Console.WriteLine($"{i}  Voucher set!!!!!");
+                    }
+                    startDate = startDate.AddMonths(-1);
+                    Console.WriteLine("--------------------");
+                }
+            }
+        }
 
         private string[] GetProductCategory()
         {
