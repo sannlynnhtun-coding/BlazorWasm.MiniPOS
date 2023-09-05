@@ -1022,7 +1022,7 @@ window.yearOverYear = function () {
 }
 
 window.pastFiveYear = function (data) {
-    console.log(data);
+    console.log({ data });
     // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
     Highcharts.chart('PastFiveYear', {
         chart: {
@@ -1047,7 +1047,7 @@ window.pastFiveYear = function (data) {
             }
         },
         series: [{
-            name: 'Medals',
+            name: 'Year',
             data: data
         }]
     });

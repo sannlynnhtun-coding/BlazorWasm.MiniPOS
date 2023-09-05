@@ -457,24 +457,24 @@ namespace BlazorWasm.MiniPOS.Services
             var pastThreeYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x => x.sale_date.Year <=year && x.sale_date.Year >= pastThreeYear)
-                .GroupBy(s=> s.sale_date.Year).Select(s=> new YearOverYearResponseModel
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new YearOverYearResponseModel
                 {
-                    Year = s.Key, 
+                    Year = s.Key,
                     TotalPrice = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
-            
+
             YearOverYearReturnModel returnModel = new();
             List<YearOverYearModel> yearData = new();
             for (var i = 1; i < dataList.Count; i++)
             {
-                returnModel.Year.Add(dataList[0].Year.ToString() +"/"+ 
+                returnModel.Year.Add(dataList[0].Year.ToString() + "/" +
                     dataList[i].Year.ToString());
 
                 yearData.Add(new YearOverYearModel
                 {
                     Year = dataList[i].Year.ToString(),
-                    Data = new List<long> { Convert.ToInt64(dataList[0].TotalPrice), Convert.ToInt64(dataList[i].TotalPrice) } 
+                    Data = new List<long> { Convert.ToInt64(dataList[0].TotalPrice), Convert.ToInt64(dataList[i].TotalPrice) }
                 });
             }
             returnModel.YearData = yearData;
@@ -488,7 +488,7 @@ namespace BlazorWasm.MiniPOS.Services
             var lst = await GetSaleVoucherHead();
             var dataList = lst
                 .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastThreeYear)
-                .GroupBy(s => s.sale_date.Year).Select(s => new 
+                .GroupBy(s => s.sale_date.Year).Select(s => new
                 {
                     Year = s.Key,
                     TotalPrice = s.Sum(sale => sale.sale_total_amount)
@@ -496,7 +496,7 @@ namespace BlazorWasm.MiniPOS.Services
             PastFiveYearModel returnModel = new();
             List<DataInfo> data = new();
             returnModel.name = "TotalPrice";
-            
+
             foreach (var item in dataList)
             {
                 var dataInfo = new DataInfo
@@ -510,7 +510,7 @@ namespace BlazorWasm.MiniPOS.Services
             }
             return data;
         }
-        public async Task<object[][]> PastFiveYear(DateTime date)
+        public async Task<List<DataReturnInfo>> PastFiveYear(DateTime date)
         {
             var year = date.Year;
             var pastThreeYear = year - 5;
@@ -522,16 +522,28 @@ namespace BlazorWasm.MiniPOS.Services
                     Year = s.Key,
                     TotalPrice = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
-            object[][] data = new object[dataList.Count][];
-            foreach(var item in dataList)
+            List<DataReturnInfo> dataReturn = new();
+            var data = new DataReturnInfo
             {
-                data = new object[][]
-                {
-                    new object[] { item.Year.ToString(), item.TotalPrice }
+                arrayObject = new object[dataList.Count][]
+            };
+            //object[][] data = new object[dataList.Count][];
+            for (int index = 0; index < dataList.Count; index++)
+            {
+                //data[index] = new object[] {
+                //    dataList[index].Year.ToString(),
+                //    dataList[index].TotalPrice
+                //};
+                
+                data.arrayObject[index] = new object[] {
+                    dataList[index].Year.ToString(),
+                    dataList[index].TotalPrice
                 };
             }
+            dataReturn.Add(data);
 
-            return data;
+
+            return dataReturn;
         }
 
         public async Task GenerateYearOverYear()
@@ -583,7 +595,7 @@ namespace BlazorWasm.MiniPOS.Services
             List<ProductInfo> topFiveProductLst = new();
             var lst = await _localStorage
                 .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
-
+            if (lst is null) return new List<ProductInfo>();
             int currentYear = DateTime.Now.Year;
             var currentYearData = lst.Where(d => d.detail_date.Year == currentYear).ToList();
 
@@ -603,9 +615,9 @@ namespace BlazorWasm.MiniPOS.Services
                 var productInfo = new ProductInfo
                 {
                     name = topUniqueProductsOfYear[i].ProductName,
-                    data = new int[12] 
+                    data = new int[12]
                 };
-                
+
                 for (int j = 0; j < 12; j++)
                 {
                     var result = currentYearData

@@ -29,7 +29,6 @@
 
     public class DataReturnInfo
     {
-        public string year { get; set; }
-        public int price { get; set; }
+        public object[][] arrayObject { get; set; }
     }
 }
