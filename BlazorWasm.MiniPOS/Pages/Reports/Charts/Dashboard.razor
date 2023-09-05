@@ -1,4 +1,6 @@
 ﻿@page "/Dashboard"
+@using BlazorWasm.MiniPOS.Pages.GenerateData
+@using System.Collections
 
 <h3>BarChart</h3>
 <div class="row">
@@ -26,11 +28,15 @@
     </div>
 </div>
 @code {
+    
+    private List<MonthlyTopFiveProductsOfCurrentYear> _topProductsData;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JsRuntime.InvokeVoidAsync("basicColumnChart");
+            var data = await db.CurrentYearTopFiveProductsByMonth();
+
+            await JsRuntime.InvokeVoidAsync("basicColumnChart", data);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
