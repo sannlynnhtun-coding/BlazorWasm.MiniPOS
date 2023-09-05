@@ -26,12 +26,9 @@
     <div class="col-md-6">
         <div id="YearOverYear"></div>
     </div>
-    <div class="col-md-6">
-        <div id="PastFiveYears"></div>
-    </div>
 </div>
 @code {
-    
+
     private List<MonthlyTopFiveProductsOfCurrentYear> _topProductsData;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -44,9 +41,7 @@
             await JsRuntime.InvokeVoidAsync("barBasicChart");
             await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
-            await JsRuntime.InvokeVoidAsync("yearOverYear",yearOverYear.Year,
-            yearOverYear.YearData);
-            await JsRuntime.InvokeVoidAsync("pastFiveYears");
+            await JsRuntime.InvokeVoidAsync("yearOverYear");
         }
     }
 }

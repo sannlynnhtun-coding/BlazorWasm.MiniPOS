@@ -451,15 +451,12 @@ namespace BlazorWasm.MiniPOS.Services
             return lst;
         }
 
-        public async Task YearOverYearChart(DateTime dateTime)
         public async Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime)
         {
             var year = dateTime.Year;
             var pastThreeYear = year - 5;
             var lst = await GetSaleVoucherHead();
             var dataList = lst
-                .Where(x => x.sale_date.Year >= pastThreeYear
-                            && x.sale_date.Year <= year).ToList();
                 .Where(x => x.sale_date.Year <=year && x.sale_date.Year >= pastThreeYear)
                 .GroupBy(s=> s.sale_date.Year).Select(s=> new YearOverYearResponseModel
                 {
