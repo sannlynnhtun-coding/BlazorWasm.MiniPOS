@@ -94,6 +94,12 @@
         </MudGrid>
         <div id="CompareTwoYear"></div>
     </div>
+    @*<div class="col-md-6">
+        <div id="ProductCategoryAndProduct"></div>
+    </div>*@
+    <div class="col-md-6">
+        <div id="SixMostSoldProducts"></div>
+    </div>
 </div>
 
 @code {
@@ -108,6 +114,8 @@
         {
             await db.GenerateYearOverYear();
             await db.GenerateDataByMonth();
+
+            var sixSeries =  await db.SixMostSoldProducts();
             var sevenDaysData = await db.PastSevenDays();
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
@@ -131,9 +139,10 @@
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
             await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
+            // await JsRuntime.InvokeVoidAsync("productCategoryAndProduct");
+            await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
         }
     }
-
 
     async Task HandleValueChanged(int value)
     {

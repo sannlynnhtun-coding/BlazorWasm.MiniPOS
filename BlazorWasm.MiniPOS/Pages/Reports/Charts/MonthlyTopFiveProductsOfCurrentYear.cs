@@ -25,3 +25,9 @@ public class PastSevenDaysModel
     
     public List<ProductInfo> productInfos { get; set; }
 }
+
+public class SixMostSoldProductsModel
+{
+    public string name { get; set; }
+    public List<int> data { get; set; }
+}

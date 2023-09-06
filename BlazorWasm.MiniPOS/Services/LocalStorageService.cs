@@ -910,6 +910,35 @@ namespace BlazorWasm.MiniPOS.Services
             return model;
         }
 
+        public async Task<List<SixMostSoldProductsModel>> SixMostSoldProducts()
+        {
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new List<SaleVoucherDetailDataModel>();
+            List<SixMostSoldProductsModel> models = new();
+            var topSixProducts = lst
+                .GroupBy(s => s.product_name)
+                .Select(group => new
+                {
+                    name = group.Key,
+                    data = group.Sum(s => s.product_qty) 
+                })
+                .OrderByDescending(s => s.data)
+                .Take(6)
+                .ToList();
+            foreach (var item in topSixProducts)
+            {
+                models.Add(new SixMostSoldProductsModel
+                {
+                    name = item.name,
+                    data = new List<int>
+                    {
+                        item.data
+                    }
+                });
+            }
+            return models;
+        }
+
         public async Task GenerateDataByMonth()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
