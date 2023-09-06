@@ -12,13 +12,6 @@
         <div id="BarBasicChart"></div>
     </div>
     <div class="col-md-6">
-        <div id="play-controls">
-            <button id="play-pause-button" class="fa fa-play" title="play"></button>
-            <input id="play-range" type="range" value="1960" min="1960" max="2018">
-        </div>
-        <div id="BarRaceChart"></div>
-    </div>
-    <div class="col-md-6">
         <div id="ColumnDrillDown"></div>
     </div>
     <div class="col-md-6">
@@ -34,8 +27,6 @@
         <div id="PastSevenDays"></div>
     </div>
     <div class="col-md-12">
-        @*  @if(yearList is not null && yearList.Count > 0)
-        { *@
         <MudGrid>
             <MudItem xs="6">
                 <MudSelect T="int" Label="Year"
@@ -89,6 +80,7 @@
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
             //await db.GenerateDataByMonth();
+            var testData = await db.QtyOfTopFiveProductsByYear();
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             var result = await db.YearOverYearChart(DateTime.Now);
