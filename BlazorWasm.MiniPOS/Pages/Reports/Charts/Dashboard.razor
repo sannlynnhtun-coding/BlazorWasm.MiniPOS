@@ -113,7 +113,6 @@
             yearList = await db.GetYearList();
             var yearlySaleAmount = await db.YearlySaleAmount();
     //await db.GenerateDataByMonth();
-            var testData = await db.QtyOfTopFiveProductsByYear();
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             var result = await db.YearOverYearChart(DateTime.Now);

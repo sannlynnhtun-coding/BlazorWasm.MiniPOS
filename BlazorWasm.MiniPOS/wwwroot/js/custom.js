@@ -840,6 +840,7 @@ window.pastSevenDays = function (days, series) {
         }
     });
 }
+
 window.pastFiveYearFunnelChart = function (data) {
     // Set up the chart
     data = data.arrayObject
