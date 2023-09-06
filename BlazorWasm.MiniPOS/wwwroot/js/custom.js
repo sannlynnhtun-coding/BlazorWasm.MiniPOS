@@ -1062,3 +1062,87 @@ window.pastFiveYear = function (data) {
         }]
     });
 }
+
+window.pastFiveYearFunnelChart = function (data) {
+    // Set up the chart
+    data = data.arrayObject
+    console.log(data)
+    Highcharts.chart('PastFiveYearFunnelChart', {
+        chart: {
+            type: 'funnel3d',
+            options3d: {
+                enabled: true,
+                alpha: 10,
+                depth: 50,
+                viewDistance: 50
+            }
+        },
+        title: {
+            text: 'Highcharts Funnel3D Chart'
+        },
+        accessibility: {
+            screenReaderSection: {
+                beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{typeDescription}</div><div>{chartSubtitle}</div><div>{chartLongdesc}</div>'
+            }
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b> ({point.y:,.0f})$',
+                    allowOverlap: true,
+                    y: 10
+                },
+                neckWidth: '30%',
+                neckHeight: '25%',
+                width: '80%',
+                height: '80%'
+            }
+        },
+        series: [{
+            name: 'Year',
+            data: data
+        }]
+    });
+}
+
+window.compareTwoYear = function (result, category) {
+    console.log(result)
+    console.log(category)
+    Highcharts.chart('CompareTwoYear', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Efficiency Optimization by Branch'
+        },
+        xAxis: {
+            categories: category
+        },
+        yAxis: [{
+            min: 0,
+            title: {
+                text: 'Employees'
+            }
+        }, {
+            title: {
+                text: 'Profit (millions)'
+            },
+            opposite: true
+        }],
+        legend: {
+            shadow: false
+        },
+        tooltip: {
+            shared: true
+        },
+        plotOptions: {
+            column: {
+                grouping: false,
+                shadow: false,
+                borderWidth: 0
+            }
+        },
+        series: result
+    });
+}

@@ -39,6 +39,9 @@ namespace BlazorWasm.MiniPOS.Services
         Task SetVoucher();
         Task UpdateProductSale(ProductSaleDataModel model);
         Task<YearOverYearReturnModel> YearOverYearChart(DateTime dateTime);
-        Task<DataReturnInfo> PastFiveYearV2(DateTime date);
+        Task<DataReturnInfo> PastFiveYearFunnelChart(DateTime date);
+        Task<List<int>> GetYearList();
+        Task<List<TwoYearComparisonModel>> CompareTwoYear(int firstYear,
+            int secondYear);
     }
 }

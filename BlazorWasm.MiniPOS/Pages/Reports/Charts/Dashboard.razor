@@ -27,29 +27,104 @@
     <div class="col-md-6">
         <div id="PastFiveYear"></div>
     </div>
+    <div class="col-md-6">
+        <div id="PastFiveYearFunnelChart"></div>
+    </div>
+    <div class="col-md-12">
+        @*  @if(yearList is not null && yearList.Count > 0)
+        { *@
+        <MudGrid>
+            <MudItem xs="6">
+                <MudSelect T="int" Label="Year"
+                           ValueChanged="HandleValueChanged"
+                           Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                    @if (yearList is not null)
+                    {
+                        @foreach (var item in yearList)
+                        {
+                            <MudSelectItem T="int"
+                                           Disabled="@(selectedYear == item || secondSelectedYear == item?
+                                                      true : false)"
+                                           Value="@item" />
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="6">
+                <MudSelect T="int" Label="Year" Variant="Variant.Outlined"
+                           ValueChanged="HandleValueSecondChanged"
+                           AnchorOrigin="Origin.BottomCenter">
+                    @if (yearList is not null)
+                    {
+                        @foreach (var item in yearList)
+                        {
+                            <MudSelectItem T="int"
+                                           Disabled="@(selectedYear == item ||
+                                                       secondSelectedYear == item ?
+                                                      true : false)"
+                                           Value="@item" />
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+        </MudGrid>
+        <div id="CompareTwoYear"></div>
+    </div>
 </div>
 @code {
-
+    private List<int> yearList = new();
+    private int selectedYear = 0;
+    private int secondSelectedYear = 0;
     private List<MonthlyTopFiveProductsOfCurrentYear> _topProductsData;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            await db.GenerateYearOverYear();
+            yearList = await db.GetYearList();
             //await db.GenerateDataByMonth();
             var testData = await db.QtyOfTopFiveProductsByYear();
-            await db.GenerateYearOverYear();
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             var result = await db.YearOverYearChart(DateTime.Now);
             var pastFiveYear = await db.PastFiveYear(DateTime.Now);
+            var funnelChartPastFiveYear = await db.PastFiveYearFunnelChart(DateTime.Now);
             // var pastFiveYear = await db.DonutChart();
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
-            await JsRuntime.InvokeVoidAsync("barRaceChart");
+            // await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
             await JsRuntime.InvokeVoidAsync("yearOverYear");
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
+            await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
         }
+    }
+
+
+    async Task HandleValueChanged(int value)
+    {
+        selectedYear = value;
+
+        if (selectedYear != 0 && secondSelectedYear != 0)
+            await CompareTwoYear(selectedYear, secondSelectedYear);
+    }
+
+    async Task HandleValueSecondChanged(int value)
+    {
+        secondSelectedYear = value;
+
+        if (selectedYear != 0 && secondSelectedYear != 0)
+            await CompareTwoYear(selectedYear, secondSelectedYear);
+    }
+
+    async Task CompareTwoYear(int firstYear, int secondYear)
+    {
+        var yearLst = new List<string> { 
+            firstYear.ToString(), 
+            secondSelectedYear.ToString()
+        };
+        var result = await db.CompareTwoYear(firstYear, secondYear);
+        await JsRuntime.InvokeVoidAsync("compareTwoYear", result,yearLst);
     }
 }
