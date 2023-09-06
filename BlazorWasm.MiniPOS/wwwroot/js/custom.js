@@ -838,7 +838,8 @@ window.pastSevenDays = function (days, series) {
                 }
             }]
         }
-
+    });
+}
 window.pastFiveYearFunnelChart = function (data) {
     // Set up the chart
     data = data.arrayObject
@@ -923,7 +924,7 @@ window.compareTwoYear = function (result, category) {
     });
 }
 
-window.yearlySaleAmount = function (category,data) {
+window.yearlySaleAmount = function (category, data) {
     // Set up the chart
     const chart = new Highcharts.Chart({
         chart: {
