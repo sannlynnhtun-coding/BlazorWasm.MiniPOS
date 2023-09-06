@@ -152,7 +152,6 @@ window.columnChart = function () {
 }
 
 window.basicColumnChart = function (series) {
-    console.log({ series });
     Highcharts.chart('BasicColumnChart', {
         chart: {
             type: 'column'
@@ -204,7 +203,7 @@ window.basicColumnChart = function (series) {
     });
 }
 
-window.barBasicChart = function () {
+window.barBasicChart = function (name, series) {
     Highcharts.chart('BarBasicChart', {
         chart: {
             type: 'bar'
@@ -220,7 +219,7 @@ window.barBasicChart = function () {
             align: 'left'
         },
         xAxis: {
-            categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+            categories: name,
             title: {
                 text: null
             },
@@ -230,7 +229,7 @@ window.barBasicChart = function () {
         yAxis: {
             min: 0,
             title: {
-                text: 'Population (millions)',
+                text: 'Product Quantity',
                 align: 'high'
             },
             labels: {
@@ -265,19 +264,7 @@ window.barBasicChart = function () {
         credits: {
             enabled: false
         },
-        series: [{
-            name: 'Year 1990',
-            data: [631, 727, 3202, 721, 26]
-        }, {
-            name: 'Year 2000',
-            data: [814, 841, 3714, 726, 31]
-        }, {
-            name: 'Year 2010',
-            data: [1044, 944, 4170, 735, 40]
-        }, {
-            name: 'Year 2018',
-            data: [1276, 1007, 4561, 746, 42]
-        }]
+        series: series
     });
 
 }
@@ -787,6 +774,70 @@ window.pastFiveYear = function (data) {
         }]
     });
 }
+
+window.pastSevenDays = function (days, series) {
+    Highcharts.chart('PastSevenDays', {
+
+        chart: {
+            polar: true,
+            type: 'line'
+        },
+
+        accessibility: {
+            description: 'A spiderweb chart compares the allocated budget against actual spending within an organization. The spider chart has six spokes. Each spoke represents one of the 6 departments within the organization: sales, marketing, development, customer support, information technology and administration. The chart is interactive, and each data point is displayed upon hovering. The chart clearly shows that 4 of the 6 departments have overspent their budget with Marketing responsible for the greatest overspend of $20,000. The allocated budget and actual spending data points for each department are as follows: Sales. Budget equals $43,000; spending equals $50,000. Marketing. Budget equals $19,000; spending equals $39,000. Development. Budget equals $60,000; spending equals $42,000. Customer support. Budget equals $35,000; spending equals $31,000. Information technology. Budget equals $17,000; spending equals $26,000. Administration. Budget equals $10,000; spending equals $14,000.'
+        },
+
+        title: {
+            text: 'Past seven days',
+            x: -80
+        },
+
+        pane: {
+            size: '80%'
+        },
+
+        xAxis: {
+            categories: days,
+            tickmarkPlacement: 'on',
+            lineWidth: 0
+        },
+
+        yAxis: {
+            gridLineInterpolation: 'polygon',
+            lineWidth: 0,
+            min: 0
+        },
+
+        tooltip: {
+            shared: true,
+            pointFormat: '<span style="color:{series.color}">{series.name}: <b>${point.y:,.0f}</b><br/>'
+        },
+
+        legend: {
+            align: 'right',
+            verticalAlign: 'middle',
+            layout: 'vertical'
+        },
+
+        series: series,
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        layout: 'horizontal'
+                    },
+                    pane: {
+                        size: '70%'
+                    }
+                }
+            }]
+        }
 
 window.pastFiveYearFunnelChart = function (data) {
     // Set up the chart

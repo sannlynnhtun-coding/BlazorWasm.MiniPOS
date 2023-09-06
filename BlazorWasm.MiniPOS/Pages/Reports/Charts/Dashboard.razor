@@ -93,6 +93,9 @@
         if (firstRender)
         {
             await db.GenerateYearOverYear();
+            await db.GenerateDataByMonth();
+            var sevenDaysData = await db.PastSevenDays();
+            var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
             var yearlySaleAmount = await db.YearlySaleAmount();
             //await db.GenerateDataByMonth();
@@ -105,13 +108,17 @@
             // var pastFiveYear = await db.DonutChart();
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
-            await JsRuntime.InvokeVoidAsync("barBasicChart");
+            await JsRuntime.InvokeVoidAsync("barBasicChart", 
+                barBasicChartData.productNames, barBasicChartData.productInfos);
+            // await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
             await JsRuntime.InvokeVoidAsync("yearOverYear");
             await JsRuntime.InvokeVoidAsync("yearlySaleAmount",yearlySaleAmount.category,
             yearlySaleAmount.data);
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
+            await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
+
         }
     }
 

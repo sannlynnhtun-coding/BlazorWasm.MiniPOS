@@ -202,6 +202,14 @@ namespace BlazorWasm.MiniPOS.Services
             var result = lst.FirstOrDefault(x => x.product_id == guid);
             return result ?? throw new InvalidOperationException();
         }
+        
+        public async Task<ProductDataModel?> GetProductByName(String name)
+        {
+            var lst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
+            lst ??= new List<ProductDataModel>();
+            var result = lst.FirstOrDefault(x => x.product_name == name);
+            return result ?? throw new InvalidOperationException();
+        }
 
         public async Task SetSaleProduct(ProductSaleDataModel model)
         {
@@ -473,14 +481,16 @@ namespace BlazorWasm.MiniPOS.Services
             for (var i = 1; i < dataList.Count; i++)
             {
                 returnModel.Year.Add(dataList[0].Year.ToString() + "/" +
-                    dataList[i].Year.ToString());
+                                     dataList[i].Year.ToString());
 
                 yearData.Add(new YearOverYearModel
                 {
                     Year = dataList[i].Year.ToString(),
-                    Data = new List<long> { Convert.ToInt64(dataList[0].TotalPrice), Convert.ToInt64(dataList[i].TotalPrice) }
+                    Data = new List<long>
+                        { Convert.ToInt64(dataList[0].TotalPrice), Convert.ToInt64(dataList[i].TotalPrice) }
                 });
             }
+
             returnModel.YearData = yearData;
             return returnModel;
         }
@@ -627,6 +637,7 @@ namespace BlazorWasm.MiniPOS.Services
 
                 data.Add(dataInfo);
             }
+
             returnModel.data = data;
             return returnModel;
         }
@@ -655,6 +666,7 @@ namespace BlazorWasm.MiniPOS.Services
 
             return model;
         }
+        
         public async Task<DataReturnInfo> PastFiveYearFunnelChart(DateTime date)
         {
             var year = date.Year;
@@ -676,13 +688,16 @@ namespace BlazorWasm.MiniPOS.Services
             };
             for (int index = 0; index < dataList.Count; index++)
             {
-                data.arrayObject[index] = new object[] {
-             dataList[index].Year.ToString(),
-             dataList[index].Amount
-         };
+                data.arrayObject[index] = new object[]
+                {
+                    dataList[index].Year.ToString(),
+                    dataList[index].Amount
+                };
             }
+
             return data;
         }
+
         public async Task<DonutChartResponseModel> DonutChart()
         {
             var data = JsonConvert.DeserializeObject<DonutChartResponseModel>(JsonData.str);
@@ -730,8 +745,10 @@ namespace BlazorWasm.MiniPOS.Services
                                 await SetSaleProduct(_model);
                             }
                         }
+
                         await SetVoucher();
                     }
+
                     _startDate = _startDate.AddYears(-1);
                 }
             }
@@ -774,20 +791,26 @@ namespace BlazorWasm.MiniPOS.Services
 
                     productInfo.data[j] = result;
                 }
+
                 topFiveProductLst.Add(productInfo);
             }
+
             return topFiveProductLst;
         }
 
-        public async Task<List<ProductInfo>> QtyOfTopFiveProductsByYear()
+        public async Task<QtyOfTopFiveProductsByYearModel> QtyOfTopFiveProductsByYear()
         {
-            List<ProductInfo> topFiveProductLst = new();
-            var startYear = DateTime.Now.Year;
-            var endYear = startYear - 4;
+            var model = new QtyOfTopFiveProductsByYearModel();
 
-            var lst = await _localStorage
-                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
-            if (lst is null) return new List<ProductInfo>();
+            var startYear = DateTime.Now.Year;
+            var endYear = startYear - 3;
+
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            if (lst is null) return model;
+
+            /*var topUniqueProducts = GetTopUniqueProductNames(lst, 4);
+            model.productNames = topUniqueProducts.Select(s=> s.);*/
+
             var topUniqueProducts = lst
                 .GroupBy(s => s.product_name)
                 .Select(group => new
@@ -796,8 +819,11 @@ namespace BlazorWasm.MiniPOS.Services
                     TotalQty = group.Sum(s => s.product_qty)
                 })
                 .OrderByDescending(s => s.TotalQty)
-                .Take(5)
+                .Take(4)
                 .ToList();
+
+            model.productNames = topUniqueProducts.Select(s => s.ProductName).ToArray();
+            var topFiveProductLst = new List<ProductInfo>();
 
             for (int i = endYear; i <= startYear; i++)
             {
@@ -815,11 +841,74 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_qty);
                     productInfo.data[j] = result;
                 }
+
                 topFiveProductLst.Add(productInfo);
             }
-            return topFiveProductLst;
+
+            model.productInfos = topFiveProductLst;
+            return model;
         }
 
+        public async Task<PastSevenDaysModel> PastSevenDays()
+        {
+            var model = new PastSevenDaysModel();
+
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            if (lst is null) return model;
+
+            var currentDate = DateTime.Now;
+            var startDate = currentDate.AddDays(-6);
+            List<string> daysOfWeekList = new List<string>();
+            var endDate = currentDate;
+            for (DateTime date = startDate; date <= currentDate; date = date.AddDays(1))
+            {
+                string dayOfWeek = date.ToString("dddd");
+                daysOfWeekList.Add(dayOfWeek);
+            }
+
+            model.days = daysOfWeekList.ToArray();
+            var sevenDaysData = lst
+                .Where(s => s.detail_date >= startDate && s.detail_date <= endDate)
+                .ToList();
+
+            var topSixProducts = lst
+                .GroupBy(s => s.product_name)
+                .Select(group => new
+                {
+                    ProductName = group.Key,
+                    TotalQty = group.Sum(s => s.product_qty)
+                })
+                .OrderByDescending(s => s.TotalQty)
+                .Take(6)
+                .ToList();
+            var productLst = new List<ProductInfo>();
+            for (int i = 0; i < topSixProducts.Count; i++)
+            {
+                var productInfo = new ProductInfo
+                {
+                    name = topSixProducts[i].ProductName,
+                    data = new int[topSixProducts.Count]
+                };
+                /*foreach (var result in daysOfWeekList.Select(t => sevenDaysData
+                             .Where(s => s.product_name == topSixProducts[i].ProductName)
+                             .Where(s => s.detail_date.Day.ToString("dddd") == t)
+                             .Sum(s => s.product_price)))
+                {
+                    productInfo.data[i] = result;
+                }*/
+                foreach (var t in daysOfWeekList)
+                {
+                    var result = sevenDaysData
+                        .Where(s => s.product_name == topSixProducts[i].ProductName)
+                        .Where(s => s.detail_date.Day.ToString("dddd") == t)
+                        .Sum(s => s.product_price);
+                    productInfo.data[i] = result;
+                }
+                productLst.Add(productInfo);
+            }
+            model.productInfos = productLst;
+            return model;
+        }
 
         public async Task GenerateDataByMonth()
         {
@@ -836,7 +925,7 @@ namespace BlazorWasm.MiniPOS.Services
                 var endDate = new DateTime(2023, 1, 1);
                 while (startDate >= endDate)
                 {
-                    Console.WriteLine($"Start Date {startDate} -- End Date {endDate}");
+                    // Console.WriteLine($"Start Date {startDate} -- End Date {endDate}");
                     for (int i = 0; i < 4; i++)
                     {
                         for (int j = 0; j < 3; j++)
@@ -862,13 +951,13 @@ namespace BlazorWasm.MiniPOS.Services
                             {
                                 await SetSaleProduct(_model);
                             }
-                            Console.WriteLine($"model => {_model.product_name}");
+                            // Console.WriteLine($"model => {_model.product_name}");
                         }
                         await SetVoucher();
-                        Console.WriteLine($"{i}  Voucher set!!!!!");
+                        // Console.WriteLine($"{i}  Voucher set!!!!!");
                     }
                     startDate = startDate.AddMonths(-1);
-                    Console.WriteLine("--------------------");
+                    // Console.WriteLine("--------------------");
                 }
             }
         }
