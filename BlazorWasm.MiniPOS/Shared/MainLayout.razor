@@ -153,7 +153,8 @@
 
 @code {
     private bool isShowProfileMenu = false;
-    private EnumPage Page = EnumPage.Sale;
+    // private EnumPage Page = EnumPage.Sale;
+    private EnumPage Page = EnumPage.Dashboard;
     private bool isLoading = false;
 
     protected override async Task OnInitializedAsync()
@@ -203,13 +204,13 @@
     private static List<PageUrlModel> PageList
         => new List<PageUrlModel>
             {
-            new PageUrlModel { Page = EnumPage.Sale, Url = "" },
+            new PageUrlModel { Page = EnumPage.Sale, Url = "/Sale" },
             new PageUrlModel { Page = EnumPage.Product, Url = "setup/product" },
             new PageUrlModel { Page = EnumPage.ProductCategory, Url = "setup/product-category" },
             new PageUrlModel { Page = EnumPage.BestProductReport, Url = "best-product-report" },
             new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
             new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
-            new PageUrlModel { Page = EnumPage.Dashboard, Url = "/Dashboard" },
+            new PageUrlModel { Page = EnumPage.Dashboard, Url = "" },
             };
 
     static string InsertSpacesBeforeCapitals(string input)
