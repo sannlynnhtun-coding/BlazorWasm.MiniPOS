@@ -12,13 +12,6 @@
         <div id="BarBasicChart"></div>
     </div>
     <div class="col-md-6">
-        <div id="play-controls">
-            <button id="play-pause-button" class="fa fa-play" title="play"></button>
-            <input id="play-range" type="range" value="1960" min="1960" max="2018">
-        </div>
-        <div id="BarRaceChart"></div>
-    </div>
-    <div class="col-md-6">
         <div id="ColumnDrillDown"></div>
     </div>
     <div class="col-md-6">
@@ -31,8 +24,6 @@
         <div id="PastFiveYearFunnelChart"></div>
     </div>
     <div class="col-md-12">
-        @*  @if(yearList is not null && yearList.Count > 0)
-        { *@
         <MudGrid>
             <MudItem xs="6">
                 <MudSelect T="int" Label="Year"
@@ -93,7 +84,6 @@
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("columnChart");
             await JsRuntime.InvokeVoidAsync("barBasicChart");
-            // await JsRuntime.InvokeVoidAsync("barRaceChart");
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
             await JsRuntime.InvokeVoidAsync("yearOverYear");
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
