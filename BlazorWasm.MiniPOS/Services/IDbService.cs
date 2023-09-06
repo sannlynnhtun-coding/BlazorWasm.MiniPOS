@@ -43,5 +43,6 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<int>> GetYearList();
         Task<List<TwoYearComparisonModel>> CompareTwoYear(int firstYear,
             int secondYear);
+        Task<YearlySaleAmountModel> YearlySaleAmount();
     }
 }

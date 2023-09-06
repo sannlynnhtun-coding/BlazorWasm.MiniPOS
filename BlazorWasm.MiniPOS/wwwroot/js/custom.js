@@ -791,7 +791,7 @@ window.pastFiveYear = function (data) {
 window.pastFiveYearFunnelChart = function (data) {
     // Set up the chart
     data = data.arrayObject
-    console.log(data)
+    /*console.log(data)*/
     Highcharts.chart('PastFiveYearFunnelChart', {
         chart: {
             type: 'funnel3d',
@@ -832,8 +832,8 @@ window.pastFiveYearFunnelChart = function (data) {
 }
 
 window.compareTwoYear = function (result, category) {
-    console.log(result)
-    console.log(category)
+    //console.log(result)
+    //console.log(category)
     Highcharts.chart('CompareTwoYear', {
         chart: {
             type: 'column'
@@ -872,11 +872,11 @@ window.compareTwoYear = function (result, category) {
     });
 }
 
-window.yearlySaleAmount = function () {
+window.yearlySaleAmount = function (category,data) {
     // Set up the chart
     const chart = new Highcharts.Chart({
         chart: {
-            renderTo: 'container',
+            renderTo: 'YearlySaleAmount',
             type: 'column',
             options3d: {
                 enabled: true,
@@ -887,8 +887,7 @@ window.yearlySaleAmount = function () {
             }
         },
         xAxis: {
-            categories: ['Toyota', 'BMW', 'Volvo', 'Audi', 'Peugeot', 'Mercedes-Benz',
-                'Volkswagen', 'Polestar', 'Kia', 'Nissan']
+            categories: category
         },
         yAxis: {
             title: {
@@ -897,10 +896,10 @@ window.yearlySaleAmount = function () {
         },
         tooltip: {
             headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: 'Cars sold: {point.y}'
+            pointFormat: 'Amount: {point.y} MMK'
         },
         title: {
-            text: 'Sold passenger cars in Norway by brand, January 2021',
+            text: 'Yearly Sale Amount From Current Year',
             align: 'left'
         },
         subtitle: {
@@ -918,7 +917,7 @@ window.yearlySaleAmount = function () {
             }
         },
         series: [{
-            data: [1318, 1073, 1060, 813, 775, 745, 537, 444, 416, 395],
+            data: data,
             colorByPoint: true
         }]
     });

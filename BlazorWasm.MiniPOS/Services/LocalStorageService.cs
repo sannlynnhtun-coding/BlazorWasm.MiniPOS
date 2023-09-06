@@ -562,6 +562,26 @@ namespace BlazorWasm.MiniPOS.Services
 
             return (red, green, blue);
         }
+        public async Task<YearlySaleAmountModel> YearlySaleAmount()
+        {
+            var year = DateTime.Now.Year;
+            var pastFiveYear = year - 5;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            YearlySaleAmountModel returnModel = new();
+            foreach (var item in dataList)
+            {
+                returnModel.data.Add(item.Amount);
+                returnModel.category.Add(item.Year.ToString());
+            }
+            return returnModel;
+        }
         public async Task<List<int>> GetYearList()
         {
             var year = DateTime.Now.Year;

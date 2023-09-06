@@ -17,4 +17,9 @@
         public string valueSuffix { get; set; }
     }
 
+    public class YearlySaleAmountModel
+    {
+        public List<string> category { get; set; } = new();
+        public List<int> data { get; set; } = new();
+    }
 }
