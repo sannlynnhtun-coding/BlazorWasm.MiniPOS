@@ -152,7 +152,6 @@ window.columnChart = function () {
 }
 
 window.basicColumnChart = function (series) {
-    console.log({ series });
     Highcharts.chart('BasicColumnChart', {
         chart: {
             type: 'column'

@@ -84,8 +84,8 @@
         if (firstRender)
         {
             await db.GenerateYearOverYear();
-            //await db.GenerateDataByMonth();
-            var testing = await db.PastSevenDays();
+            await db.GenerateDataByMonth();
+            var sevenDaysData = await db.PastSevenDays();
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
             //await db.GenerateDataByMonth();
@@ -103,7 +103,7 @@
             await JsRuntime.InvokeVoidAsync("columnDrillDown");
             await JsRuntime.InvokeVoidAsync("yearOverYear");
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
-            await JsRuntime.InvokeVoidAsync("pastSevenDays", testing.days, testing.productInfos);
+            await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
 
         }
