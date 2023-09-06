@@ -79,8 +79,6 @@
             var sevenDaysData = await db.PastSevenDays();
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
-            //await db.GenerateDataByMonth();
-            var testData = await db.QtyOfTopFiveProductsByYear();
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             var result = await db.YearOverYearChart(DateTime.Now);
