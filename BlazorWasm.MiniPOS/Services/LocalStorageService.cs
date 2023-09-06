@@ -8,6 +8,7 @@ using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFivePr
 using System.Linq;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using System;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -493,7 +494,102 @@ namespace BlazorWasm.MiniPOS.Services
             returnModel.YearData = yearData;
             return returnModel;
         }
+        public async Task<List<TwoYearComparisonModel>> CompareTwoYear(int firstYear,
+            int secondYear)
+        {
+            var lst = await GetSaleVoucherHead();
+            var firstResultLst = lst
+                .Where(x => x.sale_date.Year == firstYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            var secondResultLst = lst
+                .Where(x => x.sale_date.Year == secondYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.sale_total_amount)
+                }).ToList();
+            List<TwoYearComparisonModel> returnData = new();
+            foreach (var item in firstResultLst)
+            {
+                for(int i = 0; i < 2; i++)
+                {
+                    var result = GenerateColor();
+                    returnData.Add(new TwoYearComparisonModel
+                    {
+                        name = i != 0 ? item.Year.ToString() + "Optimized" : 
+                                item.Year.ToString(),
+                        color = $"rgba({result.Item1},{result.Item2},{result.Item3},{1})",
+                        data = new List<double>
+                        {
+                            i == 0 ? item.Amount /10 : secondResultLst[0].Amount / 10,
+                            i == 0 ? item.Amount /100 : secondResultLst[0].Amount / 100,
+                            i == 0 ? item.Amount /1000 : secondResultLst[0].Amount / 1000,
+                        },
+                        pointPadding = i != 0 ? 0.4 : 0.3,
+                        pointPlacement = -0.2,
+                    });
+                }
+            }
+            foreach (var item in secondResultLst)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    var result = GenerateColor();
+                    returnData.Add(new TwoYearComparisonModel
+                    {
+                        name = i != 0 ? item.Year.ToString() + "Optimized" :
+                                item.Year.ToString(),
+                        color = $"rgba({result.Item1},{result.Item2},{result.Item3},{1})",
+                        data = new List<double>
+                        {
+                            i == 0 ? item.Amount /10 : firstResultLst[0].Amount / 10,
+                            i == 0 ? item.Amount /100 : firstResultLst[0].Amount / 100,
+                            i == 0 ? item.Amount /1000 : firstResultLst[0].Amount / 1000,
+                        },
+                        tooltip = new ChartTooltip
+                        {
+                           valuePrefix = "$",
+                           valueSuffix = "M"
+                        },
+                        pointPadding = i != 0 ? 0.4 : 0.3,
+                        pointPlacement = 0.2,
+                        yAxis = 1
+                    });
+                }
+            }
+            return returnData;
+        }
+        public (int, int, int) GenerateColor()
+        {
+            Random random = new();
+            int red = random.Next(256);   
+            int green = random.Next(256); 
+            int blue = random.Next(256);
 
+            return (red, green, blue);
+        }
+        public async Task<List<int>> GetYearList()
+        {
+            var year = DateTime.Now.Year;
+            var pastFiveYear = year - 5;
+            var lst = await GetSaleVoucherHead();
+            var dataList = lst
+                .Where(x => x.sale_date.Year <= year && x.sale_date.Year >= pastFiveYear)
+                .GroupBy(s => s.sale_date.Year).Select(s => new
+                {
+                    Year = s.Key,
+                }).ToList();
+            List<int> yearList = new();
+            foreach (var item in dataList)
+            {
+                yearList.Add(item.Year);
+            }
+            return yearList;
+        }
         public async Task<PastFiveYearModel> PastFiveYearV1(DateTime date)
         {
             var year = date.Year;
@@ -550,8 +646,8 @@ namespace BlazorWasm.MiniPOS.Services
 
             return model;
         }
-
-        public async Task<DataReturnInfo> PastFiveYearV2(DateTime date)
+        
+        public async Task<DataReturnInfo> PastFiveYearFunnelChart(DateTime date)
         {
             var year = date.Year;
             var pastFiveYear = year - 5;
