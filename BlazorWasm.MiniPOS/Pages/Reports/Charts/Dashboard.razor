@@ -126,6 +126,7 @@
             var funnelChartPastFiveYear = await db.PastFiveYearFunnelChart(DateTime.Now);
             var productsMaxMinQty = await db.MaxMinQtyOfProducts();
             var fiveYearLineChart = await db.FiveYearLineChart();
+            var pastFiveYearMonthly = await db.PastFiveYearMonthlySaleAmount(DateTime.Now);
 
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("barBasicChart",

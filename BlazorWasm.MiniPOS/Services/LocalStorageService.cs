@@ -1007,8 +1007,8 @@ namespace BlazorWasm.MiniPOS.Services
         {
             var year = dateTime.Year;
             var pastFiveYear = year - 5;
-            var startDate = dateTime;
-            //var endDate = dateTime
+            var startDate = dateTime.ToString("yyyy-MM");
+            var endDate = dateTime.AddYears(-5).ToString("yyyy-MM");
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
 
             List<int> yearLst = new();
@@ -1017,13 +1017,14 @@ namespace BlazorWasm.MiniPOS.Services
                 yearLst.Add(year);
                 year = dateTime.AddYears(-1).Year;
             }
-            //var dataList = lst
-            //    .Where(x => x.detail_date.ToString("yyyy-MM") <= year && x.detail_date.ToString("yyyy-MM") >= pastFiveYear)
-            //    .GroupBy(s => s.detail_date.Year).Select(s => new
-            //    {
-            //        Year = s.Key,
-            //        Amount = s.Sum(sale => sale.product_price)
-            //    }).ToList();
+            var dataList = lst
+                .Where(x => Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) <= Convert.ToDateTime(startDate)
+                && Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) >= Convert.ToDateTime(endDate))
+                .GroupBy(s => s.detail_date.ToString("yyyy-MM")).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.product_price)
+                }).ToList();
             return default;
         }
         public async Task GenerateDataByMonth()
