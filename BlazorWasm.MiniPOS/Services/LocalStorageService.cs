@@ -202,7 +202,7 @@ namespace BlazorWasm.MiniPOS.Services
             var result = lst.FirstOrDefault(x => x.product_id == guid);
             return result ?? throw new InvalidOperationException();
         }
-        
+
         public async Task<ProductDataModel?> GetProductByName(String name)
         {
             var lst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
@@ -513,16 +513,16 @@ namespace BlazorWasm.MiniPOS.Services
                     Amount = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
             List<TwoYearComparisonModel> returnData = new();
-            if(firstResultLst.Count == 0 || secondResultLst.Count == 0) 
+            if (firstResultLst.Count == 0 || secondResultLst.Count == 0)
                 return returnData;
             foreach (var item in firstResultLst)
             {
-                for(int i = 0; i < 2; i++)
+                for (int i = 0; i < 2; i++)
                 {
                     var result = GenerateColor();
                     returnData.Add(new TwoYearComparisonModel
                     {
-                        name = i != 0 ? item.Year.ToString() + "Optimized" : 
+                        name = i != 0 ? item.Year.ToString() + "Optimized" :
                                 item.Year.ToString(),
                         color = $"rgba({result.Item1},{result.Item2},{result.Item3},{1})",
                         data = new List<double>
@@ -554,8 +554,8 @@ namespace BlazorWasm.MiniPOS.Services
                         },
                         tooltip = new ChartTooltip
                         {
-                           valuePrefix = "$",
-                           valueSuffix = "M"
+                            valuePrefix = "$",
+                            valueSuffix = "M"
                         },
                         pointPadding = i != 0 ? 0.4 : 0.3,
                         pointPlacement = 0.2,
@@ -568,8 +568,8 @@ namespace BlazorWasm.MiniPOS.Services
         public (int, int, int) GenerateColor()
         {
             Random random = new();
-            int red = random.Next(256);   
-            int green = random.Next(256); 
+            int red = random.Next(256);
+            int green = random.Next(256);
             int blue = random.Next(256);
 
             return (red, green, blue);
@@ -668,7 +668,7 @@ namespace BlazorWasm.MiniPOS.Services
 
             return model;
         }
-        
+
         public async Task<DataReturnInfo> PastFiveYearFunnelChart(DateTime date)
         {
             var year = date.Year;
@@ -907,7 +907,7 @@ namespace BlazorWasm.MiniPOS.Services
                 productLst.Add(productInfo);
             }
             model.productInfos = productLst;
-            return model;                                                                     
+            return model;
         }
 
         public async Task<List<SixMostSoldProductsModel>> SixMostSoldProducts()
@@ -920,7 +920,7 @@ namespace BlazorWasm.MiniPOS.Services
                 .Select(group => new
                 {
                     name = group.Key,
-                    data = group.Sum(s => s.product_qty) 
+                    data = group.Sum(s => s.product_qty)
                 })
                 .OrderByDescending(s => s.data)
                 .Take(6)
@@ -979,7 +979,7 @@ namespace BlazorWasm.MiniPOS.Services
                 .ToList();
 
             var fiveYearsData = lst
-                .Where(f => f.detail_date.Year <= currentYear 
+                .Where(f => f.detail_date.Year <= currentYear
                             && f.detail_date.Year >= pastFiveYear)
                 .ToList();
 
@@ -990,7 +990,7 @@ namespace BlazorWasm.MiniPOS.Services
                     name = fiveProducts[i].ProductName,
                     data = new int[currentYear - pastFiveYear]
                 };
-                
+
                 for (int j = pastFiveYear; j <= currentYear; j++)
                 {
                     var result = fiveYearsData
@@ -1007,26 +1007,48 @@ namespace BlazorWasm.MiniPOS.Services
         {
             var year = dateTime.Year;
             var pastFiveYear = year - 5;
-            var startDate = dateTime.ToString("yyyy-MM");
-            var endDate = dateTime.AddYears(-5).ToString("yyyy-MM");
+            var startDate = dateTime;
+            var endDate = dateTime.AddYears(-5);
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
 
             List<int> yearLst = new();
-            while(year >= pastFiveYear)
+            List<PastFiveYearsMonthlyModel> returnModel = new();
+            List<MonthlyModel> monthlyModel = new();
+            while (year >= pastFiveYear)
             {
                 yearLst.Add(year);
-                year = dateTime.AddYears(-1).Year;
+                year = year - 1;
             }
             var dataList = lst
-                .Where(x => Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) <= Convert.ToDateTime(startDate)
-                && Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) >= Convert.ToDateTime(endDate))
-                .GroupBy(s => s.detail_date.ToString("yyyy-MM")).Select(s => new
+                            .Where(x => x.detail_date <= startDate
+                            && x.detail_date >= endDate).ToList();
+            PastFiveYearsMonthlyModel model = new();
+            int count = 0;
+            foreach (var item in yearLst)
+            {
+                foreach (var data in dataList)
                 {
-                    Year = s.Key,
-                    Amount = s.Sum(sale => sale.product_price)
-                }).ToList();
-            return default;
+                    if (item == data.detail_date.Year && count < 12)
+                    {
+                        monthlyModel.Add(new MonthlyModel
+                        {
+                            name = data.detail_date.ToString(),
+                            value = data.product_price
+                        });
+                        count++;
+                    }
+                }
+                count = 0;
+                returnModel.Add(new PastFiveYearsMonthlyModel
+                {
+                    name = item.ToString(),
+                    data = monthlyModel
+                });
+                monthlyModel = new();
+            }
+            return returnModel;
         }
+
         public async Task GenerateDataByMonth()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
