@@ -887,7 +887,7 @@ namespace BlazorWasm.MiniPOS.Services
                 var productInfo = new ProductInfo
                 {
                     name = topSixProducts[i].ProductName,
-                    data = new int[topSixProducts.Count]
+                    data = new int[daysOfWeekList.Count]
                 };
                 /*foreach (var result in daysOfWeekList.Select(t => sevenDaysData
                              .Where(s => s.product_name == topSixProducts[i].ProductName)
@@ -907,7 +907,7 @@ namespace BlazorWasm.MiniPOS.Services
                 productLst.Add(productInfo);
             }
             model.productInfos = productLst;
-            return model;
+            return model;                                                                     
         }
 
         public async Task<List<SixMostSoldProductsModel>> SixMostSoldProducts()
@@ -936,6 +936,26 @@ namespace BlazorWasm.MiniPOS.Services
                     }
                 });
             }
+            return models;
+        }
+
+        public async Task<List<MaxMinQtyOfProductsModel>> MaxMinQtyOfProducts()
+        {
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            lst ??= new List<SaleVoucherDetailDataModel>();
+            List<MaxMinQtyOfProductsModel> models = new();
+            models = lst
+                .GroupBy(product => product.product_name)
+                .Select(group => new MaxMinQtyOfProductsModel
+                {
+                    name = group.Key,
+                    low = group.Min(product => product.product_qty),
+                    high = group.Max(product => product.product_qty)
+                })
+                .OrderByDescending(group => group.high)
+                .Take(14)
+                .ToList();
+
             return models;
         }
 

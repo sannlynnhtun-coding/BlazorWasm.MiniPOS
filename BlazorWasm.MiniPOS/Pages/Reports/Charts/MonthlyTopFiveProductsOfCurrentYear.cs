@@ -31,3 +31,10 @@ public class SixMostSoldProductsModel
     public string name { get; set; }
     public List<int> data { get; set; }
 }
+
+public class MaxMinQtyOfProductsModel
+{
+    public string name { get; set; }
+    public int low { get; set; }
+    public int high { get; set; }
+}

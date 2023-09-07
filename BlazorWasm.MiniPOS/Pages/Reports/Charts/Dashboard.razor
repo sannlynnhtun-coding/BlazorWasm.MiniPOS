@@ -91,6 +91,9 @@
     <div class="col-md-6">
         <div id="SixMostSoldProducts"></div>
     </div>
+    <div class="col-md-6">
+        <div id="MaxMinQtyOfProducts"></div>
+    </div>
 </div>
 
 @code {
@@ -108,10 +111,10 @@
 
             var sixSeries =  await db.SixMostSoldProducts();
             var sevenDaysData = await db.PastSevenDays();
+            var productsMaxMinQty = await db.MaxMinQtyOfProducts();
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
             var yearlySaleAmount = await db.YearlySaleAmount();
-            var testData = await db.QtyOfTopFiveProductsByYear();
             var data = await db.CurrentYearTopFiveProductsByMonth();
             var series = data != null ? data : new List<ProductInfo>();
             var result = await db.YearOverYearChart(DateTime.Now);
@@ -129,6 +132,7 @@
             await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
             // await JsRuntime.InvokeVoidAsync("productCategoryAndProduct");
             await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
+            await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
         }
     }
 

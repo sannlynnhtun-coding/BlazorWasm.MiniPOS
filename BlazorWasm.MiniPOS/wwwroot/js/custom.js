@@ -460,7 +460,7 @@ window.sixMostSoldProducts = function (sixSeries) {
                 dataLabels: {
                     enabled: true,
                     align: 'center',
-                    format: '{y} K'
+                    format: '{y} qty'
                 },
                 stacking: 'percent',
                 paths: [{
@@ -469,6 +469,50 @@ window.sixMostSoldProducts = function (sixSeries) {
             }
         },
         series: sixSeries
+    });
+}
+
+window.maxMinQtyOfProducts = function (data) {
+    Highcharts.chart('MaxMinQtyOfProducts', {
+
+        chart: {
+            type: 'dumbbell',
+            inverted: true
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        subtitle: {
+            text: '1970 vs 2021 Source: ' +
+                '<a href="https://ec.europa.eu/eurostat/en/web/main/data/database"' +
+                'target="_blank">Eurostat</a>'
+        },
+
+        title: {
+            text: 'Maximum - Minimum Quantity of Products'
+        },
+
+        tooltip: {
+            shared: true
+        },
+
+        xAxis: {
+            type: 'category'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Quantity'
+            }
+        },
+
+        series: [{
+            name: 'Quantity',
+            data: data
+        }]
+
     });
 }
 

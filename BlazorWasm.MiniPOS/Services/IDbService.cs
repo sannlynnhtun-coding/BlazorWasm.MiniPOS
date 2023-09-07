@@ -9,6 +9,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<bool> CheckIsProductExit(Guid guid);
         Task<List<ProductInfo>> CurrentYearTopFiveProductsByMonth();
         Task<List<SixMostSoldProductsModel>> SixMostSoldProducts();
+        Task<List<MaxMinQtyOfProductsModel>> MaxMinQtyOfProducts();
         Task DeleteProduct(Guid guid);
         Task DeleteProductCategory(Guid guid);
         Task DeleteProductSale(Guid guid);
