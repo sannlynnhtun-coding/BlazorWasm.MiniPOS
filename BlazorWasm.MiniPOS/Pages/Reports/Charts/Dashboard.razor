@@ -97,6 +97,9 @@
     <div class="col-md-6">
         <div id="FiveYearLineChart"></div>
     </div>
+    <div class="col-md-6">
+        <div id="MonthlySaleAmount"></div>
+    </div>
 </div>
 
 @code {
@@ -109,7 +112,6 @@
     {
         if (firstRender)
         {
-            await db.GenerateYearOverYear();
             await db.GenerateDataByMonth();
 
             var sixSeries = await db.SixMostSoldProducts();
@@ -138,6 +140,8 @@
             await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
             await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
             await JsRuntime.InvokeVoidAsync("fiveYearLineChart", fiveYearLineChart);
+            await JsRuntime.InvokeVoidAsync("monthlySaleAmount");
+            
         }
     }
 
