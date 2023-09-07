@@ -513,6 +513,8 @@ namespace BlazorWasm.MiniPOS.Services
                     Amount = s.Sum(sale => sale.sale_total_amount)
                 }).ToList();
             List<TwoYearComparisonModel> returnData = new();
+            if(firstResultLst.Count == 0 || secondResultLst.Count == 0) 
+                return returnData;
             foreach (var item in firstResultLst)
             {
                 for(int i = 0; i < 2; i++)
@@ -1001,7 +1003,30 @@ namespace BlazorWasm.MiniPOS.Services
             }
             return productInfoLst;
         }
+        public async Task<List<PastFiveYearsMonthlyModel>> PastFiveYearMonthlySaleAmount(DateTime dateTime)
+        {
+            var year = dateTime.Year;
+            var pastFiveYear = year - 5;
+            var startDate = dateTime.ToString("yyyy-MM");
+            var endDate = dateTime.AddYears(-5).ToString("yyyy-MM");
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
 
+            List<int> yearLst = new();
+            while(year >= pastFiveYear)
+            {
+                yearLst.Add(year);
+                year = dateTime.AddYears(-1).Year;
+            }
+            var dataList = lst
+                .Where(x => Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) <= Convert.ToDateTime(startDate)
+                && Convert.ToDateTime(x.detail_date.ToString("yyyy-MM")) >= Convert.ToDateTime(endDate))
+                .GroupBy(s => s.detail_date.ToString("yyyy-MM")).Select(s => new
+                {
+                    Year = s.Key,
+                    Amount = s.Sum(sale => sale.product_price)
+                }).ToList();
+            return default;
+        }
         public async Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct()
         {
             var _productLst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");

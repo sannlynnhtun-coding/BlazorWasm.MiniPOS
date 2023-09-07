@@ -22,4 +22,16 @@
         public List<string> category { get; set; } = new();
         public List<int> data { get; set; } = new();
     }
+
+    public class MonthlyModel
+    {
+        public string name { get; set; }
+        public double value { get; set; }
+    }
+
+    public class PastFiveYearsMonthlyModel
+    {
+        public string name { get; set; }
+        public List<MonthlyModel> data { get; set; }
+    }
 }
