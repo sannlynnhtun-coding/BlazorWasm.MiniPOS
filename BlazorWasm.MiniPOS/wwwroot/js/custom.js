@@ -394,8 +394,6 @@ window.pastSevenDays = function (days, series) {
     });
 }
 
-
-
 window.sixMostSoldProducts = function (sixSeries) {
     Highcharts.chart('SixMostSoldProducts', {
         chart: {
@@ -474,7 +472,6 @@ window.sixMostSoldProducts = function (sixSeries) {
 
 window.maxMinQtyOfProducts = function (data) {
     Highcharts.chart('MaxMinQtyOfProducts', {
-
         chart: {
             type: 'dumbbell',
             inverted: true
@@ -514,6 +511,67 @@ window.maxMinQtyOfProducts = function (data) {
         }]
 
     });
+}
+
+window.fiveYearLineChart = function (data) {
+    Highcharts.chart('FiveYearLineChart', {
+
+        title: {
+            text: 'Five Years Line Chart',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'By Job Category. Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>.',
+            align: 'left'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Yearly Sale Amount'
+            }
+        },
+
+        xAxis: {
+            accessibility: {
+                rangeDescription: 'Range: From Current Year to Past Five Years'
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: 2010
+            }
+        },
+
+        series: data,
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+
 }
 
 /*window.productCategoryAndProduct = function () {

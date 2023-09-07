@@ -841,10 +841,8 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_qty);
                     productInfo.data[j] = result;
                 }
-
                 topFiveProductLst.Add(productInfo);
             }
-
             model.productInfos = topFiveProductLst;
             return model;
         }
@@ -957,6 +955,51 @@ namespace BlazorWasm.MiniPOS.Services
                 .ToList();
 
             return models;
+        }
+
+        public async Task<List<ProductInfo>> FiveYearLineChart()
+        {
+            List<ProductInfo> productInfoLst = new();
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            int currentYear = DateTime.Now.Year;
+            int pastFiveYear = currentYear - 5;
+            lst ??= new List<SaleVoucherDetailDataModel>();
+
+            var fiveProducts = lst
+                .GroupBy(p => p.product_name)
+                .Select(s => new
+                {
+                    ProductName = s.Key,
+                    TotalSalePrice = s.Sum(t => t.product_price)
+                })
+                .OrderByDescending(t => t.TotalSalePrice)
+                .Take(5)
+                .ToList();
+
+            var fiveYearsData = lst
+                .Where(f => f.detail_date.Year <= currentYear 
+                            && f.detail_date.Year >= pastFiveYear)
+                .ToList();
+
+            for (int i = 0; i < fiveProducts.Count; i++)
+            {
+                var productInfo = new ProductInfo
+                {
+                    name = fiveProducts[i].ProductName,
+                    data = new int[currentYear - pastFiveYear]
+                };
+                
+                for (int j = pastFiveYear; j <= currentYear; j++)
+                {
+                    var result = fiveYearsData
+                        .Where(s => s.product_name == fiveProducts[i].ProductName)
+                        .Where(s => s.detail_date.Year == j)
+                        .Sum(s => s.product_price);
+                    productInfo.data[i] = result;
+                }
+                productInfoLst.Add(productInfo);
+            }
+            return productInfoLst;
         }
 
         public async Task GenerateDataByMonth()

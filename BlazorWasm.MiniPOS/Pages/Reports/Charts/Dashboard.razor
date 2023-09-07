@@ -94,6 +94,9 @@
     <div class="col-md-6">
         <div id="MaxMinQtyOfProducts"></div>
     </div>
+    <div class="col-md-6">
+        <div id="FiveYearLineChart"></div>
+    </div>
 </div>
 
 @code {
@@ -109,9 +112,8 @@
             await db.GenerateYearOverYear();
             await db.GenerateDataByMonth();
 
-            var sixSeries =  await db.SixMostSoldProducts();
+            var sixSeries = await db.SixMostSoldProducts();
             var sevenDaysData = await db.PastSevenDays();
-            var productsMaxMinQty = await db.MaxMinQtyOfProducts();
             var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
             var yearlySaleAmount = await db.YearlySaleAmount();
@@ -120,6 +122,8 @@
             var result = await db.YearOverYearChart(DateTime.Now);
             var pastFiveYear = await db.PastFiveYear(DateTime.Now);
             var funnelChartPastFiveYear = await db.PastFiveYearFunnelChart(DateTime.Now);
+            var productsMaxMinQty = await db.MaxMinQtyOfProducts();
+            var fiveYearLineChart = await db.FiveYearLineChart();
 
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("barBasicChart",
@@ -130,9 +134,10 @@
             await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
             await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
-            // await JsRuntime.InvokeVoidAsync("productCategoryAndProduct");
+    // await JsRuntime.InvokeVoidAsync("productCategoryAndProduct");
             await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
             await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
+            await JsRuntime.InvokeVoidAsync("fiveYearLineChart", fiveYearLineChart);
         }
     }
 
