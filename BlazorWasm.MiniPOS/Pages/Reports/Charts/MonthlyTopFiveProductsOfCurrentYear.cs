@@ -1,4 +1,6 @@
-﻿namespace BlazorWasm.MiniPOS.Pages.Reports.Charts;
+﻿using BlazorWasm.MiniPOS.Models;
+
+namespace BlazorWasm.MiniPOS.Pages.Reports.Charts;
 
 public class MonthlyTopFiveProductsOfCurrentYear
 {
@@ -37,4 +39,16 @@ public class MaxMinQtyOfProductsModel
     public string name { get; set; }
     public int low { get; set; }
     public int high { get; set; }
+}
+
+public class ProductCategoryChartModel
+{
+    public string name { get; set; }
+    public List<ProductChartModel> data { get; set; }
+}
+
+public class ProductChartModel
+{
+    public string name { get; set; }
+    public int value { get; set; }
 }

@@ -11,6 +11,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<ProductInfo>> FiveYearLineChart();
         Task<List<SixMostSoldProductsModel>> SixMostSoldProducts();
         Task<List<MaxMinQtyOfProductsModel>> MaxMinQtyOfProducts();
+        Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct();
         Task DeleteProduct(Guid guid);
         Task DeleteProductCategory(Guid guid);
         Task DeleteProductSale(Guid guid);

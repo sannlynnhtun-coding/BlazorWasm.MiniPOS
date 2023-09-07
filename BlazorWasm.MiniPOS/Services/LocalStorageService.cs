@@ -1002,6 +1002,94 @@ namespace BlazorWasm.MiniPOS.Services
             return productInfoLst;
         }
 
+        public async Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct()
+        {
+            var _productLst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
+            _productLst ??= new List<ProductDataModel>();
+            var _productCategoryLst = await _localStorage
+                .GetItemAsync<List<ProductCategoryDataModel>>("Tbl_ProductCategory");
+            _productCategoryLst ??= new List<ProductCategoryDataModel>();
+            List<ProductCategoryChartModel> model = new();
+            var sixProductCategory = _productCategoryLst.Take(6).ToList();
+            
+            
+
+            /*for (int i = 0; i < sixProductCategory.Count; i++)
+            {
+                var pc = new ProductCategoryChartModel
+                {
+                    name = sixProductCategory[i].product_category_name,
+                    data = new List<ProductChartModel>()
+                };
+                var t = sixProductCategory[i].product_category_code;
+                var proLst = _productLst
+                    .Where(p => p.product_category_code == sixProductCategory[i].product_category_code)
+                    .Select(p => new ProductChartModel
+                    {
+                        name = p.product_name,
+                        value = p.product_sale_price
+                    })
+                    .Take(5)
+                    .ToList();
+
+                pc.data = proLst;
+                model.Add(pc);
+            }*/
+            
+            foreach (var category in sixProductCategory)
+            {
+                var productsForCategory = _productLst
+                    .Where(p => p.product_category_code == category.product_category_code)
+                    .Select(p => new ProductChartModel
+                    {
+                        name = p.product_name,
+                        value = p.product_sale_price
+                    })
+                    .Take(10);
+
+                var pc = new ProductCategoryChartModel
+                {
+                    name = category.product_category_name,
+                    data = productsForCategory.ToList()
+                };
+
+                model.Add(pc);
+            }
+            /*for (int i = 0; i < sixProductCategory.Count; i++)
+            {
+                var categoryCode = sixProductCategory[i].product_category_code;
+                int count = 0;
+
+                var pc = new ProductCategoryChartModel
+                {
+                    name = sixProductCategory[i].product_category_name,
+                    data = new List<ProductChartModel>()
+                };
+                
+                foreach (var product in _productLst)
+                {
+                    if (product.product_category_code == categoryCode)
+                    {
+                        pc.data.Add(new ProductChartModel
+                        {
+                            name = product.product_name,
+                            value = product.product_sale_price
+                        });
+
+                        count++;
+
+                        if (count >= 5)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            */
+
+            return model;
+        }
+
         public async Task GenerateDataByMonth()
         {
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");

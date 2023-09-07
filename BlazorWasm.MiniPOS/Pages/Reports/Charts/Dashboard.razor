@@ -85,9 +85,7 @@
         </MudGrid>
         <div id="CompareTwoYear"></div>
     </div>
-    @*<div class="col-md-6">
-        <div id="ProductCategoryAndProduct"></div>
-    </div>*@
+
     <div class="col-md-6">
         <div id="SixMostSoldProducts"></div>
     </div>
@@ -96,6 +94,9 @@
     </div>
     <div class="col-md-6">
         <div id="FiveYearLineChart"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="ProductCategoryAndProduct"></div>
     </div>
 </div>
 
@@ -124,6 +125,7 @@
             var funnelChartPastFiveYear = await db.PastFiveYearFunnelChart(DateTime.Now);
             var productsMaxMinQty = await db.MaxMinQtyOfProducts();
             var fiveYearLineChart = await db.FiveYearLineChart();
+            var pdAndPdCtgy = await db.ProductCategoryAndProduct();
 
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("barBasicChart",
@@ -134,10 +136,10 @@
             await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
             await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
-    // await JsRuntime.InvokeVoidAsync("productCategoryAndProduct");
             await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
             await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
             await JsRuntime.InvokeVoidAsync("fiveYearLineChart", fiveYearLineChart);
+            await JsRuntime.InvokeVoidAsync("productCategoryAndProduct", pdAndPdCtgy);
         }
     }
 
