@@ -52,3 +52,26 @@ public class ProductChartModel
     public string name { get; set; }
     public int value { get; set; }
 }
+
+public class RootObject
+{
+    public string name { get; set; }
+    public string lineColor { get; set; }
+    public string color { get; set; }
+    public string fillColor { get; set; }
+    public object[][] data { get; set; }
+    public int xAxis { get; set; }
+}
+
+public class MonthlyRevenueReportForThreeYear{
+    
+    public string monthName { get; set; }
+    public int value { get; set; }
+}
+
+public class MonthlyRevenueReportResponseModel
+{
+    public string name { get; set; }
+    public List<MonthlyRevenueReportForThreeYear> data { get; set; }
+}
+

@@ -622,6 +622,131 @@ window.productCategoryAndProduct = function (data) {
     });
 }
 
+window.monthlyRevenueReportOfThreeYear = function () {
+    Highcharts.chart('MonthlyRevenueReportOfThreeYear', {
+        chart: {
+            type: 'area',
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 30,
+                depth: 200
+            }
+        },
+        title: {
+            text: 'Comparison of Yearly Sale Prices'
+        },
+        accessibility: {
+            description: 'The chart is showing the shapes of three mountain ranges as three area line series laid out in 3D behind each other.',
+            keyboardNavigation: {
+                seriesNavigation: {
+                    mode: 'serialize'
+                }
+            }
+        },
+        lang: {
+            accessibility: {
+                axis: {
+                    xAxisDescriptionPlural: 'The chart has 3 unlabelled X axes, one for each series.'
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Sale Prices',
+                x: -40
+            },
+            labels: {
+                format: '{value:,.0f} MMK'
+            },
+            gridLineDashStyle: 'Dash'
+        },
+        xAxis: [{
+            visible: false
+        }, {
+            visible: false
+        }, {
+            visible: false
+        }],
+        plotOptions: {
+            area: {
+                depth: 100,
+                marker: {
+                    enabled: false
+                },
+                states: {
+                    inactive: {
+                        enabled: false
+                    }
+                }
+            }
+        },
+        tooltip: {
+            valueSuffix: ' MMK'
+        },
+        series: [{
+            name: '2023 Monthly Revenue Report',
+            lineColor: 'rgb(180,90,50)',
+            color: 'rgb(200,110,50)',
+            fillColor: 'rgb(200,110,50)',
+            data: [
+                ['January', 0],
+                ['February', 2009],
+                ['March', 2152],
+                ['April', 2142],
+                ['May', 2465],
+                ['June', 2061],
+                ['July', 1438],
+                ['August', 2230],
+                ['September', 2284],
+                ['October', 2418],
+                ['November', 2429],
+                ['December', 2526]
+            ]
+        }, {
+            xAxis: 1,
+            lineColor: 'rgb(120,160,180)',
+            color: 'rgb(140,180,200)',
+            fillColor: 'rgb(140,180,200)',
+            name: '2022 Monthly Revenue Report',
+            data: [
+                ['January', 2049],
+                ['February', 2746],
+                ['March', 2173],
+                ['April', 2202],
+                ['May', 2543],
+                ['June', 2232],
+                ['July', 2257],
+                ['August', 2349],
+                ['September', 2198],
+                ['October', 2556],
+                ['November', 2536],
+                ['December', 2667]
+            ]
+        }, {
+            xAxis: 2,
+            lineColor: 'rgb(200, 190, 140)',
+            color: 'rgb(200, 190, 140)',
+            fillColor: 'rgb(230, 220, 180)',
+            name: '2021 Monthly Revenue Report',
+            data: [
+                ['January', 0],
+                ['February', 4314],
+                ['March', 3716],
+                ['April', 3672],
+                ['May', 3212],
+                ['June', 3133],
+                ['July', 3084],
+                ['August', 2884],
+                ['September', 2951],
+                ['October', 3238],
+                ['November', 3326],
+                ['December', 2871]
+            ]
+        }]
+    });
+}
+
 window.pastFiveYearFunnelChart = function (data) {
     // Set up the chart
     data = data.arrayObject
