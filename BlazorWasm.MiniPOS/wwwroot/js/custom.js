@@ -624,6 +624,30 @@ window.productCategoryAndProduct = function (data) {
 
 window.monthlyRevenueReportOfThreeYear = function (data) {
     
+    var colors = [
+        'rgb(180,90,50)',
+        'rgb(120,160,180)',
+        'rgb(200,190,140)'
+    ];
+
+    var seriesData = [];
+    $.each(data, function (index, report) {
+        var color = colors[index % colors.length];
+        var series = {
+            name: report.name,
+            lineColor: color,
+            color: color,
+            fillColor: color,
+            data: []
+        };
+
+        $.each(report.data, function (index, dataItem) {
+            series.data.push([dataItem.monthName, dataItem.value]);
+        });
+
+        seriesData.push(series);
+    });
+    
     Highcharts.chart('MonthlyRevenueReportOfThreeYear', {
         chart: {
             type: 'area',
@@ -685,66 +709,7 @@ window.monthlyRevenueReportOfThreeYear = function (data) {
         tooltip: {
             valueSuffix: ' MMK'
         },
-        series: [{
-            name: '2023 Monthly Revenue Report',
-            lineColor: 'rgb(180,90,50)',
-            color: 'rgb(200,110,50)',
-            fillColor: 'rgb(200,110,50)',
-            data: [
-                ['January', 0],
-                ['February', 2009],
-                ['March', 2152],
-                ['April', 2142],
-                ['May', 2465],
-                ['June', 2061],
-                ['July', 1438],
-                ['August', 2230],
-                ['September', 2284],
-                ['October', 2418],
-                ['November', 2429],
-                ['December', 2526]
-            ]
-        }, {
-            xAxis: 1,
-            lineColor: 'rgb(120,160,180)',
-            color: 'rgb(140,180,200)',
-            fillColor: 'rgb(140,180,200)',
-            name: '2022 Monthly Revenue Report',
-            data: [
-                ['January', 2049],
-                ['February', 2746],
-                ['March', 2173],
-                ['April', 2202],
-                ['May', 2543],
-                ['June', 2232],
-                ['July', 2257],
-                ['August', 2349],
-                ['September', 2198],
-                ['October', 2556],
-                ['November', 2536],
-                ['December', 2667]
-            ]
-        }, {
-            xAxis: 2,
-            lineColor: 'rgb(200, 190, 140)',
-            color: 'rgb(200, 190, 140)',
-            fillColor: 'rgb(230, 220, 180)',
-            name: '2021 Monthly Revenue Report',
-            data: [
-                ['January', 0],
-                ['February', 4314],
-                ['March', 3716],
-                ['April', 3672],
-                ['May', 3212],
-                ['June', 3133],
-                ['July', 3084],
-                ['August', 2884],
-                ['September', 2951],
-                ['October', 3238],
-                ['November', 3326],
-                ['December', 2871]
-            ]
-        }]
+        series: seriesData
     });
 }
 
@@ -947,7 +912,7 @@ window.monthlySaleAmount = function (data) {
 
 window.pastFiveYearDailySaleAmount = function (data) {
     data = data.dataArray
-    console.log(data);
+    console.log(`network data => ${data[0][0]}`);
     // Add the nodes option through an event call. We want to start with the parent
     // item and apply separate colors to each child element, then the same color to
     // grandchildren.
@@ -965,9 +930,9 @@ window.pastFiveYearDailySaleAmount = function (data) {
             ) {
                 e.options.data.forEach(function (link) {
 
-                    if (link[0] === 'Blueberry7 = 277') {
-                        nodes['Blueberry7 = 277'] = {
-                            id: 'Blueberry7 = 277',
+                    if (link[0] === data[0][0]) {
+                        nodes[data[0][0]] = {
+                            id: data[0][0],
                             marker: {
                                 radius: 20
                             }
