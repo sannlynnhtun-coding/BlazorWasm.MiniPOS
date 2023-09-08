@@ -622,7 +622,8 @@ window.productCategoryAndProduct = function (data) {
     });
 }
 
-window.monthlyRevenueReportOfThreeYear = function () {
+window.monthlyRevenueReportOfThreeYear = function (data) {
+    
     Highcharts.chart('MonthlyRevenueReportOfThreeYear', {
         chart: {
             type: 'area',

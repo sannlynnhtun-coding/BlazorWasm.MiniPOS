@@ -1152,15 +1152,6 @@ namespace BlazorWasm.MiniPOS.Services
                             value = group.Sum(v => v.product_price)
                         });*/
 
-            foreach (var response in model)
-            {
-                Console.WriteLine($"Report Name: {response.name}");
-                foreach (var item in response.data)
-                {
-                    Console.WriteLine($"Month: {item.monthName}, Value: {item.value}");
-                }
-            }
-
             return model;
         }
 
