@@ -96,14 +96,14 @@ window.getLocalStorageName = function () {
     return window.localStorage ? window.localStorage.name : null;
 };
 
-window.basicColumnChart = function (series) {
+window.basicColumnChart = function (id, title, series) {
     console.log(series)
-    Highcharts.chart('BasicColumnChart', {
+    Highcharts.chart(id, {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Top 5 selling products of current Year by each Month'
+            text: title
         },
         subtitle: {
             text: ''
