@@ -699,7 +699,38 @@ namespace BlazorWasm.MiniPOS.Services
 
             return data;
         }
-
+        public async Task<PastFiveYearsDailyModel> PastFiveYearsDailyAmount(DateTime dateTime)
+        {
+            var startDate = dateTime;
+            var endDate = dateTime.AddYears(-5);
+            var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            var dataList = lst
+                            .Where(x => x.detail_date <= startDate
+                            && x.detail_date >= endDate).ToList();
+            int count = 0;
+            int inner = 0;
+            int plusFive = 5;
+            var data = new PastFiveYearsDailyModel
+            {
+                dataArray = new string[dataList.Count][]
+            };
+            for (int i = 0; i < dataList.Count(); i++)
+            {
+                data.dataArray[i] = new string[]
+                {
+                        dataList[inner].product_name+dataList[inner].product_qty+" = "+dataList[inner].product_price,
+                        dataList[count].product_name+dataList[count].product_qty+" = "+dataList[count].product_price
+                };
+                count++;
+                count = count < dataList.Count ? count : dataList.Count - 1;
+                if (count > plusFive)
+                {
+                    inner = inner + 1;
+                    plusFive += 5; 
+                }
+            }
+            return data;
+        }
         public async Task<DonutChartResponseModel> DonutChart()
         {
             var data = JsonConvert.DeserializeObject<DonutChartResponseModel>(JsonData.str);
@@ -1057,8 +1088,8 @@ namespace BlazorWasm.MiniPOS.Services
             _productCategoryLst ??= new List<ProductCategoryDataModel>();
             List<ProductCategoryChartModel> model = new();
             var sixProductCategory = _productCategoryLst.Take(6).ToList();
-            
-            
+
+
 
             /*for (int i = 0; i < sixProductCategory.Count; i++)
             {
@@ -1081,7 +1112,7 @@ namespace BlazorWasm.MiniPOS.Services
                 pc.data = proLst;
                 model.Add(pc);
             }*/
-            
+
             foreach (var category in sixProductCategory)
             {
                 var productsForCategory = _productLst

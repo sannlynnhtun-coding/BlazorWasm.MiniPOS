@@ -34,4 +34,9 @@
         public string name { get; set; }
         public List<MonthlyModel> data { get; set; }
     }
+
+    public class PastFiveYearsDailyModel
+    {
+        public string[][] dataArray { get; set; }
+    }
 }

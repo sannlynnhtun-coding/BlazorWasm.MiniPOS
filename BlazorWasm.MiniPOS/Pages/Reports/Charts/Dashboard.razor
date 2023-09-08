@@ -103,6 +103,9 @@
     <div class="col-md-6">
         <div id="MonthlySaleAmount"></div>
     </div>
+    <div class="col-md-6">
+        <div id="PastFiveYearDailySaleAmount"></div>
+    </div>
 </div>
 
 @code {
@@ -131,6 +134,7 @@
             var fiveYearLineChart = await db.FiveYearLineChart();
             var pastFiveYearMonthly = await db.PastFiveYearMonthlySaleAmount(DateTime.Now);
             var pdAndPdCtgy = await db.ProductCategoryAndProduct();
+            var pastFiveYearDaily = await db.PastFiveYearsDailyAmount(DateTime.Now);
 
             await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
             await JsRuntime.InvokeVoidAsync("barBasicChart",
@@ -140,13 +144,14 @@
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
             await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
             await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
-            await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
+            //await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
             await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
             await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
             await JsRuntime.InvokeVoidAsync("fiveYearLineChart", fiveYearLineChart);
             await JsRuntime.InvokeVoidAsync("monthlySaleAmount", pastFiveYearMonthly);
-            
             await JsRuntime.InvokeVoidAsync("productCategoryAndProduct", pdAndPdCtgy);
+            await JsRuntime.InvokeVoidAsync("pastFiveYearDailySaleAmount", pastFiveYearDaily);
+
         }
     }
 
