@@ -82,6 +82,7 @@
                                 <ChildContent>
                                     <MudMenuItem OnClick="() => ChangeUrl(EnumPage.BestProductReport)">Best Product Report</MudMenuItem>
                                     <MudMenuItem OnClick="() => ChangeUrl(EnumPage.SaleReport)">Sale Report</MudMenuItem>
+                                    <MudMenuItem OnClick="() => ExportData()">Export Data</MudMenuItem>
                                 </ChildContent>
                             </MudMenu>
                         </div>
@@ -164,13 +165,32 @@
 
 @code {
     private bool isShowProfileMenu = false;
-    // private EnumPage Page = EnumPage.Sale;
     private EnumPage Page = EnumPage.Dashboard;
     private bool isLoading = false;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
 
+        }
+    }
+
+    private async Task ExportData()
+    {
+        var titleData = new List<ExportTitle>
+            {
+                new ExportTitle { title = "product_code", dataIndex = "product_code" },
+                new ExportTitle { title = "product_name", dataIndex = "product_name" }
+            };
+        var lst = await db.GetProductList();
+        await JsRuntime.InvokeVoidAsync("exportJsonData", titleData, lst, "export-data");
+    }
+
+    public class ExportTitle
+    {
+        public string? title { get; set; }
+        public string? dataIndex { get; set; }
     }
 
     private void ShowProfileMenu()
@@ -215,7 +235,7 @@
 
     private static List<PageUrlModel> PageList
         => new List<PageUrlModel>
-            {
+                                {
             new PageUrlModel { Page = EnumPage.Sale, Url = "/Sale" },
             new PageUrlModel { Page = EnumPage.Product, Url = "setup/product" },
             new PageUrlModel { Page = EnumPage.ProductCategory, Url = "setup/product-category" },
@@ -223,11 +243,11 @@
             new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
             new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
             new PageUrlModel { Page = EnumPage.Dashboard, Url = "" },
-             };
+                                 };
 
     private static List<string> ChartList =>
     new List<string>
-        {
+                            {
         "BasicColumnChart",
         "BarBasicChart",
         "PastFiveYearChart",
@@ -242,16 +262,17 @@
         "MonthlySaleAmount",
         "PastFiveYearDailySaleAmount",
         "MonthlyRevenueReportOfThreeYear"
-        };
+                            };
+
     private void ShowChart(string chartName)
     {
         StateContainer.ChartName = chartName;
     }
-    static string InsertSpacesBeforeCapitals(string input)
+
+    private static string InsertSpacesBeforeCapitals(string input)
     {
         var pattern = @"(?<!^)(?=[A-Z])"; // Positive lookahead for capital letters
         var replaced = Regex.Replace(input, pattern, " ");
         return replaced;
     }
-
 }
