@@ -2,7 +2,7 @@
 @implements IDisposable
 @inject ChartStateContainer StateContainer
 
-@if(!string.IsNullOrWhiteSpace(StateContainer.ChartName))
+@if (!string.IsNullOrWhiteSpace(StateContainer.ChartName))
 {
     chartName = StateContainer.ChartName;
     firstShow = false;
@@ -15,7 +15,7 @@
     <div class="col-md-6" style="display:@(chartName =="BasicColumnChart" || firstShow == true ?
     "":"none")">
         @* <div id="BasicColumnChart"></div> *@
-        @if (Series is not null) 
+        @if (Series is not null)
         {
             <PageBasicColumnChart Id="BasicColumnChart"
                                   Title="Top 5 selling products of current Year by each Month"
@@ -138,7 +138,6 @@
 </div>
 
 @code {
-
     private List<MonthlyTopFiveProductsOfCurrentYear> _topProductsData;
     private List<ProductInfo>? Series;
     private QtyOfTopFiveProductsByYearModel? BarBasicData;
@@ -198,9 +197,9 @@
     {
         StateContainer.OnChange -= StateHasChanged;
     }
-    private static List<string> ChartList =>
-    new List<string>
-            {
+
+    private static List<string> ChartList => new List<string>
+    {
         "BasicColumnChart",
         "BarBasicChart",
         "PastFiveYearChart",
@@ -214,5 +213,5 @@
         "ProductCategoryAndProduct",
         "MonthlySaleAmount",
         "PastFiveYearDailySaleAmount"
-            };
+    };
 }
