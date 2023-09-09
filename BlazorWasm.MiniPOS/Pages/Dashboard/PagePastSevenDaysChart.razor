@@ -1,0 +1,29 @@
+﻿<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+    
+    [Parameter]
+    public PastSevenDaysModel? PastSevenDaysData { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (PastSevenDaysData is not null)
+            {
+                await JsRuntime.InvokeVoidAsync("pastSevenDays", Id, Title,
+                    PastSevenDaysData.days, PastSevenDaysData.productInfos);
+            }
+        }
+    }
+}

@@ -149,13 +149,13 @@ window.basicColumnChart = function (id, title, series) {
     });
 }
 
-window.barBasicChart = function (name, series) {
-    Highcharts.chart('BarBasicChart', {
+window.barBasicChart = function (id, title, categories, data) {
+    Highcharts.chart(id, {
         chart: {
             type: 'bar'
         },
         title: {
-            text: 'Historic World Population by Region',
+            text: title,
             align: 'left'
         },
         subtitle: {
@@ -165,7 +165,7 @@ window.barBasicChart = function (name, series) {
             align: 'left'
         },
         xAxis: {
-            categories: name,
+            categories: categories,
             title: {
                 text: null
             },
@@ -210,7 +210,7 @@ window.barBasicChart = function (name, series) {
         credits: {
             enabled: false
         },
-        series: series
+        series: data
     });
 
 }
@@ -329,8 +329,8 @@ window.pastFiveYear = function (data) {
     });
 }
 
-window.pastSevenDays = function (days, series) {
-    Highcharts.chart('PastSevenDays', {
+window.pastSevenDays = function (id, title, days, series) {
+    Highcharts.chart(id, {
 
         chart: {
             polar: true,
@@ -342,7 +342,7 @@ window.pastSevenDays = function (days, series) {
         },
 
         title: {
-            text: 'Past seven days',
+            text: title,
             x: -80
         },
 
@@ -395,8 +395,8 @@ window.pastSevenDays = function (days, series) {
     });
 }
 
-window.sixMostSoldProducts = function (sixSeries) {
-    Highcharts.chart('SixMostSoldProducts', {
+window.sixMostSoldProducts = function (id, title, sixSeries) {
+    Highcharts.chart(id, {
         chart: {
             type: 'pictorial'
         },
@@ -404,7 +404,7 @@ window.sixMostSoldProducts = function (sixSeries) {
         colors: ['#B0FDFE', '#E3FED4', '#F9F492', '#FAF269', '#FAE146', '#FDA003'],
 
         title: {
-            text: 'Six Most Sold Products'
+            text: title
         },
 
         subtitle: {
@@ -471,8 +471,8 @@ window.sixMostSoldProducts = function (sixSeries) {
     });
 }
 
-window.maxMinQtyOfProducts = function (data) {
-    Highcharts.chart('MaxMinQtyOfProducts', {
+window.maxMinQtyOfProducts = function (id, title, data) {
+    Highcharts.chart(id, {
         chart: {
             type: 'dumbbell',
             inverted: true
@@ -489,7 +489,7 @@ window.maxMinQtyOfProducts = function (data) {
         },
 
         title: {
-            text: 'Maximum - Minimum Quantity of Products'
+            text: title
         },
 
         tooltip: {
@@ -514,11 +514,11 @@ window.maxMinQtyOfProducts = function (data) {
     });
 }
 
-window.fiveYearLineChart = function (data) {
-    Highcharts.chart('FiveYearLineChart', {
+window.fiveYearLineChart = function (id, title, data) {
+    Highcharts.chart(id, {
 
         title: {
-            text: 'Five Years Line Chart',
+            text: title,
             align: 'left'
         },
 
@@ -575,14 +575,14 @@ window.fiveYearLineChart = function (data) {
 
 }
 
-window.productCategoryAndProduct = function (data) {
-    Highcharts.chart('ProductCategoryAndProduct', {
+window.productCategoryAndProduct = function (id, title, data) {
+    Highcharts.chart(id, {
         chart: {
             type: 'packedbubble',
             height: '100%'
         },
         title: {
-            text: 'Product Categories and Products',
+            text: title,
             align: 'left'
         },
         tooltip: {
@@ -622,7 +622,7 @@ window.productCategoryAndProduct = function (data) {
     });
 }
 
-window.monthlyRevenueReportOfThreeYear = function (data) {
+window.monthlyRevenueReportOfThreeYear = function (id, title, data) {
     
     var colors = [
         'rgb(180,90,50)',
@@ -648,7 +648,7 @@ window.monthlyRevenueReportOfThreeYear = function (data) {
         seriesData.push(series);
     });
     
-    Highcharts.chart('MonthlyRevenueReportOfThreeYear', {
+    Highcharts.chart(id, {
         chart: {
             type: 'area',
             options3d: {
@@ -659,7 +659,7 @@ window.monthlyRevenueReportOfThreeYear = function (data) {
             }
         },
         title: {
-            text: 'Comparison of Yearly Sale Prices'
+            text: title
         },
         accessibility: {
             description: 'The chart is showing the shapes of three mountain ranges as three area line series laid out in 3D behind each other.',

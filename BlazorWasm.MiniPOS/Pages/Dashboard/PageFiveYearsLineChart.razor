@@ -1,0 +1,29 @@
+﻿<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+    
+    [Parameter]
+    public List<ProductInfo>? FiveYearsLineChartData { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (FiveYearsLineChartData is not null)
+            {
+                await JsRuntime.InvokeVoidAsync("fiveYearLineChart", Id, Title,
+                    FiveYearsLineChartData);
+            }
+        }
+    }
+}

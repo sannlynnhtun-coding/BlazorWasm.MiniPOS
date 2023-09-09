@@ -1,0 +1,29 @@
+﻿<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+    
+    [Parameter]
+    public QtyOfTopFiveProductsByYearModel? BarBasicData { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (BarBasicData is not null)
+            {
+                await JsRuntime.InvokeVoidAsync("barBasicChart", Id, Title,
+                    BarBasicData.productNames, BarBasicData.productInfos);
+            }
+        }
+    }
+}

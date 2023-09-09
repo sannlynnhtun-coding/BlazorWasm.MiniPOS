@@ -5,14 +5,20 @@
         @* <div id="BasicColumnChart"></div> *@
         @if (Series is not null)
         {
-            <PageBasicColumnChart 
-                Id="BasicColumnChart" 
-                Title="Top 5 selling products of current Year by each Month" 
-                Series="Series" />
+            <PageBasicColumnChart
+                Id="BasicColumnChart"
+                Title="Top 5 selling products of current Year by each Month"
+                Series="Series"/>
         }
     </div>
     <div class="col-md-6">
-        <div id="BarBasicChart"></div>
+        @if (BarBasicData is not null)
+        {
+            <PageBarBasicChart
+                Id="BarBasicChart"
+                Title="Quantity of Top Five Most Sold Products By Year"
+                BarBasicData="BarBasicData"/>
+        }
     </div>
     <div class="col-md-6">
         <div id="PastFiveYear"></div>
@@ -21,37 +27,40 @@
         <div id="PastFiveYearFunnelChart"></div>
     </div>
     <div class="col-md-6">
-        <div id="PastSevenDays"></div>
+        <PagePastSevenDaysChart
+            Id="PastSevenDays"
+            Title="Past Seven Days"
+            PastSevenDaysData="PastSevenDaysData"/>
     </div>
     <div class="col-md-6">
         <div id="YearlySaleAmount"></div>
         <div id="sliders">
             <table>
                 <tbody>
-                    <tr>
-                        <td>
-                            <label for="alpha">Alpha Angle</label>
-                        </td>
-                        <td>
-                            <input id="alpha" type="range" min="0" max="45" value="15"> <span id="alpha-value" class="value">25</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="beta">Beta Angle</label>
-                        </td>
-                        <td>
-                            <input id="beta" type="range" min="-45" max="45" value="15"> <span id="beta-value" class="value">19</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="depth">Depth</label>
-                        </td>
-                        <td>
-                            <input id="depth" type="range" min="20" max="100" value="50"> <span id="depth-value" class="value">50</span>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <label for="alpha">Alpha Angle</label>
+                    </td>
+                    <td>
+                        <input id="alpha" type="range" min="0" max="45" value="15"> <span id="alpha-value" class="value">25</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="beta">Beta Angle</label>
+                    </td>
+                    <td>
+                        <input id="beta" type="range" min="-45" max="45" value="15"> <span id="beta-value" class="value">19</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="depth">Depth</label>
+                    </td>
+                    <td>
+                        <input id="depth" type="range" min="20" max="100" value="50"> <span id="depth-value" class="value">50</span>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -68,7 +77,7 @@
                         {
                             <MudSelectItem T="int"
                                            Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                           Value="@item" />
+                                           Value="@item"/>
                         }
                     }
                 </MudSelect>
@@ -83,7 +92,7 @@
                         {
                             <MudSelectItem T="int"
                                            Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                           Value="@item" />
+                                           Value="@item"/>
                         }
                     }
                 </MudSelect>
@@ -91,20 +100,41 @@
         </MudGrid>
         <div id="CompareTwoYear"></div>
     </div>
-    @*<div class="col-md-6">
-    <div id="ProductCategoryAndProduct"></div>
-    </div>*@
     <div class="col-md-6">
-        <div id="SixMostSoldProducts"></div>
+        @if (SixMostSoldProducts is not null)
+        {
+            <PageSixMostSoldProductsChart
+                Id="SixMostSoldProducts"
+                Title="Six Most Sold Products"
+                SixMostSoldProducts="SixMostSoldProducts"/>
+        }
     </div>
     <div class="col-md-6">
-        <div id="MaxMinQtyOfProducts"></div>
+        @if (MaxMinQtyOfProducts is not null)
+        {
+            <PageMaxMinQtyOfProductsChart
+                Id="MaxMinQtyOfProducts"
+                Title="Maximum - Minimum Quantity of Products"
+                MaxMinQtyOfProducts="MaxMinQtyOfProducts"/>
+        }
     </div>
     <div class="col-md-6">
-        <div id="FiveYearLineChart"></div>
+        @if (FiveYearsLineChartData is not null)
+        {
+            <PageFiveYearsLineChart
+                Id="FiveYearLineChart"
+                Title="Five Years Line Chart"
+                FiveYearsLineChartData="FiveYearsLineChartData"/>
+        }
     </div>
     <div class="col-md-6">
-        <div id="ProductCategoryAndProduct"></div>
+        @if (MaxMinQtyOfProducts is not null)
+        {
+            <PageProductAndProductCategoryChart
+                Id="ProductCategoryAndProduct"
+                Title="Product Categories and Products"
+                ProdAndProdCategory="ProdAndProdCategory"/>
+        }
     </div>
     <div class="col-md-6">
         <div id="MonthlySaleAmount"></div>
@@ -113,7 +143,13 @@
         <div id="PastFiveYearDailySaleAmount"></div>
     </div>
     <div class="col-md-6">
-        <div id="MonthlyRevenueReportOfThreeYear"></div>
+        @if (MonthlyRevenueReportForThreeYears is not null)
+        {
+            <PageMonthlyRevenueReportForThreeYearsChart
+                Id="MonthlyRevenueReportOfThreeYear"
+                Title="Comparison of Yearly Sale Prices"
+                MonthlyRevenueReportForThreeYears="MonthlyRevenueReportForThreeYears"/>
+        }
     </div>
 </div>
 
@@ -123,49 +159,50 @@
     private int secondSelectedYear = 0;
     private List<MonthlyTopFiveProductsOfCurrentYear> _topProductsData;
     private List<ProductInfo>? Series;
+    private QtyOfTopFiveProductsByYearModel? BarBasicData;
+    private List<MaxMinQtyOfProductsModel>? MaxMinQtyOfProducts;
+    private List<ProductCategoryChartModel>? ProdAndProdCategory;
+    private List<MonthlyRevenueReportResponseModel>? MonthlyRevenueReportForThreeYears;
+    private List<SixMostSoldProductsModel>? SixMostSoldProducts;
+    private PastSevenDaysModel? PastSevenDaysData;
+    private List<ProductInfo>? FiveYearsLineChartData;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await db.GenerateDataByMonth();
-
-            var test = await db.MonthlyRevenueReportForThreeYear();
-            var sixSeries = await db.SixMostSoldProducts();
-            var sevenDaysData = await db.PastSevenDays();
-            var barBasicChartData = await db.QtyOfTopFiveProductsByYear();
             yearList = await db.GetYearList();
-            var yearlySaleAmount = await db.YearlySaleAmount();
-            var data = await db.CurrentYearTopFiveProductsByMonth();
 
-            var series = data != null ? data : new List<ProductInfo>();
+            var data = await db.CurrentYearTopFiveProductsByMonth();
             Series = data != null ? data : new List<ProductInfo>();
 
-            var result = await db.YearOverYearChart(DateTime.Now);
+            BarBasicData = await db.QtyOfTopFiveProductsByYear();
+
+            MaxMinQtyOfProducts = await db.MaxMinQtyOfProducts();
+
+            ProdAndProdCategory = await db.ProductCategoryAndProduct();
+
+            MonthlyRevenueReportForThreeYears = await db.MonthlyRevenueReportForThreeYear();
+
+            SixMostSoldProducts = await db.SixMostSoldProducts();
+            
+            PastSevenDaysData = await db.PastSevenDays();
+            
+            FiveYearsLineChartData = await db.FiveYearLineChart();
+
+            var yearlySaleAmount = await db.YearlySaleAmount();
             var pastFiveYear = await db.PastFiveYear(DateTime.Now);
             var funnelChartPastFiveYear = await db.PastFiveYearFunnelChart(DateTime.Now);
-            var productsMaxMinQty = await db.MaxMinQtyOfProducts();
-            var fiveYearLineChart = await db.FiveYearLineChart();
             var pastFiveYearMonthly = await db.PastFiveYearMonthlySaleAmount(DateTime.Now);
-            var pdAndPdCtgy = await db.ProductCategoryAndProduct();
             var pastFiveYearDaily = await db.PastFiveYearsDailyAmount(DateTime.Now);
 
-            // await JsRuntime.InvokeVoidAsync("basicColumnChart", series);
-            await JsRuntime.InvokeVoidAsync("barBasicChart",
-                barBasicChartData.productNames, barBasicChartData.productInfos);
+            await JsRuntime.InvokeVoidAsync("monthlySaleAmount", pastFiveYearMonthly);
+            await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
             await JsRuntime.InvokeVoidAsync("yearlySaleAmount", yearlySaleAmount.category,
                 yearlySaleAmount.data);
             await JsRuntime.InvokeVoidAsync("pastFiveYear", pastFiveYear);
-            await JsRuntime.InvokeVoidAsync("pastSevenDays", sevenDaysData.days, sevenDaysData.productInfos);
-            await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", funnelChartPastFiveYear);
-            //await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
-            await JsRuntime.InvokeVoidAsync("sixMostSoldProducts", sixSeries);
-            await JsRuntime.InvokeVoidAsync("maxMinQtyOfProducts", productsMaxMinQty);
-            await JsRuntime.InvokeVoidAsync("fiveYearLineChart", fiveYearLineChart);
-            await JsRuntime.InvokeVoidAsync("monthlySaleAmount", pastFiveYearMonthly);
-            await JsRuntime.InvokeVoidAsync("productCategoryAndProduct", pdAndPdCtgy);
             await JsRuntime.InvokeVoidAsync("pastFiveYearDailySaleAmount", pastFiveYearDaily);
-            await JsRuntime.InvokeVoidAsync("monthlyRevenueReportOfThreeYear", test);
             StateHasChanged();
         }
     }
