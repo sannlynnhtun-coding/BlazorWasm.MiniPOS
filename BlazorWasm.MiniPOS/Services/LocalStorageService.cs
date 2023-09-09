@@ -1079,6 +1079,61 @@ namespace BlazorWasm.MiniPOS.Services
             }
             return returnModel;
         }
+        
+        public async Task<List<MonthlyRevenueReportResponseModel>> MonthlyRevenueReportForThreeYear()
+        {
+            List<MonthlyRevenueReportResponseModel> model = new();
+            var lst = await _localStorage
+                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
+            if (lst is null) return new List<MonthlyRevenueReportResponseModel>();
+            var toYear = DateTime.Now.Year;
+            // var fromYear = toYear - 2;
+
+            for (int i = toYear - 2; i <= toYear; i++)
+            {
+                Console.WriteLine($"The Year = {i}");
+                var yearData = lst
+                    .Where(l => l.detail_date.Year == i)
+                    .ToList();
+                
+                var dataLst = new MonthlyRevenueReportResponseModel
+                {
+                    name = i + " Monthly Revenue Report",
+                    data = new List<MonthlyRevenueReportForThreeYear>()
+                };
+
+                for (int j = 0; j < 12; j++)
+                {
+                    var value = yearData
+                        .Where(v => v.detail_date.Month == j + 1)
+                        .Sum(v => v.product_price);
+
+                    var item = new MonthlyRevenueReportForThreeYear
+                    {
+                        monthName = (j + 1).GetMonthName(),
+                        value = value
+                        // value = value.FirstOrDefault()?.value ?? 0
+                    };
+                    dataLst.data.Add(item);
+                }
+                model.Add(dataLst);
+            }
+            
+            /*var threeYearLst = lst
+                .Where(l => l.detail_date.Year >= fromYear && l.detail_date.Year <= toYear)
+                .ToList();*/
+            
+            /*var value = yearData
+                        .Where(v => v.detail_date.Month == j + 1)
+                        .GroupBy(v => new { v.detail_date.Month })
+                        .Select(group => new
+                        {
+                            value = group.Sum(v => v.product_price)
+                        });*/
+
+            return model;
+        }
+        
         public async Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct()
         {
             var _productLst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
@@ -1132,38 +1187,7 @@ namespace BlazorWasm.MiniPOS.Services
 
                 model.Add(pc);
             }
-            /*for (int i = 0; i < sixProductCategory.Count; i++)
-            {
-                var categoryCode = sixProductCategory[i].product_category_code;
-                int count = 0;
-
-                var pc = new ProductCategoryChartModel
-                {
-                    name = sixProductCategory[i].product_category_name,
-                    data = new List<ProductChartModel>()
-                };
-                
-                foreach (var product in _productLst)
-                {
-                    if (product.product_category_code == categoryCode)
-                    {
-                        pc.data.Add(new ProductChartModel
-                        {
-                            name = product.product_name,
-                            value = product.product_sale_price
-                        });
-
-                        count++;
-
-                        if (count >= 5)
-                        {
-                            break;
-                        }
-                    }
-                }
-            }
-            */
-
+            
             return model;
         }
 

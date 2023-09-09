@@ -43,12 +43,12 @@
     private int selectedYear = 0;
     private int secondSelectedYear = 0;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         yearList = await db.GetYearList();
         await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
     }
-    
+
     async Task HandleValueChanged(int value)
     {
         selectedYear = value;
