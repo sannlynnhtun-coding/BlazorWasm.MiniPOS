@@ -69,8 +69,12 @@
     </div>
     <div class="col-md-6" style="display:@(chartName =="CompareTwoYear" || firstShow == true ?
     "":"none")">
-        <PageCompareTwoYearChart Id="CompareTwoYear"
-                                 Title="Compare Selected Years Sale Amount" />
+        @if (yearList is not null && yearList.Count() > 0)
+        {
+            <PageCompareTwoYearChart Id="CompareTwoYear"
+                                     Title="Compare Selected Years Sale Amount"
+                                     YearList="yearList" />
+        }
     </div>
     <div class="col-md-6" style="display:@(chartName =="SixMostSoldProducts" || firstShow == true ?
     "":"none")">
@@ -152,8 +156,14 @@
     private YearlySaleAmountModel? YearlySaleAmountData;
     private List<PastFiveYearsMonthlyModel>? PastFiveYearsMonthlyData;
     private PastFiveYearsDailyModel? PastFiveYearsDailyData;
+    private List<TwoYearComparisonModel>? TwoYearComparisonData;
+
     private string? chartName { get; set; }
     private bool firstShow = true;
+    public List<int>? yearList { get; set; }
+
+    private int selectedYear = 0;
+    private int secondSelectedYear = 0;
 
     protected override void OnInitialized()
     {
@@ -165,6 +175,7 @@
         if (firstRender)
         {
             await db.GenerateDataByMonth();
+            yearList = await db.GetYearList();
 
             var data = await db.CurrentYearTopFiveProductsByMonth();
             Series = data != null ? data : new List<ProductInfo>();
@@ -180,7 +191,6 @@
             SixMostSoldProducts = await db.SixMostSoldProducts();
 
             PastSevenDaysData = await db.PastSevenDays();
-
             FiveYearsLineChartData = await db.FiveYearLineChart();
 
             YearlySaleAmountData = await db.YearlySaleAmount();
@@ -197,21 +207,4 @@
     {
         StateContainer.OnChange -= StateHasChanged;
     }
-
-    private static List<string> ChartList => new List<string>
-    {
-        "BasicColumnChart",
-        "BarBasicChart",
-        "PastFiveYearChart",
-        "PastFiveYearFunnelChart",
-        "PastSevenDays",
-        "YearlySaleAmount",
-        "CompareTwoYear",
-        "SixMostSoldProducts",
-        "MaxMinQtyOfProducts",
-        "FiveYearLineChart",
-        "ProductCategoryAndProduct",
-        "MonthlySaleAmount",
-        "PastFiveYearDailySaleAmount"
-    };
 }

@@ -168,12 +168,9 @@
     private EnumPage Page = EnumPage.Dashboard;
     private bool isLoading = false;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-
-        }
+       
     }
 
     private async Task ExportData()

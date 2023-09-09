@@ -1,35 +1,39 @@
-﻿<MudGrid>
-    <MudItem xs="6">
-        <MudSelect T="int" Label="From Year"
-                   ValueChanged="HandleValueChanged"
-                   Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
-            @if (yearList is not null)
-            {
-                @foreach (var item in yearList)
+﻿@if (YearList is not null && YearList.Count() > 0)
+{
+    <MudGrid>
+        <MudItem xs="6">
+            <MudSelect T="int" Label="From Year"
+                       ValueChanged="HandleValueChanged"
+                       Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                @if (YearList is not null)
                 {
-                    <MudSelectItem T="int"
-                                   Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                   Value="@item" />
+                    @foreach (var item in YearList)
+                    {
+                        <MudSelectItem T="int"
+                                       Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
+                                       Value="@item" />
+                    }
                 }
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="6">
-        <MudSelect T="int" Label="To Year" Variant="Variant.Outlined"
-                   ValueChanged="HandleValueSecondChanged"
-                   AnchorOrigin="Origin.BottomCenter">
-            @if (yearList is not null)
-            {
-                @foreach (var item in yearList)
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="6">
+            <MudSelect T="int" Label="To Year" Variant="Variant.Outlined"
+                       ValueChanged="HandleValueSecondChanged"
+                       AnchorOrigin="Origin.BottomCenter">
+                @if (YearList is not null)
                 {
-                    <MudSelectItem T="int"
-                                   Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                   Value="@item" />
+                    @foreach (var item in YearList)
+                    {
+                        <MudSelectItem T="int"
+                                       Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
+                                       Value="@item" />
+                    }
                 }
-            }
-        </MudSelect>
-    </MudItem>
-</MudGrid>
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+}
+
 <div id="@Id"></div>
 
 @code {
@@ -39,14 +43,24 @@
     [Parameter]
     public string? Title { get; set; }
 
-    private List<int> yearList = new();
+    [Parameter]
+    public List<TwoYearComparisonModel>? TwoYearComparisonData { get; set; }
+
+    [Parameter]
+    public List<int>? YearList { get; set; }
+
     private int selectedYear = 0;
     private int secondSelectedYear = 0;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        yearList = await db.GetYearList();
-        await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
+        if (firstRender)
+        {
+            if (YearList is not null && YearList.Count() > 0)
+            {
+                await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
+            }
+        }
     }
 
     async Task HandleValueChanged(int value)
@@ -73,6 +87,6 @@
             secondSelectedYear.ToString()
         };
         var result = await db.CompareTwoYear(firstYear, secondYear);
-        await JsRuntime.InvokeVoidAsync("compareTwoYear", Id, Title, result, yearLst);
+        await JsRuntime.InvokeVoidAsync("compareTwoYear", Id, Title, result, YearList);
     }
 }
