@@ -1,5 +1,5 @@
 ﻿using BlazorWasm.MiniPOS.Models;
-using BlazorWasm.MiniPOS.Pages.Reports.Charts;
+using BlazorWasm.MiniPOS.Pages.Dashboard.Model;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -12,7 +12,6 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<SixMostSoldProductsModel>> SixMostSoldProducts();
         Task<List<MaxMinQtyOfProductsModel>> MaxMinQtyOfProducts();
         Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct();
-        Task<List<MonthlyRevenueReportResponseModel>> MonthlyRevenueReportForThreeYear();
         Task DeleteProduct(Guid guid);
         Task DeleteProductCategory(Guid guid);
         Task DeleteProductSale(Guid guid);
@@ -36,7 +35,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<ProductSaleResponseDataModel> ProductSalePagination(int pageNo, int pageSize);
         Task ProductUpdate(ProductDataModel model);
         Task<QtyOfTopFiveProductsByYearModel> QtyOfTopFiveProductsByYear();
-        Task<PastSevenDaysModel> PastSevenDays();
+        Task<PastSevenDaysModel?> PastSevenDays();
         Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime);
         Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime);
         Task SetProduct(ProductDataModel model);

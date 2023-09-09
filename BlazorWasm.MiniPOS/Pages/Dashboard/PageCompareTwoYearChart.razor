@@ -1,0 +1,78 @@
+﻿<MudGrid>
+    <MudItem xs="6">
+        <MudSelect T="int" Label="Year"
+                   ValueChanged="HandleValueChanged"
+                   Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+            @if (yearList is not null)
+            {
+                @foreach (var item in yearList)
+                {
+                    <MudSelectItem T="int"
+                                   Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
+                                   Value="@item" />
+                }
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="6">
+        <MudSelect T="int" Label="Year" Variant="Variant.Outlined"
+                   ValueChanged="HandleValueSecondChanged"
+                   AnchorOrigin="Origin.BottomCenter">
+            @if (yearList is not null)
+            {
+                @foreach (var item in yearList)
+                {
+                    <MudSelectItem T="int"
+                                   Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
+                                   Value="@item" />
+                }
+            }
+        </MudSelect>
+    </MudItem>
+</MudGrid>
+<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    private List<int> yearList = new();
+    private int selectedYear = 0;
+    private int secondSelectedYear = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        yearList = await db.GetYearList();
+        await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
+    }
+    
+    async Task HandleValueChanged(int value)
+    {
+        selectedYear = value;
+
+        if (selectedYear != 0 && secondSelectedYear != 0)
+            await CompareTwoYear(selectedYear, secondSelectedYear);
+    }
+
+    async Task HandleValueSecondChanged(int value)
+    {
+        secondSelectedYear = value;
+
+        if (selectedYear != 0 && secondSelectedYear != 0)
+            await CompareTwoYear(selectedYear, secondSelectedYear);
+    }
+
+    async Task CompareTwoYear(int firstYear, int secondYear)
+    {
+        var yearLst = new List<string>
+        {
+            firstYear.ToString(),
+            secondSelectedYear.ToString()
+        };
+        var result = await db.CompareTwoYear(firstYear, secondYear);
+        await JsRuntime.InvokeVoidAsync("compareTwoYear", Id, Title, result, yearLst);
+    }
+}

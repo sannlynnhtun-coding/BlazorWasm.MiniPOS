@@ -1,4 +1,4 @@
-﻿namespace BlazorWasm.MiniPOS.Pages.Reports.Charts
+﻿namespace BlazorWasm.MiniPOS.Pages.Dashboard.Model
 {
     public class TwoYearComparisonModel
     {

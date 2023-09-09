@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using BlazorWasm.MiniPOS.Models;
-using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
+using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Dashboard.Model.MonthlyTopFiveProductsOfCurrentYear;
 
 namespace BlazorWasm.MiniPOS.Pages.Sale
 {

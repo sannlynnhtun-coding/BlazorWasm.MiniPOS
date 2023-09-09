@@ -1,0 +1,25 @@
+﻿
+<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public DonutChartResponseModel? PastFiveYearData { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (PastFiveYearData is not null)
+            {
+                await JsRuntime.InvokeVoidAsync("pastFiveYear", Id, Title,
+                        PastFiveYearData);
+            }
+        }
+    }
+}

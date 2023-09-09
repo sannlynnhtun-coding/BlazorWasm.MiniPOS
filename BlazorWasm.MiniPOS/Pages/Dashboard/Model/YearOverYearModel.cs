@@ -1,4 +1,4 @@
-﻿namespace BlazorWasm.MiniPOS.Pages.Reports.Charts
+﻿namespace BlazorWasm.MiniPOS.Pages.Dashboard.Model
 {
     public class YearOverYearModel
     {
@@ -24,25 +24,25 @@
 
     public class DataInfo
     {
-       public object[] array { get; set; }
+        public object[] array { get; set; }
     }
 
     public class DataReturnInfo
     {
         public object[][] arrayObject { get; set; }
     }
-	public class DonutChartResponseModel
-	{
-		public List<DonutChartModel> data { get; set; }
-	}
-	public class DonutChartModel
-	{
-		public string name { get; set; }
-		public int value { get; set; }
-	}
-	public static class JsonData
-	{
-		public static string str { get; } = @" {""data"":[
+    public class DonutChartResponseModel
+    {
+        public List<DonutChartModel> data { get; set; }
+    }
+    public class DonutChartModel
+    {
+        public string name { get; set; }
+        public int value { get; set; }
+    }
+    public static class JsonData
+    {
+        public static string str { get; } = @" {""data"":[
 		{
 			""name""  :""Norway"",
 			""value"" :16

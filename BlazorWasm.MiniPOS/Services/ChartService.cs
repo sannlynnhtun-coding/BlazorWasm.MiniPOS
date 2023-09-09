@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
 using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
-using BlazorWasm.MiniPOS.Pages.Reports.Charts;
-using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
+using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Dashboard.Model.MonthlyTopFiveProductsOfCurrentYear;
 
 namespace BlazorWasm.MiniPOS.Services;
 

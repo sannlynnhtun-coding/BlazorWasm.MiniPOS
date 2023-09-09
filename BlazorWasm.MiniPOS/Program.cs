@@ -14,4 +14,5 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();
 builder.Services.AddSingleton<IDbService, LocalStorageService>();
+builder.Services.AddSingleton<ChartStateContainer>();
 await builder.Build().RunAsync();

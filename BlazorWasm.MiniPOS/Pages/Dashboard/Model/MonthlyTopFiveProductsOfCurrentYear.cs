@@ -1,6 +1,6 @@
 ﻿using BlazorWasm.MiniPOS.Models;
 
-namespace BlazorWasm.MiniPOS.Pages.Reports.Charts;
+namespace BlazorWasm.MiniPOS.Pages.Dashboard.Model;
 
 public class MonthlyTopFiveProductsOfCurrentYear
 {
@@ -17,14 +17,14 @@ public class ProductInfo
 public class QtyOfTopFiveProductsByYearModel
 {
     public string[] productNames { get; set; }
-    
+
     public List<ProductInfo> productInfos { get; set; }
 }
 
 public class PastSevenDaysModel
 {
     public string[] days { get; set; }
-    
+
     public List<ProductInfo> productInfos { get; set; }
 }
 
@@ -63,8 +63,9 @@ public class RootObject
     public int xAxis { get; set; }
 }
 
-public class MonthlyRevenueReportForThreeYear{
-    
+public class MonthlyRevenueReportForThreeYear
+{
+
     public string monthName { get; set; }
     public int value { get; set; }
 }

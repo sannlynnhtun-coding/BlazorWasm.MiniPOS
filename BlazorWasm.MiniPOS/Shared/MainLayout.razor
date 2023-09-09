@@ -1,5 +1,6 @@
 ﻿@using System.Text.RegularExpressions;
 @inherits LayoutComponentBase
+@inject ChartStateContainer StateContainer
 <div class="min-h-full">
     <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -34,12 +35,22 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="javascript:void(0);"
-                            @onclick="() => ChangeUrl(EnumPage.Dashboard)"
-                               aria-current="page"
-                               class="@IsActive(EnumPage.Dashboard)">
-                                Dashboard
-                            </a>
+                            <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+                                <ActivatorContent>
+                                    <a href="javascript:void(0);"
+                                    @onclick="() => ChangeUrl(EnumPage.Dashboard)"
+                                       aria-current="page"
+                                       class="@IsActive(EnumPage.Dashboard)">
+                                        Dashboard
+                                    </a>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    @foreach(var item in ChartList)
+                                    {
+                                        <MudMenuItem OnClick="() => ShowChart(item)">@item</MudMenuItem>
+                                    }
+                                </ChildContent>
+                            </MudMenu>
                             <a href="javascript:void(0);"
                             @onclick="() => ChangeUrl(EnumPage.Sale)"
                                aria-current="page"
@@ -159,7 +170,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+
     }
 
     private void ShowProfileMenu()
@@ -194,6 +205,7 @@
 
     private async Task ChangeUrl(EnumPage page)
     {
+        StateContainer.DashboardShow = true;
         Page = page;
         isLoading = true;
         await Task.Delay(TimeSpan.FromSeconds(2));
@@ -211,8 +223,30 @@
             new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
             new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
             new PageUrlModel { Page = EnumPage.Dashboard, Url = "" },
-            };
+             };
 
+    private static List<string> ChartList =>
+    new List<string>
+        {
+        "BasicColumnChart",
+        "BarBasicChart",
+        "PastFiveYearChart",
+        "PastFiveYearFunnelChart",
+        "PastSevenDays",
+        "YearlySaleAmount",
+        "CompareTwoYear",
+        "SixMostSoldProducts",
+        "MaxMinQtyOfProducts",
+        "FiveYearLineChart",
+        "ProductCategoryAndProduct",
+        "MonthlySaleAmount",
+        "PastFiveYearDailySaleAmount",
+        "MonthlyRevenueReportOfThreeYear"
+        };
+    private void ShowChart(string chartName)
+    {
+        StateContainer.ChartName = chartName;
+    }
     static string InsertSpacesBeforeCapitals(string input)
     {
         var pattern = @"(?<!^)(?=[A-Z])"; // Positive lookahead for capital letters

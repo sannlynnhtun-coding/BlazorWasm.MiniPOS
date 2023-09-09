@@ -287,7 +287,7 @@ window.columnRangeChart = function () {
 
 }
 
-window.pastFiveYear = function (data) {
+window.pastFiveYear = function (id,title,data) {
     console.log(data);
 
     data = data.data;
@@ -300,7 +300,7 @@ window.pastFiveYear = function (data) {
     console.log(lst);
 
     // Data retrieved from https://olympics.com/en/olympic-games/beijing-2022/medals
-    Highcharts.chart('PastFiveYear', {
+    Highcharts.chart(id, {
         chart: {
             type: 'pie',
             options3d: {
@@ -309,7 +309,7 @@ window.pastFiveYear = function (data) {
             }
         },
         title: {
-            text: 'Past Five Years Sale Record',
+            text: title,
             align: 'left'
         },
         subtitle: {
@@ -713,11 +713,11 @@ window.monthlyRevenueReportOfThreeYear = function (id, title, data) {
     });
 }
 
-window.pastFiveYearFunnelChart = function (data) {
+window.pastFiveYearFunnelChart = function (id,title,data) {
     // Set up the chart
     data = data.arrayObject
     /*console.log(data)*/
-    Highcharts.chart('PastFiveYearFunnelChart', {
+    Highcharts.chart(id, {
         chart: {
             type: 'funnel3d',
             options3d: {
@@ -728,7 +728,7 @@ window.pastFiveYearFunnelChart = function (data) {
             }
         },
         title: {
-            text: 'Highcharts Funnel3D Chart'
+            text: title
         },
         accessibility: {
             screenReaderSection: {
@@ -756,15 +756,15 @@ window.pastFiveYearFunnelChart = function (data) {
     });
 }
 
-window.compareTwoYear = function (result, category) {
+window.compareTwoYear = function (id,title,result, category) {
     console.log(result)
     console.log(category)
-    Highcharts.chart('CompareTwoYear', {
+    Highcharts.chart(id, {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Efficiency Optimization by Branch'
+            text: title
         },
         xAxis: {
             categories: category
@@ -797,11 +797,11 @@ window.compareTwoYear = function (result, category) {
     });
 }
 
-window.yearlySaleAmount = function (category, data) {
+window.yearlySaleAmount = function (id,title,category, data) {
     // Set up the chart
     const chart = new Highcharts.Chart({
         chart: {
-            renderTo: 'YearlySaleAmount',
+            renderTo: id,
             type: 'column',
             options3d: {
                 enabled: true,
@@ -824,7 +824,7 @@ window.yearlySaleAmount = function (category, data) {
             pointFormat: 'Amount: {point.y} MMK'
         },
         title: {
-            text: 'Yearly Sale Amount From Current Year',
+            text: title,
             align: 'left'
         },
         subtitle: {
@@ -864,15 +864,15 @@ window.yearlySaleAmount = function (category, data) {
 
 }
 
-window.monthlySaleAmount = function (data) {
+window.monthlySaleAmount = function (id,title,data) {
     console.log(data);
-    Highcharts.chart('MonthlySaleAmount', {
+    Highcharts.chart(id, {
         chart: {
             type: 'packedbubble',
             height: '100%'
         },
         title: {
-            text: 'Past Five Year Monthly Sale Amount',
+            text: title,
             align: 'left'
         },
         tooltip: {
@@ -910,7 +910,7 @@ window.monthlySaleAmount = function (data) {
 
 }
 
-window.pastFiveYearDailySaleAmount = function (data) {
+window.pastFiveYearDailySaleAmount = function (id,title,data) {
     data = data.dataArray
     console.log(`network data => ${data[0][0]}`);
     // Add the nodes option through an event call. We want to start with the parent
@@ -959,13 +959,13 @@ window.pastFiveYearDailySaleAmount = function (data) {
         }
     );
 
-    Highcharts.chart('PastFiveYearDailySaleAmount', {
+    Highcharts.chart(id, {
         chart: {
             type: 'networkgraph',
             height: '100%'
         },
         title: {
-            text: 'The Indo-European Language Tree',
+            text: title,
             align: 'left'
         },
         subtitle: {

@@ -1,0 +1,24 @@
+﻿
+<div id="@Id"></div>
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public DataReturnInfo? PastFiveYearsFunnelData { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (PastFiveYearsFunnelData is not null)
+            {
+                await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", Id, Title, PastFiveYearsFunnelData);
+            }
+        }
+    }
+}

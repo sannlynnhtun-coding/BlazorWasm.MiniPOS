@@ -3,12 +3,12 @@ using System.Text.Json;
 using ApexCharts;
 using Blazored.LocalStorage;
 using BlazorWasm.MiniPOS.Models;
-using BlazorWasm.MiniPOS.Pages.Reports.Charts;
-using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Reports.Charts.MonthlyTopFiveProductsOfCurrentYear;
+using TopFiveProducts = BlazorWasm.MiniPOS.Pages.Dashboard.Model.MonthlyTopFiveProductsOfCurrentYear;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System;
+using BlazorWasm.MiniPOS.Pages.Dashboard.Model;
 
 namespace BlazorWasm.MiniPOS.Services
 {
@@ -494,7 +494,6 @@ namespace BlazorWasm.MiniPOS.Services
             returnModel.YearData = yearData;
             return returnModel;
         }
-
         public async Task<List<TwoYearComparisonModel>> CompareTwoYear(int firstYear,
             int secondYear)
         {
@@ -523,20 +522,20 @@ namespace BlazorWasm.MiniPOS.Services
                     var result = GenerateColor();
                     returnData.Add(new TwoYearComparisonModel
                     {
-                        name = i != 0 ? item.Year.ToString() + "Optimized" : item.Year.ToString(),
+                        name = i != 0 ? item.Year.ToString() + "Optimized" :
+                                item.Year.ToString(),
                         color = $"rgba({result.Item1},{result.Item2},{result.Item3},{1})",
                         data = new List<double>
                         {
-                            i == 0 ? item.Amount / 10 : secondResultLst[0].Amount / 10,
-                            i == 0 ? item.Amount / 100 : secondResultLst[0].Amount / 100,
-                            i == 0 ? item.Amount / 1000 : secondResultLst[0].Amount / 1000,
+                            i == 0 ? item.Amount /10 : secondResultLst[0].Amount / 10,
+                            i == 0 ? item.Amount /100 : secondResultLst[0].Amount / 100,
+                            i == 0 ? item.Amount /1000 : secondResultLst[0].Amount / 1000,
                         },
                         pointPadding = i != 0 ? 0.4 : 0.3,
                         pointPlacement = -0.2,
                     });
                 }
             }
-
             foreach (var item in secondResultLst)
             {
                 for (int i = 0; i < 2; i++)
@@ -544,13 +543,14 @@ namespace BlazorWasm.MiniPOS.Services
                     var result = GenerateColor();
                     returnData.Add(new TwoYearComparisonModel
                     {
-                        name = i != 0 ? item.Year.ToString() + "Optimized" : item.Year.ToString(),
+                        name = i != 0 ? item.Year.ToString() + "Optimized" :
+                                item.Year.ToString(),
                         color = $"rgba({result.Item1},{result.Item2},{result.Item3},{1})",
                         data = new List<double>
                         {
-                            i == 0 ? item.Amount / 10 : firstResultLst[0].Amount / 10,
-                            i == 0 ? item.Amount / 100 : firstResultLst[0].Amount / 100,
-                            i == 0 ? item.Amount / 1000 : firstResultLst[0].Amount / 1000,
+                            i == 0 ? item.Amount /10 : firstResultLst[0].Amount / 10,
+                            i == 0 ? item.Amount /100 : firstResultLst[0].Amount / 100,
+                            i == 0 ? item.Amount /1000 : firstResultLst[0].Amount / 1000,
                         },
                         tooltip = new ChartTooltip
                         {
@@ -563,10 +563,8 @@ namespace BlazorWasm.MiniPOS.Services
                     });
                 }
             }
-
             return returnData;
         }
-
         public (int, int, int) GenerateColor()
         {
             Random random = new();
@@ -576,7 +574,6 @@ namespace BlazorWasm.MiniPOS.Services
 
             return (red, green, blue);
         }
-
         public async Task<YearlySaleAmountModel> YearlySaleAmount()
         {
             var year = DateTime.Now.Year;
@@ -595,10 +592,8 @@ namespace BlazorWasm.MiniPOS.Services
                 returnModel.data.Add(item.Amount);
                 returnModel.category.Add(item.Year.ToString());
             }
-
             return returnModel;
         }
-
         public async Task<List<int>> GetYearList()
         {
             var year = DateTime.Now.Year;
@@ -615,10 +610,8 @@ namespace BlazorWasm.MiniPOS.Services
             {
                 yearList.Add(item.Year);
             }
-
             return yearList;
         }
-
         public async Task<PastFiveYearModel> PastFiveYearV1(DateTime date)
         {
             var year = date.Year;
@@ -706,14 +699,13 @@ namespace BlazorWasm.MiniPOS.Services
 
             return data;
         }
-
         public async Task<PastFiveYearsDailyModel> PastFiveYearsDailyAmount(DateTime dateTime)
         {
             var startDate = dateTime;
             var endDate = dateTime.AddYears(-5);
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
             var dataList = lst
-                .Where(x => x.detail_date <= startDate
+                            .Where(x => x.detail_date <= startDate
                             && x.detail_date >= endDate).ToList();
             int count = 0;
             int inner = 0;
@@ -726,21 +718,19 @@ namespace BlazorWasm.MiniPOS.Services
             {
                 data.dataArray[i] = new string[]
                 {
-                    dataList[inner].product_name + dataList[inner].product_qty + " = " + dataList[inner].product_price,
-                    dataList[count].product_name + dataList[count].product_qty + " = " + dataList[count].product_price
+                        dataList[inner].product_name+dataList[inner].product_qty+" = "+dataList[inner].product_price,
+                        dataList[count].product_name+dataList[count].product_qty+" = "+dataList[count].product_price
                 };
                 count++;
                 count = count < dataList.Count ? count : dataList.Count - 1;
                 if (count > plusFive)
                 {
                     inner = inner + 1;
-                    plusFive += 5;
+                    plusFive += 5; 
                 }
             }
-
             return data;
         }
-
         public async Task<DonutChartResponseModel> DonutChart()
         {
             var data = JsonConvert.DeserializeObject<DonutChartResponseModel>(JsonData.str);
@@ -884,15 +874,13 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_qty);
                     productInfo.data[j] = result;
                 }
-
                 topFiveProductLst.Add(productInfo);
             }
-
             model.productInfos = topFiveProductLst;
             return model;
         }
 
-        public async Task<PastSevenDaysModel> PastSevenDays()
+        public async Task<PastSevenDaysModel?> PastSevenDays()
         {
             var model = new PastSevenDaysModel();
 
@@ -947,10 +935,8 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_price);
                     productInfo.data[i] = result;
                 }
-
                 productLst.Add(productInfo);
             }
-
             model.productInfos = productLst;
             return model;
         }
@@ -981,7 +967,6 @@ namespace BlazorWasm.MiniPOS.Services
                     }
                 });
             }
-
             return models;
         }
 
@@ -1045,13 +1030,10 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_price);
                     productInfo.data[i] = result;
                 }
-
                 productInfoLst.Add(productInfo);
             }
-
             return productInfoLst;
         }
-
         public async Task<List<PastFiveYearsMonthlyModel>> PastFiveYearMonthlySaleAmount(DateTime dateTime)
         {
             var year = dateTime.Year;
@@ -1068,9 +1050,8 @@ namespace BlazorWasm.MiniPOS.Services
                 yearLst.Add(year);
                 year = year - 1;
             }
-
             var dataList = lst
-                .Where(x => x.detail_date <= startDate
+                            .Where(x => x.detail_date <= startDate
                             && x.detail_date >= endDate).ToList();
             PastFiveYearsMonthlyModel model = new();
             int count = 0;
@@ -1088,7 +1069,6 @@ namespace BlazorWasm.MiniPOS.Services
                         count++;
                     }
                 }
-
                 count = 0;
                 returnModel.Add(new PastFiveYearsMonthlyModel
                 {
@@ -1097,65 +1077,8 @@ namespace BlazorWasm.MiniPOS.Services
                 });
                 monthlyModel = new();
             }
-
             return returnModel;
         }
-
-        public async Task<List<MonthlyRevenueReportResponseModel>> MonthlyRevenueReportForThreeYear()
-        {
-            List<MonthlyRevenueReportResponseModel> model = new();
-            var lst = await _localStorage
-                .GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
-            if (lst is null) return new List<MonthlyRevenueReportResponseModel>();
-            var toYear = DateTime.Now.Year;
-            // var fromYear = toYear - 2;
-
-            for (int i = toYear - 2; i <= toYear; i++)
-            {
-                Console.WriteLine($"The Year = {i}");
-                var yearData = lst
-                    .Where(l => l.detail_date.Year == i)
-                    .ToList();
-                
-                var dataLst = new MonthlyRevenueReportResponseModel
-                {
-                    name = i + " Monthly Revenue Report",
-                    data = new List<MonthlyRevenueReportForThreeYear>()
-                };
-
-                for (int j = 0; j < 12; j++)
-                {
-                    var value = yearData
-                        .Where(v => v.detail_date.Month == j + 1)
-                        .Sum(v => v.product_price);
-
-                    var item = new MonthlyRevenueReportForThreeYear
-                    {
-                        monthName = (j + 1).GetMonthName(),
-                        value = value
-                        // value = value.FirstOrDefault()?.value ?? 0
-                    };
-                    dataLst.data.Add(item);
-                }
-                model.Add(dataLst);
-            }
-            
-            /*var threeYearLst = lst
-                .Where(l => l.detail_date.Year >= fromYear && l.detail_date.Year <= toYear)
-                .ToList();*/
-            
-            /*var value = yearData
-                        .Where(v => v.detail_date.Month == j + 1)
-                        .GroupBy(v => new { v.detail_date.Month })
-                        .Select(group => new
-                        {
-                            value = group.Sum(v => v.product_price)
-                        });*/
-
-            return model;
-        }
-
-
         public async Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct()
         {
             var _productLst = await _localStorage.GetItemAsync<List<ProductDataModel>>("Tbl_Product");
@@ -1165,6 +1088,30 @@ namespace BlazorWasm.MiniPOS.Services
             _productCategoryLst ??= new List<ProductCategoryDataModel>();
             List<ProductCategoryChartModel> model = new();
             var sixProductCategory = _productCategoryLst.Take(6).ToList();
+
+
+
+            /*for (int i = 0; i < sixProductCategory.Count; i++)
+            {
+                var pc = new ProductCategoryChartModel
+                {
+                    name = sixProductCategory[i].product_category_name,
+                    data = new List<ProductChartModel>()
+                };
+                var t = sixProductCategory[i].product_category_code;
+                var proLst = _productLst
+                    .Where(p => p.product_category_code == sixProductCategory[i].product_category_code)
+                    .Select(p => new ProductChartModel
+                    {
+                        name = p.product_name,
+                        value = p.product_sale_price
+                    })
+                    .Take(5)
+                    .ToList();
+
+                pc.data = proLst;
+                model.Add(pc);
+            }*/
 
             foreach (var category in sixProductCategory)
             {
@@ -1185,6 +1132,37 @@ namespace BlazorWasm.MiniPOS.Services
 
                 model.Add(pc);
             }
+            /*for (int i = 0; i < sixProductCategory.Count; i++)
+            {
+                var categoryCode = sixProductCategory[i].product_category_code;
+                int count = 0;
+
+                var pc = new ProductCategoryChartModel
+                {
+                    name = sixProductCategory[i].product_category_name,
+                    data = new List<ProductChartModel>()
+                };
+                
+                foreach (var product in _productLst)
+                {
+                    if (product.product_category_code == categoryCode)
+                    {
+                        pc.data.Add(new ProductChartModel
+                        {
+                            name = product.product_name,
+                            value = product.product_sale_price
+                        });
+
+                        count++;
+
+                        if (count >= 5)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            */
 
             return model;
         }
@@ -1233,16 +1211,13 @@ namespace BlazorWasm.MiniPOS.Services
                             }
                             // Console.WriteLine($"model => {_model.product_name}");
                         }
-
                         await SetVoucher();
                         // Console.WriteLine($"{i}  Voucher set!!!!!");
                     }
-
                     startDate = startDate.AddMonths(-1);
                     // Console.WriteLine("--------------------");
                 }
             }
-
             if (headLst is null)
             {
                 DateTime _startDate = DateTime.Now;
