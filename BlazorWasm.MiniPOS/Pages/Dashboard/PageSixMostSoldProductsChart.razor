@@ -10,11 +10,6 @@
     [Parameter]
     public List<SixMostSoldProductsModel>? SixMostSoldProducts { get; set; }
 
-    protected override async Task OnParametersSetAsync()
-    {
-
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
