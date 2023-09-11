@@ -8,7 +8,7 @@ namespace BlazorWasm.MiniPOS.Services
         Task<List<BestProductReportModel>> BestProductReport();
         Task<bool> CheckIsProductExit(Guid guid);
         Task<List<ProductInfo>> CurrentYearTopFiveProductsByMonth();
-        Task<List<ProductInfo>> FiveYearLineChart();
+        Task<FiveYearLineChart> FiveYearLineChart();
         Task<List<SixMostSoldProductsModel>> SixMostSoldProducts();
         Task<List<MaxMinQtyOfProductsModel>> MaxMinQtyOfProducts();
         Task<List<ProductCategoryChartModel>> ProductCategoryAndProduct();

@@ -514,7 +514,8 @@ window.maxMinQtyOfProducts = function (id, title, data) {
     });
 }
 
-window.fiveYearLineChart = function (id, title, data) {
+window.fiveYearLineChart = function (id, title, year, data) {
+    console.log(`${year} -------------------- ${data}`)
     Highcharts.chart(id, {
 
         title: {
@@ -550,7 +551,7 @@ window.fiveYearLineChart = function (id, title, data) {
                 label: {
                     connectorAllowed: false
                 },
-                pointStart: 2010
+                pointStart: year
             }
         },
 

@@ -150,7 +150,7 @@
     private List<MonthlyRevenueReportResponseModel>? MonthlyRevenueReportForThreeYears;
     private List<SixMostSoldProductsModel>? SixMostSoldProducts;
     private PastSevenDaysModel? PastSevenDaysData;
-    private List<ProductInfo>? FiveYearsLineChartData;
+    private FiveYearLineChart FiveYearsLineChartData;
     private DonutChartResponseModel? PastFiveYearData;
     private DataReturnInfo? PastFiveYearFunnelData;
     private YearlySaleAmountModel? YearlySaleAmountData;
@@ -175,6 +175,8 @@
         if (firstRender)
         {
             await db.GenerateDataByMonth();
+            await db.GetProductCategoryList();
+            
             yearList = await db.GetYearList();
 
             var data = await db.CurrentYearTopFiveProductsByMonth();

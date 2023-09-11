@@ -14,6 +14,11 @@ public class ProductInfo
     public int[] data { get; set; }
 }
 
+public class FiveYearLineChart{
+    public int pastFiveYear { get; set; }
+    public List<ProductInfo> productInfos { get; set; }
+}
+
 public class QtyOfTopFiveProductsByYearModel
 {
     public string[] productNames { get; set; }

@@ -8,7 +8,7 @@
     public string? Title { get; set; }
     
     [Parameter]
-    public List<ProductInfo>? FiveYearsLineChartData { get; set; }
+    public FiveYearLineChart? FiveYearsLineChartData { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -22,7 +22,7 @@
             if (FiveYearsLineChartData is not null)
             {
                 await JsRuntime.InvokeVoidAsync("fiveYearLineChart", Id, Title,
-                    FiveYearsLineChartData);
+                    FiveYearsLineChartData.pastFiveYear, FiveYearsLineChartData.productInfos);
             }
         }
     }

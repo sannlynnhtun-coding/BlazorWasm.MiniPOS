@@ -990,13 +990,18 @@ namespace BlazorWasm.MiniPOS.Services
             return models;
         }
 
-        public async Task<List<ProductInfo>> FiveYearLineChart()
+        public async Task<FiveYearLineChart> FiveYearLineChart()
         {
-            List<ProductInfo> productInfoLst = new();
             var lst = await _localStorage.GetItemAsync<List<SaleVoucherDetailDataModel>>("Tbl_SaleVoucherDetail");
             int currentYear = DateTime.Now.Year;
-            int pastFiveYear = currentYear - 5;
+            int pastFiveYear = currentYear - 4;
             lst ??= new List<SaleVoucherDetailDataModel>();
+
+            FiveYearLineChart model = new FiveYearLineChart
+            {
+                pastFiveYear = pastFiveYear,
+                productInfos = new List<ProductInfo>()
+            };
 
             var fiveProducts = lst
                 .GroupBy(p => p.product_name)
@@ -1019,7 +1024,7 @@ namespace BlazorWasm.MiniPOS.Services
                 var productInfo = new ProductInfo
                 {
                     name = fiveProducts[i].ProductName,
-                    data = new int[currentYear - pastFiveYear]
+                    data = new int[5]
                 };
 
                 for (int j = pastFiveYear; j <= currentYear; j++)
@@ -1030,9 +1035,9 @@ namespace BlazorWasm.MiniPOS.Services
                         .Sum(s => s.product_price);
                     productInfo.data[i] = result;
                 }
-                productInfoLst.Add(productInfo);
+                model.productInfos.Add(productInfo);
             }
-            return productInfoLst;
+            return model;
         }
         public async Task<List<PastFiveYearsMonthlyModel>> PastFiveYearMonthlySaleAmount(DateTime dateTime)
         {
