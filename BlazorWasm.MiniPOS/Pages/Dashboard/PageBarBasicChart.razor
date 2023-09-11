@@ -10,11 +10,6 @@
     [Parameter]
     public QtyOfTopFiveProductsByYearModel? BarBasicData { get; set; }
 
-    protected override async Task OnParametersSetAsync()
-    {
-
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

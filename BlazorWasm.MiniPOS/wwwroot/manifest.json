@@ -1,6 +1,6 @@
 {
-  "name": "BlazorWasm.MiniPOS",
-  "short_name": "BlazorWasm.MiniPOS",
+  "name": "Blazor Wasm - Mini POS",
+  "short_name": "Blazor Wasm - Mini POS",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -8,12 +8,12 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "icon-192.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     }
