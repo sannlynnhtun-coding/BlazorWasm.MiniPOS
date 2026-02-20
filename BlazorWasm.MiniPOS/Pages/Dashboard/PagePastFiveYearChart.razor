@@ -1,5 +1,6 @@
-﻿
-<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -13,13 +14,11 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (PastFiveYearData?.data is not null)
         {
-            if (PastFiveYearData is not null)
-            {
-                await JsRuntime.InvokeVoidAsync("pastFiveYear", Id, Title,
-                        PastFiveYearData);
-            }
+            // Prepare data for Highcharts: list of { name: '...', y: ... }
+            var highchartsData = PastFiveYearData.data.Select(x => new { name = x.name, y = x.value }).ToList();
+            await JsRuntime.InvokeVoidAsync("renderHighchartsPie", Id, Title, highchartsData);
         }
     }
 }

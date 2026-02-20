@@ -6,7 +6,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
 {
     public partial class PageSale
     {
-        private List<ProductNameListDataModel>? _lstProduct = new();
+        private List<ProductDataModel>? _lstProduct = new();
         private ProductSaleDataModel _model = new();
         private ProductSaleResponseDataModel? _lstProductSale = new();
         private int _grandTotal;
@@ -15,28 +15,17 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
 
         protected override async Task OnInitializedAsync()
         {
-            _lstProduct = await db.GetProductNameList();
-            _lstProduct ??= new List<ProductNameListDataModel>();
+            _lstProduct = await db.GetProductList();
+            _lstProduct ??= new List<ProductDataModel>();
             if (_lstProduct == null || !_lstProduct.Any())
                 nav.NavigateTo("/setup/product-category");
             _lstProductSale = await db.GetRecentProductSale();
             _grandTotal = await db.GetGrandTotal();
         }
 
-        // private async Task ProductNameChange(ChangeEventArgs e)
         private async Task ProductNameChange(object value)
         {
             if (_isEdit) return;
-            // if (e.Value?.ToString() == "--Select Product Name--")
-            // {
-            //     _model.product_price = 0;
-            // }
-            // else
-            // {
-            //     _model.product_id = new Guid(e.Value.ToString() ?? string.Empty);
-            //     var lst = await db.GetProductName(_model.product_id);
-            //     _model.product_price = lst.product_sale_price;
-            // }
             if (value is Guid productId)
             {
                 _model.product_id = productId;
@@ -79,17 +68,15 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
 
             _grandTotal = await db.GetGrandTotal();
             _lstProductSale = await db.GetRecentProductSale();
-            _lstProduct = await db.GetProductNameList();
+            _lstProduct = await db.GetProductList();
             _model = new ProductSaleDataModel();
         }
 
         private async Task Save()
         {
             await db.SetVoucher();
-            _lstProduct = await db.GetProductNameList();
+            _lstProduct = await db.GetProductList();
             _lstProductSale = await db.GetRecentProductSale();
-            //_lstProduct = new();
-            //return Task.CompletedTask;
         }
 
         private async Task DeleteProductSale(Guid guid)
@@ -104,6 +91,37 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
             _isEdit = true;
             _model = await db.EditProductSale(guid);
             _isEdit = false;
+        }
+
+        private async Task AddProductToSale(Guid productId)
+        {
+            var product = await db.GetProduct(productId);
+            if (product == null) return;
+
+            var existingSaleItem = await db.EditProductSale(productId);
+            if (existingSaleItem != null && existingSaleItem.product_id == productId)
+            {
+                existingSaleItem.product_qty++;
+                existingSaleItem.product_total_price = existingSaleItem.product_qty * existingSaleItem.product_price;
+                await db.UpdateProductSale(existingSaleItem);
+            }
+            else
+            {
+                var newSaleItem = new ProductSaleDataModel
+                {
+                    product_id = product.product_id,
+                    product_name = product.product_name,
+                    product_price = product.product_sale_price,
+                    product_qty = 1,
+                    product_total_price = product.product_sale_price,
+                    product_sale_id = product.product_id,
+                    product_sale_date = DateTime.Now
+                };
+                await db.SetSaleProduct(newSaleItem);
+            }
+
+            _grandTotal = await db.GetGrandTotal();
+            _lstProductSale = await db.GetRecentProductSale();
         }
     }
 }

@@ -52,5 +52,6 @@ namespace BlazorWasm.MiniPOS.Services
         Task<YearlySaleAmountModel> YearlySaleAmount();
         Task<List<PastFiveYearsMonthlyModel>> PastFiveYearMonthlySaleAmount(DateTime dateTime);
         Task<PastFiveYearsDailyModel> PastFiveYearsDailyAmount(DateTime dateTime);
+        Task GenerateDataAsync(DateTime start, DateTime end, IProgress<double> progress);
     }
 }

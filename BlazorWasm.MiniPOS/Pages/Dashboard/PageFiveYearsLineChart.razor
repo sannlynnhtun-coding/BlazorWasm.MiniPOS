@@ -1,4 +1,6 @@
-﻿<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -6,19 +8,16 @@
 
     [Parameter]
     public string? Title { get; set; }
-    
+
     [Parameter]
     public FiveYearLineChart? FiveYearsLineChartData { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (FiveYearsLineChartData?.productInfos is not null)
         {
-            if (FiveYearsLineChartData is not null)
-            {
-                await JsRuntime.InvokeVoidAsync("fiveYearLineChart", Id, Title,
-                    FiveYearsLineChartData.pastFiveYear, FiveYearsLineChartData.productInfos);
-            }
+            var years = Enumerable.Range(FiveYearsLineChartData.pastFiveYear, 5).Select(y => y.ToString()).ToArray();
+            await JsRuntime.InvokeVoidAsync("renderHighchartsLine", Id, Title, years, FiveYearsLineChartData.productInfos);
         }
     }
 }

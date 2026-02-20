@@ -13,11 +13,7 @@
 @using BlazorWasm.MiniPOS.Pages.Sale
 @using BlazorWasm.MiniPOS.Models
 @using BlazorWasm.MiniPOS.Shared
-@using MudBlazor
-@using Radzen
-@using Radzen.Blazor
 @using BlazorWasm.MiniPOS.Pages.Components
-@using Variant = MudBlazor.Variant
 @using BlazorWasm.MiniPOS.Pages.Dashboard
 @using BlazorWasm.MiniPOS.Pages.Dashboard.Model
 
@@ -25,6 +21,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject NavigationManager nav
 @inject IDbService db
+@inject IStorageService StorageService
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 @*@using ApexCharts*@

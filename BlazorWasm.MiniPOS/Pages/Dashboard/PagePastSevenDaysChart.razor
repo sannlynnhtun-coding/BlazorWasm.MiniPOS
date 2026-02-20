@@ -1,4 +1,6 @@
-﻿<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -6,19 +8,15 @@
 
     [Parameter]
     public string? Title { get; set; }
-    
+
     [Parameter]
     public PastSevenDaysModel? PastSevenDaysData { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (PastSevenDaysData?.productInfos is not null)
         {
-            if (PastSevenDaysData is not null)
-            {
-                await JsRuntime.InvokeVoidAsync("pastSevenDays", Id, Title,
-                    PastSevenDaysData.days, PastSevenDaysData.productInfos);
-            }
+            await JsRuntime.InvokeVoidAsync("renderHighchartsLine", Id, Title, PastSevenDaysData.days, PastSevenDaysData.productInfos);
         }
     }
 }

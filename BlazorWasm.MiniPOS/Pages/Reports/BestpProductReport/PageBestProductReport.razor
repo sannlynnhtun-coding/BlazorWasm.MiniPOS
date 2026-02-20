@@ -1,9 +1,42 @@
 ﻿@page "/best-product-report"
-<h3>Best Product Report</h3>
-@if (_lstBestProductReport is not null)
-{
-    <div id="chart"></div>
-}
+
+<div class="mb-8">
+    <h2 class="text-3xl font-outfit font-bold text-gray-800">Best Sellers Report</h2>
+    <p class="text-gray-500 mt-2">Top selling products by quantity.</p>
+</div>
+
+<div class="glass-card overflow-hidden">
+    <table class="w-full text-left">
+        <thead class="bg-gray-50 border-b border-gray-100">
+            <tr>
+                <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product Name</th>
+                <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Total Sold</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            @if (_lstBestProductReport != null)
+            {
+                @foreach (var item in _lstBestProductReport)
+                {
+                    <tr class="hover:bg-gray-50/50 transition-colors">
+                        <td class="px-6 py-4 text-sm font-semibold text-gray-800">@item.ProductName</td>
+                        <td class="px-6 py-4 text-sm text-gray-600 text-right">
+                            <span class="bg-premium-orange-100 text-premium-orange-700 px-3 py-1 rounded-full font-bold">@item.ProductQuantity</span>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="px-6 py-12 text-center text-gray-500">
+                        No data available for the best sellers report.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @code {
     private List<BestProductReportModel>? _lstBestProductReport;
@@ -14,17 +47,6 @@
         {
             _lstBestProductReport = await db.BestProductReport();
             StateHasChanged();
-            var labels = _lstBestProductReport
-                .Select(x => x.ProductName)
-                .ToList();
-            var series = _lstBestProductReport
-                .Select(x => x.ProductQuantity)
-                .ToList();
-            await JsRuntime.InvokeVoidAsync(
-                "bindPieChart", 
-                "chart", 
-                labels, 
-                series);
         }
     }
 }

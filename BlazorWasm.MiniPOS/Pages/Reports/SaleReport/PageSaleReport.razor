@@ -1,4 +1,4 @@
-﻿@page "/sale-report"
+@page "/sale-report"
 
 @*<MudDatePicker PickerVariant="PickerVariant.Dialog"
                Label="Date Format" HelperText="For custom cultures"
@@ -11,19 +11,26 @@
     </MudItem>*@
 @if (Type == EnumFormType.List)
 {
-    <MudItem xs="12" sm="6">
-        @*<MudDatePicker @ref="_picker" DateFormat="dd-MM-yyyy" Label="With action buttons" @bind-Date="SelectedDate">
-    <PickerActions>
-    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
-    <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
-    <MudButton Color="Color.Primary" OnClick="DatePicker">Ok</MudButton>
-    </PickerActions>
-    </MudDatePicker>*@
-        <RadzenDatePicker @bind-Value=@SelectedDate DateFormat="dd-MM-yyyy" />
-        <RadzenButton Variant="Radzen.Variant.Flat"
-                      Shade="Shade.Lighter" Click="DatePicker"
-                      Text="Search" ButtonStyle="ButtonStyle.Primary" />
-    </MudItem>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 animate-fade-in max-w-[1400px] mx-auto">
+        <div>
+            <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">Business Intelligence</h2>
+            <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Data-Driven Insights • Revenue Tracking</p>
+        </div>
+        
+        <div class="card-premium !py-4 !px-8 flex items-center gap-6 shadow-premium-2 bg-white/80 backdrop-blur-md border-gray-100">
+            <div class="flex items-center gap-4">
+                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Temporal Bound:</span>
+                <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-gray-900 text-sm cursor-pointer hover:text-premium-orange-500 transition-colors" 
+                       value="@SelectedDate?.ToString("yyyy-MM-dd")" 
+                       @onchange="@(e => SelectedDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+            </div>
+            <div class="w-px h-8 bg-gray-100"></div>
+            <button @onclick="DatePicker" class="btn-premium !py-2.5 !px-6 shadow-premium-orange-sm hover:scale-105 active:scale-95 transition-all">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <span class="text-[10px] uppercase tracking-widest font-black">Generate Report</span>
+            </button>
+        </div>
+    </div>
 }
 @if (_saleReport != null)
 {

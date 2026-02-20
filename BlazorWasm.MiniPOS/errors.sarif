@@ -1,0 +1,2387 @@
+{
+  "$schema": "http://json.schemastore.org/sarif-1.0.0",
+  "version": "1.0.0",
+  "runs": [
+    {
+      "tool": {
+        "name": "Microsoft (R) Visual C# Compiler",
+        "version": "5.3.0.0",
+        "fileVersion": "5.3.0-2.26103.119 (a2bfa4671c2a489b874fb53ff7d5ad54cbd9c80f)",
+        "semanticVersion": "5.3.0",
+        "language": "en-US"
+      },
+      "results": [
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_price' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'qty' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'amount' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/VoucherReportModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 23,
+                  "endLine": 12,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 23,
+                  "endLine": 12,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_count' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 26,
+                  "endLine": 5,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 26,
+                  "endLine": 5,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 29,
+                  "endLine": 6,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/TodaySaleProductQty.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 29,
+                  "endLine": 6,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_id' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleVoucherDetailDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleVoucherDetailDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleVoucherDetailDataModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleVoucherDetailDataModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'ProductName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleReportResponseDataModel.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 23,
+                  "endLine": 14,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/SaleReportResponseDataModel.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 23,
+                  "endLine": 14,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'pageSetting' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductResponseModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 33,
+                  "endLine": 5,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductResponseModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 33,
+                  "endLine": 5,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductNameListDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductNameListDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_code' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_category_code' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCreationDataModel.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 23,
+                  "endLine": 8,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'pageSetting' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 33,
+                  "endLine": 13,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 33,
+                  "endLine": 13,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductSaleDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductSaleDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_category_name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'product_category_code' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Models/ProductCategoryDataModel.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 23,
+                  "endLine": 7,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 23,
+                  "endLine": 40,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 23,
+                  "endLine": 40,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 38,
+                  "endLine": 36,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 36,
+                  "startColumn": 38,
+                  "endLine": 36,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'arrayObject' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 27,
+                  "endLine": 32,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 27,
+                  "endLine": 32,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'array' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 25,
+                  "endLine": 27,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 25,
+                  "endLine": 27,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 23,
+                  "endLine": 21,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 23,
+                  "endLine": 21,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'Year' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/YearOverYearModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'dataArray' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 27,
+                  "endLine": 40,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 27,
+                  "endLine": 40,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 23,
+                  "endLine": 34,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 23,
+                  "endLine": 34,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 35,
+                  "endLine": 35,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 35,
+                  "endLine": 35,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 23,
+                  "endLine": 28,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 23,
+                  "endLine": 28,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'valuePrefix' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 23,
+                  "endLine": 16,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 23,
+                  "endLine": 16,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'valueSuffix' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 23,
+                  "endLine": 17,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 23,
+                  "endLine": 17,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 5,
+                  "startColumn": 23,
+                  "endLine": 5,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'color' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/TwoYearComparisonModel.cs",
+                "region": {
+                  "startLine": 6,
+                  "startColumn": 23,
+                  "endLine": 6,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 19,
+                  "endLine": 80,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 80,
+                  "startColumn": 19,
+                  "endLine": 80,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 51,
+                  "endLine": 81,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 51,
+                  "endLine": 81,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'monthName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 19,
+                  "endLine": 74,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 19,
+                  "endLine": 74,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 19,
+                  "endLine": 63,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 63,
+                  "startColumn": 19,
+                  "endLine": 63,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'lineColor' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 64,
+                  "startColumn": 19,
+                  "endLine": 64,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 64,
+                  "startColumn": 19,
+                  "endLine": 64,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'color' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 19,
+                  "endLine": 65,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 19,
+                  "endLine": 65,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'fillColor' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 19,
+                  "endLine": 66,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 19,
+                  "endLine": 66,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 23,
+                  "endLine": 67,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 67,
+                  "startColumn": 23,
+                  "endLine": 67,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 19,
+                  "endLine": 57,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 19,
+                  "endLine": 57,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'Month' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 19,
+                  "endLine": 7,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 19,
+                  "endLine": 7,
+                  "endColumn": 24
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'TopProducts' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 30,
+                  "endLine": 8,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 30,
+                  "endLine": 8,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 19,
+                  "endLine": 51,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 19,
+                  "endLine": 51,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 36,
+                  "endLine": 52,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 36,
+                  "endLine": 52,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 19,
+                  "endLine": 44,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 19,
+                  "endLine": 44,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 19,
+                  "endLine": 38,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 19,
+                  "endLine": 38,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 22,
+                  "endLine": 39,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 22,
+                  "endLine": 39,
+                  "endColumn": 26
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'days' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 21,
+                  "endLine": 31,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 21,
+                  "endLine": 31,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'productInfos' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 30,
+                  "endLine": 33,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 30,
+                  "endLine": 33,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'productNames' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 21,
+                  "endLine": 24,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 21,
+                  "endLine": 24,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'productInfos' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 30,
+                  "endLine": 26,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 30,
+                  "endLine": 26,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'productInfos' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 30,
+                  "endLine": 19,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 30,
+                  "endLine": 19,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'name' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 19,
+                  "endLine": 13,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 19,
+                  "endLine": 13,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'data' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 18,
+                  "endLine": 14,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Dashboard/Model/MonthlyTopFiveProductsOfCurrentYear.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 18,
+                  "endLine": 14,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Reports/SaleReport/PageSaleReportList.razor",
+                "region": {
+                  "startLine": 129,
+                  "startColumn": 43,
+                  "endLine": 129,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Reports/SaleReport/PageSaleReportList.razor",
+                "region": {
+                  "startLine": 237,
+                  "startColumn": 35,
+                  "endLine": 237,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8600",
+          "level": "warning",
+          "message": "Converting null literal or possible null value to non-nullable type.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Sale/PageSale.razor.cs",
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 20,
+                  "endLine": 41,
+                  "endColumn": 62
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Sale/PageSale.razor.cs",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 50,
+                  "endLine": 42,
+                  "endColumn": 57
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Sale/PageSale.razor.cs",
+                "region": {
+                  "startLine": 43,
+                  "startColumn": 36,
+                  "endLine": 43,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS0029",
+          "level": "error",
+          "message": "Cannot implicitly convert type 'System.Collections.Generic.List<BlazorWasm.MiniPOS.Models.ProductNameListDataModel>' to 'System.Collections.Generic.List<BlazorWasm.MiniPOS.Models.ProductDataModel>'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Sale/PageSale.razor.cs",
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 27,
+                  "endLine": 71,
+                  "endColumn": 56
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS0029",
+          "level": "error",
+          "message": "Cannot implicitly convert type 'System.Collections.Generic.List<BlazorWasm.MiniPOS.Models.ProductNameListDataModel>' to 'System.Collections.Generic.List<BlazorWasm.MiniPOS.Models.ProductDataModel>'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Pages/Sale/PageSale.razor.cs",
+                "region": {
+                  "startLine": 78,
+                  "startColumn": 27,
+                  "endLine": 78,
+                  "endColumn": 56
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 156,
+                  "startColumn": 69,
+                  "endLine": 156,
+                  "endColumn": 75
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8603",
+          "level": "warning",
+          "message": "Possible null reference return.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 748,
+                  "startColumn": 20,
+                  "endLine": 748,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8602",
+          "level": "warning",
+          "message": "Dereference of a possibly null reference.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 1255,
+                  "startColumn": 69,
+                  "endLine": 1255,
+                  "endColumn": 73
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1829",
+          "level": "note",
+          "message": "Use the \"Count\" property instead of Enumerable.Count()",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 233,
+                  "startColumn": 25,
+                  "endLine": 233,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "PropertyNameKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1829",
+          "level": "note",
+          "message": "Use the \"Count\" property instead of Enumerable.Count()",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 323,
+                  "startColumn": 25,
+                  "endLine": 323,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "PropertyNameKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1829",
+          "level": "note",
+          "message": "Use the \"Count\" property instead of Enumerable.Count()",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 346,
+                  "startColumn": 25,
+                  "endLine": 346,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "PropertyNameKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'GenerateColor' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 570,
+                  "startColumn": 32,
+                  "endLine": 570,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1829",
+          "level": "note",
+          "message": "Use the \"Count\" property instead of Enumerable.Count()",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 726,
+                  "startColumn": 33,
+                  "endLine": 726,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "PropertyNameKey": "Count"
+            }
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'GetProductCategory' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 1407,
+                  "startColumn": 26,
+                  "endLine": 1407,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CA1822",
+          "level": "note",
+          "message": "Member 'GetProduct' does not access instance data and can be marked as static",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/slh/proj/mini-pos-v2/BlazorWasm.MiniPOS/BlazorWasm.MiniPOS/Services/AppDbService.cs",
+                "region": {
+                  "startLine": 1441,
+                  "startColumn": 26,
+                  "endLine": 1441,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        }
+      ],
+      "rules": {
+        "CA1822": {
+          "id": "CA1822",
+          "shortDescription": "Mark members as static",
+          "fullDescription": "Members that do not access instance data or call instance methods can be marked as static. After you mark the methods as static, the compiler will emit nonvirtual call sites to these members. This can give you a measurable performance gain for performance-sensitive code.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "PortedFromFxCop",
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CA1829": {
+          "id": "CA1829",
+          "shortDescription": "Use Length/Count property instead of Count() when available",
+          "fullDescription": "Enumerable.Count() potentially enumerates the sequence while a Length/Count property is a direct access.",
+          "defaultLevel": "note",
+          "helpUri": "https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1829",
+          "properties": {
+            "category": "Performance",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Telemetry",
+              "EnabledRuleInAggressiveMode"
+            ]
+          }
+        },
+        "CS0029": {
+          "id": "CS0029",
+          "defaultLevel": "error",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0029)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry",
+              "NotConfigurable"
+            ]
+          }
+        },
+        "CS8600": {
+          "id": "CS8600",
+          "shortDescription": "Converting null literal or possible null value to non-nullable type.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8600)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8602": {
+          "id": "CS8602",
+          "shortDescription": "Dereference of a possibly null reference.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8602)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8603": {
+          "id": "CS8603",
+          "shortDescription": "Possible null reference return.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8603)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
+        "CS8618": {
+          "id": "CS8618",
+          "shortDescription": "Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS8618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

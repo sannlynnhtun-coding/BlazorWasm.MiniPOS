@@ -1,5 +1,6 @@
-﻿
-<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -13,12 +14,9 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (PastFiveYearsFunnelData?.arrayObject is not null)
         {
-            if (PastFiveYearsFunnelData is not null)
-            {
-                await JsRuntime.InvokeVoidAsync("pastFiveYearFunnelChart", Id, Title, PastFiveYearsFunnelData);
-            }
+            await JsRuntime.InvokeVoidAsync("renderHighchartsFunnel", Id, Title, PastFiveYearsFunnelData.arrayObject);
         }
     }
 }

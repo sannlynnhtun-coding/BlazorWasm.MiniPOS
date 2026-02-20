@@ -1,17 +1,78 @@
-﻿@page "/generate-data"
+@page "/generate-data"
 
-<div class="row" id="divLoading">
+<div class="space-y-12 animate-fade-in max-w-[1000px] mx-auto">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+        <div>
+            <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">System Simulation</h2>
+            <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Synthetic Data Engine • Load Testing Utilities</p>
+        </div>
+        <div class="w-16 h-16 bg-white border-2 border-gray-50 text-gray-300 rounded-[2rem] flex items-center justify-center shadow-premium-2 group hover:border-premium-orange-200 hover:text-premium-orange-500 transition-all">
+            <svg class="w-8 h-8 group-hover:rotate-180 transition-transform duration-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </div>
+    </div>
 
-    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label>Start Date</label>
-        <input type="date" class="form-control t-r" name="startDate" @bind-value="_startDate"/>
-    </div>
-    <div class="col-md-6 mt-5 t-r" style="padding-left: 50px">
-        <label>End Date</label>
-        <input type="date" class="form-control t-r" name="endDate" @bind-value="_endDate"/>
-    </div>
-    <div class="col-md-6 mt-5" style="padding-left: 50px">
-        <MudButton Variant="Variant.Outlined" OnClick="GenerateDataByDate" Color="Color.Default">Generate Data</MudButton>
-        @* <MudButton Variant="Variant.Outlined" OnClick="Save" Color="Color.Success">Save</MudButton> *@
+    <div class="card-premium shadow-premium-3 !p-16 relative overflow-hidden bg-white">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-blue-50/50 rounded-full blur-3xl -mr-40 -mt-40 opacity-60"></div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 relative z-10">
+            <div class="space-y-4">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Simulation Start</label>
+                <div class="relative group">
+                    <input type="date" class="input-premium py-5 px-6 rounded-2xl font-black text-gray-900 group-hover:border-premium-orange-200 transition-all" @bind-value="_startDate" />
+                </div>
+            </div>
+            <div class="space-y-4">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Simulation End</label>
+                <div class="relative group">
+                    <input type="date" class="input-premium py-5 px-6 rounded-2xl font-black text-gray-900 group-hover:border-premium-orange-200 transition-all" @bind-value="_endDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="p-10 bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 rounded-[2.5rem] flex items-start gap-8 mb-16 relative z-10 shadow-inner group hover:border-premium-orange-100 transition-all">
+            <div class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center flex-shrink-0 shadow-premium-1 group-hover:scale-110 transition-all">
+                <svg class="w-8 h-8 text-premium-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-black text-gray-900 text-lg tracking-tight">Engine Protocol</h4>
+                <p class="text-[13px] text-gray-500 font-medium leading-relaxed">This mechanism will synthesize transactional architectures for the defined temporal window. Existing product identifiers will be utilized to construct randomized economic flows, optimized for analytical calibration.</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col items-center space-y-10 relative z-10">
+            @if (_isGenerating)
+            {
+                <div class="w-full space-y-4 animate-pulse">
+                    <div class="flex justify-between text-[10px] font-black text-premium-orange-600 uppercase tracking-[0.2em]">
+                        <span>Synthesizing Records...</span>
+                        <span>@($"{_progress:F0}%")</span>
+                    </div>
+                    <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner p-1">
+                        <div class="bg-gradient-to-r from-premium-orange-500 to-premium-orange-600 h-full rounded-full transition-all duration-500 shadow-premium-orange-sm" style="width: @(_progress)%"></div>
+                    </div>
+                </div>
+            }
+
+            <div class="flex justify-end w-full pt-10 border-t-2 border-gray-50">
+                <button @onclick="GenerateDataByDate" disabled="@_isGenerating" 
+                        class="btn-premium px-16 py-5 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
+                    <span class="flex items-center space-x-4">
+                        @if (_isGenerating)
+                        {
+                            <svg class="w-6 h-6 animate-spin" fill="none" viewBox="0 0 24 24" stroke-width="3">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="text-sm uppercase tracking-widest">Processing</span>
+                        }
+                        else
+                        {
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span class="text-sm uppercase tracking-widest">Execute Simulation</span>
+                        }
+                    </span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>

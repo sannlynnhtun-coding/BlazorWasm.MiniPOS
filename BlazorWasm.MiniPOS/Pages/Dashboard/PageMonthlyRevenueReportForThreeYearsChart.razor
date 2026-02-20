@@ -1,4 +1,6 @@
-﻿<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -6,19 +8,24 @@
 
     [Parameter]
     public string? Title { get; set; }
-    
+
     [Parameter]
     public List<MonthlyRevenueReportResponseModel>? MonthlyRevenueReportForThreeYears { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (MonthlyRevenueReportForThreeYears is not null)
         {
-            if (MonthlyRevenueReportForThreeYears is not null)
-            {
-                await JsRuntime.InvokeVoidAsync("monthlyRevenueReportOfThreeYear", Id, Title,
-                    MonthlyRevenueReportForThreeYears);
-            }
+            // MonthlyRevenueReportResponseModel has name (Year) and data (List<double> of monthly amounts)
+            // We can treat this as a line chart series
+            var seriesData = MonthlyRevenueReportForThreeYears.Select(x => new {
+                name = x.name,
+                data = x.data
+            }).ToList();
+
+            var months = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+            await JsRuntime.InvokeVoidAsync("renderHighchartsLine", Id, Title, months, seriesData);
         }
     }
 }

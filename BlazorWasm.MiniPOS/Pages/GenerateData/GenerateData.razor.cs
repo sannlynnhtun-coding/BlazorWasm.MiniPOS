@@ -4,53 +4,34 @@ namespace BlazorWasm.MiniPOS.Pages.GenerateData;
 
 public partial class GenerateData
 {
-    private DateTime _startDate = DateTime.Now;
-    private DateTime _endDate = DateTime.Now.AddYears(-5);
-    private List<ProductNameListDataModel>? _lstProduct = new();
-    private ProductSaleDataModel _model = new();
-    private Random random = new();
+    private DateTime _startDate = DateTime.Now.AddMonths(-1);
+    private DateTime _endDate = DateTime.Now;
+    private bool _isGenerating = false;
+    private double _progress = 0;
 
     private async Task GenerateDataByDate()
     {
-        _lstProduct = await db.GetProductNameList();
-        _lstProduct ??= new List<ProductNameListDataModel>();
-        
-        while (_startDate >= _endDate)
-        {
-            Console.WriteLine($"Start Date or Current Date {_startDate} -- End Date {_endDate}");
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    int quantity = random.Next(1, 11);
-                    int randomIndex = random.Next(0, _lstProduct.Count);
-                    ProductNameListDataModel selectedProduct = _lstProduct[randomIndex];
-                    var item = await db.GetProductName(selectedProduct.product_id);
-                    if (item is not null)
-                        _model.product_price = item.product_sale_price;
-                    
-                    _model.product_id = selectedProduct.product_id;
-                    _model.product_name = selectedProduct.product_name;
-                    _model.product_qty = quantity;
-                    _model.product_total_price = quantity * item.product_sale_price;
-                    _model.product_sale_date = _startDate;
+        if (_isGenerating) return;
 
-                    if (await db.CheckIsProductExit(_model.product_sale_id))
-                    {
-                        await db.UpdateProductSale(_model);
-                    }
-                    else
-                    {
-                        await db.SetSaleProduct(_model);
-                    }
-                    Console.WriteLine($"model => {_model.product_name}");
-                }
-                await db.SetVoucher();
-                Console.WriteLine($"{i}  Voucher set!!!!!");
-            }
-            _startDate = _startDate.AddDays(-1);
-            Console.WriteLine("--------------------");
+        try
+        {
+            _isGenerating = true;
+            _progress = 0;
+            StateHasChanged();
+
+            var progressReporter = new Progress<double>(p =>
+            {
+                _progress = p;
+                StateHasChanged();
+            });
+
+            await db.GenerateDataAsync(_startDate, _endDate, progressReporter);
+        }
+        finally
+        {
+            _isGenerating = false;
+            _progress = 100;
+            StateHasChanged();
         }
     }
-    
 }

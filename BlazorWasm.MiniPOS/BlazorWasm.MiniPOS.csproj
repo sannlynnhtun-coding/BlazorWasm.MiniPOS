@@ -9,18 +9,17 @@
 
 	<!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">-->
 	<Target Name="BeforeBuild" BeforeTargets="Build">
-		<Exec Command="npm install" WorkingDirectory="NpmJS" />
-		<Exec Command="npm run build" WorkingDirectory="NpmJS" />
+		<Exec Command="npm install" WorkingDirectory="." />
+		<Exec Command="npm run build" WorkingDirectory="." />
 	</Target>
 
 	<ItemGroup>
 		<PackageReference Include="Blazor-ApexCharts" Version="0.9.20-beta" />
 		<PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+		<PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.13" PrivateAssets="all" />
-		<PackageReference Include="MudBlazor" Version="6.9.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Radzen.Blazor" Version="4.15.4" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,6 @@
-﻿<div id="@Id"></div>
+﻿@inject IJSRuntime JsRuntime
+
+<div id="@Id" class="w-full h-full"></div>
 
 @code {
     [Parameter]
@@ -10,12 +12,13 @@
     [Parameter]
     public List<ProductInfo>? Series { get; set; }
 
+    private readonly string[] _months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (Series is not null)
         {
-            if (Series is not null)
-                await JsRuntime.InvokeVoidAsync("basicColumnChart", Id, Title, Series);
+            await JsRuntime.InvokeVoidAsync("renderHighchartsColumn", Id, Title, _months, Series);
         }
     }
 }

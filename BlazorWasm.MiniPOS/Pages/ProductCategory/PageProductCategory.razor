@@ -1,77 +1,142 @@
-﻿@page "/setup/product-category"
-@if (FormType == EnumFormType.List)
-{
-    <div class="mb-5">
-        <button class="btn btn-success mt-3" @onclick="Create">Create</button>
-    </div>
-    <div>
-        <table class="table table-bordered text-nowrap">
-            <thead>
-            <tr>
-                <th scope="col">Action</th>
-                @*<th scope="col">Product Category Id</th>*@
-                <th scope="col">Product Category Code</th>
-                <th scope="col">Product Category Name</th>
-                <th scope="col">Product Creation Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if (_productCategoryResponseModel?.productCategories is {Count: > 0 })
-            {
-                @foreach (var item in _productCategoryResponseModel.productCategories)
-                {
-                    <tr>
-                        <td>
-                            <a class="btn btn-outline-warning mt-3"
-                               @onclick="() => Edit(item)">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
-                            <a class="btn btn-outline-danger mt-3"
-                               @onclick="() => Delete(item)">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                        </td>
-                        @*<th scope="row">@(item.product_category_id)</th>*@
-                        <td>@(item.product_category_code)</td>
-                        <td>@(item.product_category_name)</td>
-                        <td>@(item.product_category_creation_date)</td>
-                    </tr>
-                }
-            }
-            </tbody>
-        </table>
-        @if (_productCategoryResponseModel?.productCategories is {Count: > 0 })
-        {
-            <div class="d-flex flex-column align-center">
-                <MudPagination BoundaryCount="2" MiddleCount="5"
-                               Count="@_productCategoryResponseModel.pageSetting.pageCount"
-                               SelectedChanged="(pageNo) => List(pageNo)"
-                               Class="mt-4"/>
+@page "/setup/product-category"
+
+<div class="space-y-12 animate-fade-in max-w-[1200px] mx-auto">
+    @if (FormType == EnumFormType.List)
+    {
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+            <div>
+                <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">Category Architecture</h2>
+                <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Inventory Grouping • Systematic Classification</p>
             </div>
-        }
-    </div>
-}
-else if (FormType is EnumFormType.Create or EnumFormType.Edit)
-{
-    <div class="row" style="padding-left: 50px; padding-right:50px">
-        <div class="col-md-6 mt-10">
-            <label>Product Category Code</label>
-            <input type="text" class="form-control" @bind-value="_model.product_category_code"/>
+            <button @onclick="Create" class="btn-premium px-10 py-4 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
+                <span class="text-sm uppercase tracking-widest">Define Category</span>
+            </button>
         </div>
-        <div class="col-md-6 mt-10">
-            <label>Product Category Name</label>
-            <input type="text" class="form-control" @bind-value="_model.product_category_name"/>
-        </div>
-        <div class="col-md-12 mt-5">
-            <button class="btn btn-dark mt-3" @onclick=Back style="margin-right: 1%;">Back</button>
-            @if (FormType == EnumFormType.Create)
+
+        <div class="card-premium shadow-premium-3 !p-0 overflow-hidden border-none bg-white">
+            <div class="overflow-x-auto">
+                <table class="table-premium">
+                    <thead>
+                        <tr class="bg-gray-50/50">
+                            <th class="py-6 px-10">Classification Identity</th>
+                            <th class="py-6 px-10">Established Date</th>
+                            <th class="py-6 px-10 text-right">Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @if (_productCategoryResponseModel?.productCategories is { Count: > 0 })
+                        {
+                            @foreach (var item in _productCategoryResponseModel.productCategories)
+                            {
+                                <tr class="hover:bg-gray-50/80 transition-premium group">
+                                    <td class="py-6 px-10">
+                                        <div class="flex items-center">
+                                            <div class="w-16 h-16 bg-gradient-to-br from-purple-50 to-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mr-6 font-black text-lg shadow-sm group-hover:scale-105 transition-all">
+                                                @item.product_category_name?.Substring(0, 1)
+                                            </div>
+                                            <div>
+                                                <div class="font-black text-gray-900 text-base">@item.product_category_name</div>
+                                                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-1">ID: @item.product_category_code</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="py-6 px-10">
+                                        <div class="text-xs font-black text-gray-500 uppercase tracking-widest">
+                                            @item.product_category_creation_date.ToString("MMMM dd, yyyy")
+                                        </div>
+                                    </td>
+                                    <td class="py-6 px-10 text-right">
+                                        <div class="flex items-center justify-end space-x-3">
+                                            <button @onclick="() => Edit(item)" class="icon-btn-premium w-10 h-10">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                            </button>
+                                            <button @onclick="() => Delete(item)" class="icon-btn-premium w-10 h-10 hover:!bg-red-50 hover:!border-red-200 hover:!text-red-600">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (_productCategoryResponseModel?.productCategories is { Count: > 0 })
             {
-                <button type="button" @onclick="Save" class="btn btn-success mt-3">Save</button>
-            }
-            else if (FormType == EnumFormType.Edit)
-            {
-                <button type="button" @onclick="Update" class="btn btn-success mt-3">Update</button>
+                <div class="p-10 border-t-2 border-gray-50 flex justify-center bg-white shadow-inner">
+                    <div class="flex items-center space-x-3">
+                        @{
+                            var pageInfo = _productCategoryResponseModel.pageSetting;
+                            var curPage = pageInfo.pageNo;
+                            var totalP = pageInfo.pageCount;
+                        }
+
+                        <button @onclick="() => List(curPage - 1)" 
+                                disabled="@(curPage == 1)"
+                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+
+                        @for (int i = 1; i <= totalP; i++)
+                        {
+                            var p = i;
+                            <button @onclick="() => List(p)"
+                                    class="w-12 h-12 rounded-2xl border-2 font-black text-sm transition-all @(curPage == p ? "bg-premium-orange-500 border-premium-orange-600 text-white shadow-premium-orange-sm" : "border-gray-100 text-gray-400 hover:border-premium-orange-300 hover:text-premium-orange-600 hover:bg-premium-orange-50/30")">
+                                @p
+                            </button>
+                        }
+
+                        <button @onclick="() => List(curPage + 1)" 
+                                disabled="@(curPage == totalP)"
+                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
             }
         </div>
-    </div>
-}
+    }
+    else if (FormType is EnumFormType.Create or EnumFormType.Edit)
+    {
+        <div class="max-w-3xl mx-auto space-y-12">
+            <div class="flex items-center">
+                <button @onclick="Back" class="icon-btn-premium !w-16 !h-16 mr-8 shadow-premium-2 group hover:rotate-12 transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <div>
+                    <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">@(FormType == EnumFormType.Create ? "New Logic Pattern" : "Modify Logic Pattern")</h2>
+                    <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Category Specification Mode</p>
+                </div>
+            </div>
+
+            <div class="card-premium shadow-premium-3 !p-16 relative overflow-hidden bg-white">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-60"></div>
+                
+                <div class="space-y-10 relative z-10">
+                    <div class="space-y-4">
+                        <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Category Identifier</label>
+                        <input type="text" class="input-premium py-5 px-6 rounded-2xl font-bold" @bind-value="_model.product_category_code" placeholder="E.g. ELECT-01" />
+                    </div>
+                    <div class="space-y-4">
+                        <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Group Nomenclature</label>
+                        <input type="text" class="input-premium py-5 px-6 rounded-2xl font-black text-lg" @bind-value="_model.product_category_name" placeholder="E.g. High-End Electronics" />
+                    </div>
+                </div>
+
+                <div class="mt-20 pt-10 border-t-2 border-gray-50 flex flex-col sm:flex-row justify-end gap-5 relative z-10">
+                    <button @onclick="Back" class="px-10 py-5 bg-gray-50 text-gray-500 rounded-[1.25rem] font-black text-xs uppercase tracking-widest hover:bg-gray-100 transition-all active:scale-95">Discard Changes</button>
+                    <button @onclick="@(FormType == EnumFormType.Create ? Save : Update)" 
+                            class="btn-premium px-12 py-5 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
+                        <span class="text-sm uppercase tracking-widest">@(FormType == EnumFormType.Create ? "Authorize Definition" : "Sync Pattern")</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    /* Product category page specific styles removed - using global premium classes */
+</style>

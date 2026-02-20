@@ -1,92 +1,61 @@
 ﻿@if (YearList is not null && YearList.Count() > 0)
 {
-    <MudGrid>
-        <MudItem xs="6">
-            <MudSelect T="int" Label="From Year"
-                       ValueChanged="HandleValueChanged"
-                       Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="space-y-2">
+            <label class="text-sm font-semibold text-gray-600 ml-1">From Year</label>
+            <select class="premium-input appearance-none bg-no-repeat bg-[right_1rem_center]" 
+                    style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E');"
+                    @onchange="HandleYear1Changed">
+                <option value="0">Select Year</option>
                 @if (YearList is not null)
                 {
                     @foreach (var item in YearList)
                     {
-                        <MudSelectItem T="int"
-                                       Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                       Value="@item" />
+                        <option value="@item" disabled="@(selectedYear == item || secondSelectedYear == item)">@item</option>
                     }
                 }
-            </MudSelect>
-        </MudItem>
-        <MudItem xs="6">
-            <MudSelect T="int" Label="To Year" Variant="Variant.Outlined"
-                       ValueChanged="HandleValueSecondChanged"
-                       AnchorOrigin="Origin.BottomCenter">
+            </select>
+        </div>
+        <div class="space-y-2">
+            <label class="text-sm font-semibold text-gray-600 ml-1">To Year</label>
+            <select class="premium-input appearance-none bg-no-repeat bg-[right_1rem_center]" 
+                    style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E');"
+                    @onchange="HandleYear2Changed">
+                <option value="0">Select Year</option>
                 @if (YearList is not null)
                 {
                     @foreach (var item in YearList)
                     {
-                        <MudSelectItem T="int"
-                                       Disabled="@(selectedYear == item || secondSelectedYear == item ? true : false)"
-                                       Value="@item" />
+                        <option value="@item" disabled="@(selectedYear == item || secondSelectedYear == item)">@item</option>
                     }
                 }
-            </MudSelect>
-        </MudItem>
-    </MudGrid>
+            </select>
+        </div>
+    </div>
 }
 
-<div id="@Id"></div>
+<div class="flex items-center justify-center min-h-[400px] glass-card mt-6">
+    <div class="text-center">
+        <div class="w-16 h-16 bg-premium-orange-100 text-premium-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Comparison Module Paused</h2>
+        <p class="text-gray-500 max-w-sm mx-auto">The interactive comparison charts are currently disabled to optimize performance.</p>
+    </div>
+</div>
 
 @code {
-    [Parameter]
-    public string? Id { get; set; }
-
-    [Parameter]
-    public string? Title { get; set; }
-
-    [Parameter]
-    public List<TwoYearComparisonModel>? TwoYearComparisonData { get; set; }
-
-    [Parameter]
-    public List<int>? YearList { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public List<TwoYearComparisonModel>? TwoYearComparisonData { get; set; }
+    [Parameter] public List<int>? YearList { get; set; }
 
     private int selectedYear = 0;
     private int secondSelectedYear = 0;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            if (YearList is not null && YearList.Count() > 0)
-            {
-                await CompareTwoYear(DateTime.Now.Year, DateTime.Now.AddYears(-1).Year);
-            }
-        }
-    }
-
-    async Task HandleValueChanged(int value)
-    {
-        selectedYear = value;
-
-        if (selectedYear != 0 && secondSelectedYear != 0)
-            await CompareTwoYear(selectedYear, secondSelectedYear);
-    }
-
-    async Task HandleValueSecondChanged(int value)
-    {
-        secondSelectedYear = value;
-
-        if (selectedYear != 0 && secondSelectedYear != 0)
-            await CompareTwoYear(selectedYear, secondSelectedYear);
-    }
-
-    async Task CompareTwoYear(int firstYear, int secondYear)
-    {
-        var yearLst = new List<string>
-        {
-            firstYear.ToString(),
-            secondSelectedYear.ToString()
-        };
-        var result = await db.CompareTwoYear(firstYear, secondYear);
-        await JsRuntime.InvokeVoidAsync("compareTwoYear", Id, Title, result, YearList);
-    }
+    async Task HandleYear1Changed(ChangeEventArgs e) => selectedYear = int.TryParse(e.Value?.ToString(), out var y) ? y : 0;
+    async Task HandleYear2Changed(ChangeEventArgs e) => secondSelectedYear = int.TryParse(e.Value?.ToString(), out var y) ? y : 0;
 }

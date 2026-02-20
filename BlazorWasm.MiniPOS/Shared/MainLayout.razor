@@ -1,275 +1,256 @@
-﻿@using System.Text.RegularExpressions;
+@using System.Text.RegularExpressions
 @inherits LayoutComponentBase
 @inject ChartStateContainer StateContainer
-<div class="min-h-full">
-    <nav class="bg-gray-800">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div class="relative flex h-16 items-center justify-between">
-                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                    <!-- Mobile menu button-->
-                    <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="absolute -inset-0.5"></span>
-                        <span class="sr-only">Open main menu</span>
-                        <!--
-                        Icon when menu is closed.
 
-                        Menu open: "hidden", Menu closed: "block"
-                        -->
-                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                        <!--
-                        Icon when menu is open.
-
-                        Menu open: "block", Menu closed: "hidden"
-                        -->
-                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+<div class="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-dark-sidebar text-gray-300 flex-shrink-0 flex flex-col transition-all duration-500 ease-in-out border-r border-premium-orange-900/10 shadow-premium-2">
+        <div class="h-20 flex items-center px-6 bg-gradient-to-r from-dark-sidebar to-dark-sidebar/95 backdrop-blur-xl border-b border-premium-orange-900/10">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-gradient-to-br from-premium-orange-500 to-premium-orange-600 rounded-xl flex items-center justify-center shadow-premium-orange transition-transform hover:scale-105">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
                 </div>
-                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                    <div class="flex flex-shrink-0 items-center">
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
-                    </div>
-                    <div class="hidden sm:ml-6 sm:block">
-                        <div class="flex space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
-                                <ActivatorContent>
-                                    <a href="javascript:void(0);"
-                                    @onclick="() => ChangeUrl(EnumPage.Dashboard)"
-                                       aria-current="page"
-                                       class="@IsActive(EnumPage.Dashboard)">
-                                        Dashboard
-                                    </a>
-                                </ActivatorContent>
-                                <ChildContent>
-                                    @foreach(var item in ChartList)
-                                    {
-                                        <MudMenuItem OnClick="() => ShowChart(item)">@item</MudMenuItem>
-                                    }
-                                </ChildContent>
-                            </MudMenu>
-                            <a href="javascript:void(0);"
-                            @onclick="() => ChangeUrl(EnumPage.Sale)"
-                               aria-current="page"
-                               class="@IsActive(EnumPage.Sale)">
-                                Sale
-                            </a>
-                            <a href="javascript:void(0);"
-                            @onclick="() => ChangeUrl(EnumPage.Product)"
-                               class="@IsActive(EnumPage.Product)">
-                                Product
-                            </a>
-                            <a href="javascript:void(0);"
-                            @onclick="() => ChangeUrl(EnumPage.ProductCategory)"
-                               class="@IsActive(EnumPage.ProductCategory)">
-                                Product Category
-                            </a>
-                            <a href="javascript:void(0);"
-                            @onclick="() => ChangeUrl(EnumPage.GenerateData)"
-                               class="@IsActive(EnumPage.GenerateData)">
-                                Generate Data
-                            </a>
-                            <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
-                                <ActivatorContent>
-                                    <a href="javascript:void(0);"
-                                       class="@IsActive(EnumPage.Default)">
-                                        Reports
-                                    </a>
-                                </ActivatorContent>
-                                <ChildContent>
-                                    <MudMenuItem OnClick="() => ChangeUrl(EnumPage.BestProductReport)">Best Product Report</MudMenuItem>
-                                    <MudMenuItem OnClick="() => ChangeUrl(EnumPage.SaleReport)">Sale Report</MudMenuItem>
-                                    <MudMenuItem OnClick="() => ExportData()">Export Data</MudMenuItem>
-                                </ChildContent>
-                            </MudMenu>
+                <span class="text-xl font-outfit font-bold text-white tracking-tight">Mini<span class="text-premium-orange-400">POS</span></span>
+            </div>
+        </div>
+
+                <nav class="p-5 space-y-1.5 flex-grow overflow-y-auto custom-scrollbar">
+                    <NavLink href="" class="@GetNavLinkClass("")" Match="NavLinkMatch.All" @onclick="() => SetPage(EnumPage.Dashboard)">
+                        <div class="nav-icon">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Dashboard</span>
+                    </NavLink>
+
+                    <NavLink href="Sale" class="@GetNavLinkClass("Sale")" @onclick="() => SetPage(EnumPage.Sale)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Product Sale</span>
+                    </NavLink>
+
+                    <div class="pt-7 pb-2.5 px-4 text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Inventory</div>
+                    
+                    <NavLink Match="NavLinkMatch.Prefix" href="setup/product" class="@GetNavLinkClass("setup/product")" @onclick="() => SetPage(EnumPage.Product)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Products</span>
+                    </NavLink>
+
+                    <NavLink Match="NavLinkMatch.Prefix" href="setup/product-category" class="@GetNavLinkClass("setup/product-category")" @onclick="() => SetPage(EnumPage.ProductCategory)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Categories</span>
+                    </NavLink>
+
+                    <div class="pt-7 pb-2.5 px-4 text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Reports</div>
+
+                    <NavLink href="sale-report" class="@GetNavLinkClass("sale-report")" @onclick="() => SetPage(EnumPage.SaleReport)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Sale Report</span>
+                    </NavLink>
+
+                    <div class="pt-7 pb-2.5 px-4 text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Settings</div>
+
+                    <NavLink href="settings/db-provider" class="@GetNavLinkClass("settings/db-provider")" @onclick="() => SetPage(EnumPage.DbProvider)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">DB Provider</span>
+                    </NavLink>
+
+                    <div class="pt-7 pb-2.5 px-4 text-[10px] font-extrabold text-gray-500 uppercase tracking-widest">Utilities</div>
+
+                    <NavLink href="generate-data" class="@GetNavLinkClass("generate-data")" @onclick="() => SetPage(EnumPage.GenerateData)">
+                        <div class="nav-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        </div>
+                        <span class="font-semibold text-sm">Data Generator</span>
+                    </NavLink>
+                </nav>
+
+        <!-- Storage Selector -->
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <!-- Top Header -->
+        <header class="h-24 glass-card-enhanced border-b border-white/40 flex items-center justify-between px-10 flex-shrink-0 z-10 shadow-premium-2">
+            <div class="flex items-center space-x-6">
+                <button class="lg:hidden icon-btn-premium">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="2.5"/></svg>
+                </button>
+                <div class="flex flex-col">
+                    <h1 class="text-3xl font-outfit font-black text-gray-900 tracking-tight leading-none">
+                        @Title
+                    </h1>
+                    <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-1 opacity-80">Imperial Management System</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <!-- Search -->
+                <div class="hidden md:flex items-center input-premium py-3 px-5 rounded-2xl w-80 border-2 border-gray-100/50 shadow-sm">
+                    <svg class="w-4 h-4 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" placeholder="Search across POS..." class="bg-transparent border-none focus:ring-0 text-sm flex-1 text-gray-600 placeholder-gray-400 font-medium" />
+                </div>
+
+                <div class="flex items-center space-x-4 ml-2">
+                    <!-- Notifications -->
+                    <button class="icon-btn-premium relative w-12 h-12">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                        <span class="absolute top-3 right-3 w-2.5 h-2.5 bg-premium-orange-500 rounded-full border-2 border-white shadow-glow-orange animate-pulse"></span>
+                    </button>
+
+                    <!-- Profile -->
+                    <div class="flex items-center space-x-4 pl-6 border-l-2 border-gray-100/80">
+                        <div class="text-right hidden sm:block">
+                            <div class="text-sm font-bold text-gray-900">Admin Account</div>
+                            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Premium Access</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-premium-orange-400 to-premium-orange-600 p-0.5 shadow-premium-orange-sm transition-transform hover:scale-110 cursor-pointer">
+                            <img class="w-full h-full rounded-[14px] object-cover" src="https://ui-avatars.com/api/?name=Admin+User&background=f97316&color=fff" alt="Admin" />
                         </div>
                     </div>
                 </div>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">View notifications</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                        </svg>
-                    </button>
+            </div>
+        </header>
 
-                    <!-- Profile dropdown -->
-                    <div class="relative ml-3">
-                        <div>
-                            <button @onclick="ShowProfileMenu" type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                <span class="absolute -inset-1.5"></span>
-                                <span class="sr-only">Open user menu</span>
-                                <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                            </button>
+        <!-- Page Body -->
+        <main class="flex-1 overflow-y-auto custom-scrollbar p-12 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+            <div class="max-w-[1600px] mx-auto h-full">
+                @if (isLoading)
+                {
+                    <div class="flex flex-col items-center justify-center h-full space-y-6">
+                        <div class="relative w-20 h-20">
+                            <div class="absolute inset-0 border-4 border-premium-orange-100 rounded-2xl"></div>
+                            <div class="absolute inset-0 border-4 border-premium-orange-500 border-t-transparent rounded-2xl animate-spin"></div>
+                            <div class="absolute inset-5 bg-premium-orange-500/10 rounded-lg animate-pulse"></div>
                         </div>
-                        @if (isShowProfileMenu)
-                        {
-                            <!--
-                            Dropdown menu, show/hide based on menu state.
-
-                            Entering: "transition ease-out duration-100"
-                            From: "transform opacity-0 scale-95"
-                            To: "transform opacity-100 scale-100"
-                            Leaving: "transition ease-in duration-75"
-                            From: "transform opacity-100 scale-100"
-                            To: "transform opacity-0 scale-95"
-                            -->
-                            <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <!-- Active: "bg-gray-100", Not Active: "" -->
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
-                            </div>
-                        }
+                        <p class="text-gray-400 font-bold text-xs uppercase tracking-[0.3em] animate-pulse">Synchronizing Data</p>
                     </div>
-                </div>
+                }
+                else
+                {
+                    @Body
+                }
             </div>
-        </div>
-        <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="sm:hidden" id="mobile-menu">
-            <div class="space-y-1 px-2 pb-3 pt-2">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-            </div>
-        </div>
-    </nav>
-    <header class="bg-white shadow">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-                @InsertSpacesBeforeCapitals(Page.ToString())
-                @* [ @(nav.Uri) ] *@
-            </h1>
-        </div>
-    </header>
-    <main>
-        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <!-- Your content -->
-            @if (isLoading)
-            {
-                <Loading />
-            }
-            else
-            {
-                @Body
-            }
-        </div>
-    </main>
+        </main>
+    </div>
 </div>
 
+<style>
+    .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        border-radius: 1.25rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+    
+    .nav-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 25%;
+        height: 50%;
+        width: 4px;
+        background: linear-gradient(to bottom, #f97316, #ea580c);
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .nav-item:hover {
+        background: rgba(255, 255, 255, 0.03);
+        transform: translateX(4px);
+        color: white;
+    }
+    
+    .nav-item.active {
+        background: linear-gradient(to right, rgba(249, 115, 22, 0.15), rgba(249, 115, 22, 0.05));
+        color: white;
+        transform: translateX(6px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-item.active::before {
+        transform: translateX(0);
+    }
+    
+    .nav-item.active .nav-icon {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+        color: white;
+        box-shadow: 0 10px 20px rgba(249, 115, 22, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+    
+    .nav-icon {
+        width: 3.25rem;
+        height: 3.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1.1rem;
+        margin-right: 1.25rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    
+    .nav-item:hover .nav-icon {
+        background: rgba(249, 115, 22, 0.2);
+        transform: scale(1.05) rotate(3deg);
+        border-color: rgba(249, 115, 22, 0.3);
+    }
+</style>
+
 @code {
-    private bool isShowProfileMenu = false;
-    private EnumPage Page = EnumPage.Dashboard;
     private bool isLoading = false;
+    private EnumPage Page = EnumPage.Dashboard;
+    private string Title => InsertSpacesBeforeCapitals(Page.ToString());
 
-    protected override async Task OnInitializedAsync()
+    private void SetPage(EnumPage page)
     {
-       
+        Page = page;
+        StateContainer.DashboardShow = true;
     }
 
-    private async Task ExportData()
+    private string GetNavLinkClass(string url)
     {
-        var titleData = new List<ExportTitle>
-            {
-                new ExportTitle { title = "product_code", dataIndex = "product_code" },
-                new ExportTitle { title = "product_name", dataIndex = "product_name" }
-            };
-        var lst = await db.GetProductList();
-        await JsRuntime.InvokeVoidAsync("exportJsonData", titleData, lst, "export-data");
+        return $"nav-item {(IsActiveUrl(url) ? "active" : "")}";
     }
 
-    public class ExportTitle
+    private bool IsActiveUrl(string url)
     {
-        public string? title { get; set; }
-        public string? dataIndex { get; set; }
-    }
-
-    private void ShowProfileMenu()
-    {
-        isShowProfileMenu = !isShowProfileMenu;
+        var currentUri = nav.ToBaseRelativePath(nav.Uri);
+        return currentUri == url || (url != "" && currentUri.StartsWith(url));
     }
 
     private enum EnumPage
     {
-        Default,
+        Dashboard,
         Sale,
         Product,
         ProductCategory,
-        BestProductReport,
-        GenerateData,
         SaleReport,
-        Dashboard
-    }
-
-    private class PageUrlModel
-    {
-        public EnumPage Page { get; set; }
-        public string Url { get; set; }
-    }
-
-    private string IsActive(EnumPage page)
-    {
-        return page == Page ?
-            "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" :
-            "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium";
-    }
-
-    private async Task ChangeUrl(EnumPage page)
-    {
-        StateContainer.DashboardShow = true;
-        Page = page;
-        isLoading = true;
-        await Task.Delay(TimeSpan.FromSeconds(2));
-        isLoading = false;
-        nav.NavigateTo(PageList.FirstOrDefault(x => x.Page == page)?.Url ?? "");
-    }
-
-    private static List<PageUrlModel> PageList
-        => new List<PageUrlModel>
-                                {
-            new PageUrlModel { Page = EnumPage.Sale, Url = "/Sale" },
-            new PageUrlModel { Page = EnumPage.Product, Url = "setup/product" },
-            new PageUrlModel { Page = EnumPage.ProductCategory, Url = "setup/product-category" },
-            new PageUrlModel { Page = EnumPage.BestProductReport, Url = "best-product-report" },
-            new PageUrlModel { Page = EnumPage.GenerateData, Url = "generate-data" },
-            new PageUrlModel { Page = EnumPage.SaleReport, Url = "sale-report" },
-            new PageUrlModel { Page = EnumPage.Dashboard, Url = "" },
-                                 };
-
-    private static List<string> ChartList =>
-    new List<string>
-                            {
-        "BasicColumnChart",
-        "BarBasicChart",
-        "PastFiveYearChart",
-        "PastFiveYearFunnelChart",
-        "PastSevenDays",
-        "YearlySaleAmount",
-        "CompareTwoYear",
-        "SixMostSoldProducts",
-        "MaxMinQtyOfProducts",
-        "FiveYearLineChart",
-        "ProductCategoryAndProduct",
-        "MonthlySaleAmount",
-        "PastFiveYearDailySaleAmount",
-        "MonthlyRevenueReportOfThreeYear"
-                            };
-
-    private void ShowChart(string chartName)
-    {
-        StateContainer.ChartName = chartName;
+        DbProvider,
+        GenerateData
     }
 
     private static string InsertSpacesBeforeCapitals(string input)
     {
-        var pattern = @"(?<!^)(?=[A-Z])"; // Positive lookahead for capital letters
-        var replaced = Regex.Replace(input, pattern, " ");
-        return replaced;
+        if (string.IsNullOrEmpty(input)) return "";
+        var pattern = @"(?<!^)(?=[A-Z])";
+        return Regex.Replace(input, pattern, " ");
     }
 }
