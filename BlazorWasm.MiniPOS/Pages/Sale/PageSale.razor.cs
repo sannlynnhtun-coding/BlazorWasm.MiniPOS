@@ -109,6 +109,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
             await db.SetVoucher();
             await List(_productResponseModel?.pageSetting?.pageNo ?? 1);
             _lstProductSale = await db.GetRecentProductSale();
+            _grandTotal = await db.GetGrandTotal();
         }
 
         private async Task DeleteProductSale(Guid guid)

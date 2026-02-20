@@ -11,33 +11,95 @@
     </MudItem>*@
 @if (Type == EnumFormType.List)
 {
-    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-10 mb-16 animate-fade-in max-w-[1400px] mx-auto">
-        <div>
-            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Intelligence</h2>
-            <p class="text-[10px] text-orange-500 font-bold uppercase tracking-[0.2em] mt-3 opacity-80">Data-Driven Insights • Revenue Tracking</p>
-        </div>
-        
-        <div class="glass-card !py-6 !px-10 flex flex-col md:flex-row items-center gap-10 bg-white/90 hover:transform-none shadow-2xl shadow-black/5">
-            <div class="flex flex-col sm:flex-row items-center gap-8">
-                <div class="flex items-center gap-4">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">From:</span>
-                    <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
-                           value="@FromDate?.ToString("yyyy-MM-dd")" 
-                           @onchange="@(e => FromDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+    <div class="space-y-12 animate-fade-in max-w-[1400px] mx-auto pb-10">
+        <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-10">
+            <div>
+                <h2 class="text-4xl font-black text-slate-900 tracking-tight">Intelligence</h2>
+                <p class="text-[10px] text-orange-500 font-bold uppercase tracking-[0.2em] mt-3 opacity-80">Operational Analytics • Performance Tracking</p>
+            </div>
+            
+            <div class="glass-card !py-6 !px-10 flex flex-col md:flex-row items-center gap-10 bg-white/90 hover:transform-none shadow-2xl shadow-black/5 ring-1 ring-slate-200/50">
+                <div class="flex flex-col sm:flex-row items-center gap-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Start Period</span>
+                            <input type="date" class="bg-transparent border-none p-0 focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
+                                   value="@FromDate?.ToString("yyyy-MM-dd")" 
+                                   @onchange="@(e => FromDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+                        </div>
+                    </div>
+                    <div class="hidden sm:block w-px h-8 bg-slate-200/60 transition-all"></div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">End Period</span>
+                            <input type="date" class="bg-transparent border-none p-0 focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
+                                   value="@ToDate?.ToString("yyyy-MM-dd")" 
+                                   @onchange="@(e => ToDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+                        </div>
+                    </div>
                 </div>
-                <div class="hidden sm:block w-px h-6 bg-slate-200"></div>
-                <div class="flex items-center gap-4">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">To:</span>
-                    <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
-                           value="@ToDate?.ToString("yyyy-MM-dd")" 
-                           @onchange="@(e => ToDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+                <div class="hidden md:block w-px h-10 bg-slate-200"></div>
+                <button @onclick="GenerateReport" class="px-10 py-4 orange-gradient text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-orange-500/20 hover:scale-[1.02] active:scale-95 flex items-center group">
+                    <svg class="w-4 h-4 mr-3 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    Evaluate
+                </button>
+            </div>
+        </div>
+
+        <!-- Intelligence Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card bg-white p-8 hover:transform-none border border-slate-100 shadow-xl shadow-black/5 group">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:bg-orange-600 group-hover:text-white transition-all duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Revenue Volume</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl font-black text-slate-900 tracking-tight">@(_saleReport?.lstSaleReport?.Sum(x => x.sale_total_amount).ToString("N0") ?? "0")</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 tracking-widest flex items-center">
+                        <svg class="w-3 h-3 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 11-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"/></svg>
+                        MMK Total
+                    </span>
                 </div>
             </div>
-            <div class="hidden md:block w-px h-10 bg-slate-200"></div>
-            <button @onclick="GenerateReport" class="px-10 py-4 orange-gradient text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-orange-500/25 active:scale-95 flex items-center group">
-                <svg class="w-4 h-4 mr-3 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                Sync Data
-            </button>
+
+            <div class="glass-card bg-white p-8 hover:transform-none border border-slate-100 shadow-xl shadow-black/5 group">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-all duration-300 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    </div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Transaction Count</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl font-black text-slate-900 tracking-tight">@(_saleReport?.lstSaleReport?.Count.ToString("N0") ?? "0")</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 tracking-widest">Recorded Orders</span>
+                </div>
+            </div>
+
+            <div class="glass-card bg-white p-8 hover:transform-none border border-slate-100 shadow-xl shadow-black/5 group">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center transition-all duration-300 group-hover:bg-orange-500 group-hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full border border-slate-100">Market AOV</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-3xl font-black text-slate-900 tracking-tight">
+                        @((_saleReport?.lstSaleReport?.Any() == true ? _saleReport.lstSaleReport.Average(x => x.sale_total_amount) : 0).ToString("N0"))
+                    </span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase mt-2 tracking-widest flex items-center">
+                        <svg class="w-3 h-3 mr-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2l5.256.716a1 1 0 01.551 1.707l-3.804 3.707.898 5.233a1 1 0 01-1.451 1.054L11 17.147l-4.7 2.47a1 1 0 01-1.451-1.054l.898-5.233-3.804-3.707a1 1 0 01.551-1.707l5.256-.716 1.179-4.456A1 1 0 0112 2z" clip-rule="evenodd"/></svg>
+                        Value per Order
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 }
