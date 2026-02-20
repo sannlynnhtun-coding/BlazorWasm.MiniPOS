@@ -12,6 +12,16 @@
 		<Exec Command="npm install" WorkingDirectory="." />
 		<Exec Command="npm run build" WorkingDirectory="." />
 	</Target>
+	<ItemGroup>
+	  <Compile Remove="NpmJS\**" />
+	  <Compile Remove="Styles\**" />
+	  <Content Remove="NpmJS\**" />
+	  <Content Remove="Styles\**" />
+	  <EmbeddedResource Remove="NpmJS\**" />
+	  <EmbeddedResource Remove="Styles\**" />
+	  <None Remove="NpmJS\**" />
+	  <None Remove="Styles\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Blazor-ApexCharts" Version="0.9.20-beta" />
@@ -1312,14 +1322,6 @@
 		<_ContentIncludedByDefault Remove="wwwroot\js\lib\Highcharts-11.0.1\themes\sunset.js" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\lib\Highcharts-11.0.1\themes\sunset.js.map" />
 		<_ContentIncludedByDefault Remove="wwwroot\js\lib\Highcharts-11.0.1\themes\sunset.src.js" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Styles\tailwind.css" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="NpmJS\src\" />
 	</ItemGroup>
 
 </Project>

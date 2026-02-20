@@ -7,6 +7,7 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
     public partial class PageSale
     {
         private List<ProductDataModel>? _lstProduct = new();
+        private ProductResponseModel? _productResponseModel;
         private ProductSaleDataModel _model = new();
         private ProductSaleResponseDataModel? _lstProductSale = new();
         private int _grandTotal;
@@ -19,8 +20,39 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
             _lstProduct ??= new List<ProductDataModel>();
             if (_lstProduct == null || !_lstProduct.Any())
                 nav.NavigateTo("/setup/product-category");
+            
+            await List();
+
             _lstProductSale = await db.GetRecentProductSale();
             _grandTotal = await db.GetGrandTotal();
+        }
+
+        async Task List(int pageNo = 1, int pageSize = 12)
+        {
+            _lstProduct = await db.GetProductList();
+            _lstProduct ??= new();
+            
+            var pageCount = _lstProduct.Count / pageSize;
+            if (_lstProduct.Count % pageSize > 0)
+            {
+                pageCount++;
+            }
+
+            var pageSetting = new PageSettingModel()
+            {
+                pageCount = pageCount,
+                pageSize = pageSize,
+                pageNo = pageNo
+            };
+            
+            _productResponseModel = new ProductResponseModel()
+            {
+                products = _lstProduct
+                    .Skip((pageNo - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList(),
+                pageSetting = pageSetting
+            };
         }
 
         private async Task ProductNameChange(object value)
@@ -68,14 +100,14 @@ namespace BlazorWasm.MiniPOS.Pages.Sale
 
             _grandTotal = await db.GetGrandTotal();
             _lstProductSale = await db.GetRecentProductSale();
-            _lstProduct = await db.GetProductList();
+            await List(_productResponseModel?.pageSetting?.pageNo ?? 1);
             _model = new ProductSaleDataModel();
         }
 
         private async Task Save()
         {
             await db.SetVoucher();
-            _lstProduct = await db.GetProductList();
+            await List(_productResponseModel?.pageSetting?.pageNo ?? 1);
             _lstProductSale = await db.GetRecentProductSale();
         }
 

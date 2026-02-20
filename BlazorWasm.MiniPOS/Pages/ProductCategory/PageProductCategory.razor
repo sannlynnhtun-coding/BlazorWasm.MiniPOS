@@ -39,30 +39,30 @@
                     <table class="w-full text-left text-sm whitespace-nowrap">
                         <thead>
                             <tr class="bg-slate-50/50 border-b border-slate-100">
-                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px]">Identifier</th>
-                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px]">Description</th>
-                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px] text-right">Aesthetics</th>
+                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">Identifier</th>
+                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">Description</th>
+                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
                             @foreach (var item in _productCategoryResponseModel.productCategories)
                             {
-                                <tr class="hover:bg-orange-50/30 transition-colors animate-fade-in">
-                                    <td class="px-8 py-6 w-40">
-                                        <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-mono text-xs font-bold border border-slate-200/50">
+                                <tr class="hover:bg-orange-50/30 transition-colors animate-fade-in group">
+                                    <td class="px-6 py-4 w-40 border-b border-slate-50/50">
+                                        <div class="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-mono text-[11px] font-bold border border-slate-200/50 group-hover:bg-white transition-colors">
                                             @item.product_category_code
                                         </div>
                                     </td>
-                                    <td class="px-8 py-6">
-                                        <span class="font-bold text-slate-900 text-base">@item.product_category_name</span>
+                                    <td class="px-6 py-4 border-b border-slate-50/50">
+                                        <span class="font-bold text-slate-900 text-sm">@item.product_category_name</span>
                                     </td>
-                                    <td class="px-8 py-6 text-right">
-                                        <div class="flex items-center justify-end space-x-3">
-                                            <button @onclick="() => Edit(item)" class="p-2 text-slate-300 hover:text-orange-600 transition-all hover:bg-orange-100 rounded-lg" title="Edit">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    <td class="px-6 py-4 border-b border-slate-50/50 text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button @onclick="() => Edit(item)" class="p-1.5 text-slate-300 hover:text-orange-600 transition-all hover:bg-orange-100 rounded-lg" title="Edit">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                             </button>
-                                            <button @onclick="() => Delete(item)" class="p-2 text-slate-300 hover:text-red-600 transition-all hover:bg-red-50 rounded-lg" title="Delete">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
+                                            <button @onclick="() => Delete(item)" class="p-1.5 text-slate-300 hover:text-red-600 transition-all hover:bg-red-50 rounded-lg" title="Delete">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </div>
                                     </td>
@@ -71,6 +71,28 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination footer -->
+                @if (_productCategoryResponseModel?.pageSetting != null && _productCategoryResponseModel.pageSetting.pageCount > 1)
+                {
+                    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/30 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-500">
+                            Page <span class="text-slate-900">@_productCategoryResponseModel.pageSetting.pageNo</span> of <span class="text-slate-900">@_productCategoryResponseModel.pageSetting.pageCount</span>
+                        </span>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 @(_productCategoryResponseModel.pageSetting.pageNo <= 1 ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 border border-slate-200/60 shadow-sm")"
+                                    disabled="@(_productCategoryResponseModel.pageSetting.pageNo <= 1)"
+                                    @onclick="() => List(_productCategoryResponseModel.pageSetting.pageNo - 1)">
+                                Previous
+                            </button>
+                            <button class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 @(_productCategoryResponseModel.pageSetting.pageNo >= _productCategoryResponseModel.pageSetting.pageCount ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 border border-slate-200/60 shadow-sm")"
+                                    disabled="@(_productCategoryResponseModel.pageSetting.pageNo >= _productCategoryResponseModel.pageSetting.pageCount)"
+                                    @onclick="() => List(_productCategoryResponseModel.pageSetting.pageNo + 1)">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                }
             }
         </div>
     }

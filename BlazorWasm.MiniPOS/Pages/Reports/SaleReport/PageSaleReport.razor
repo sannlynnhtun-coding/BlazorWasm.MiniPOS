@@ -11,23 +11,32 @@
     </MudItem>*@
 @if (Type == EnumFormType.List)
 {
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 animate-fade-in max-w-[1400px] mx-auto">
+    <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-10 mb-16 animate-fade-in max-w-[1400px] mx-auto">
         <div>
             <h2 class="text-4xl font-black text-slate-900 tracking-tight">Intelligence</h2>
-            <p class="text-[10px] text-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Data-Driven Insights • Revenue Tracking</p>
+            <p class="text-[10px] text-orange-500 font-bold uppercase tracking-[0.2em] mt-3 opacity-80">Data-Driven Insights • Revenue Tracking</p>
         </div>
         
-        <div class="glass-card !py-4 !px-8 flex flex-col sm:flex-row items-center gap-6 bg-white/80 hover:transform-none">
-            <div class="flex items-center gap-4">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Report Date:</span>
-                <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
-                       value="@SelectedDate?.ToString("yyyy-MM-dd")" 
-                       @onchange="@(e => SelectedDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+        <div class="glass-card !py-6 !px-10 flex flex-col md:flex-row items-center gap-10 bg-white/90 hover:transform-none shadow-2xl shadow-black/5">
+            <div class="flex flex-col sm:flex-row items-center gap-8">
+                <div class="flex items-center gap-4">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">From:</span>
+                    <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
+                           value="@FromDate?.ToString("yyyy-MM-dd")" 
+                           @onchange="@(e => FromDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+                </div>
+                <div class="hidden sm:block w-px h-6 bg-slate-200"></div>
+                <div class="flex items-center gap-4">
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">To:</span>
+                    <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
+                           value="@ToDate?.ToString("yyyy-MM-dd")" 
+                           @onchange="@(e => ToDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
+                </div>
             </div>
-            <div class="hidden sm:block w-px h-8 bg-slate-100"></div>
-            <button @onclick="DatePicker" class="px-8 py-3 orange-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-orange-500/20 active:scale-95 flex items-center">
-                <svg class="w-4 h-4 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                Generate Report
+            <div class="hidden md:block w-px h-10 bg-slate-200"></div>
+            <button @onclick="GenerateReport" class="px-10 py-4 orange-gradient text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-orange-500/25 active:scale-95 flex items-center group">
+                <svg class="w-4 h-4 mr-3 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Sync Data
             </button>
         </div>
     </div>
@@ -38,21 +47,15 @@
 }
 
 @code {
-    private DateTime? SelectedDate { get; set; } = DateTime.Today;
+    private DateTime? FromDate { get; set; } = DateTime.Today;
+    private DateTime? ToDate { get; set; } = DateTime.Today;
     private SaleReportResponseDataModel? _saleReport = new();
-    //MudDatePicker _picker;
     private EnumFormType Type { get; set; } = EnumFormType.List;
-    //DateTime? date = DateTime.Today;
-    //private async Task HandleDateValueChanged(DateTime? value)
-    //{
-    //    SelectedDate = value.Value;
-    //    Model = await db.SaleReport(SelectedDate);
-    //}
 
-    private async Task DatePicker()
+    private async Task GenerateReport()
     {
-        _saleReport = await db.SaleReport(Convert.ToDateTime(SelectedDate));
-        //_picker.Close();
+        if (FromDate is null || ToDate is null) return;
+        _saleReport = await db.SaleReport(FromDate.Value, ToDate.Value);
     }
 
     void Detail(SaleVoucherHeadDataModel data)
@@ -63,5 +66,10 @@
     void Back()
     {
         Type = EnumFormType.List;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GenerateReport();
     }
 }

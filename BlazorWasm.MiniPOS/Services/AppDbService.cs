@@ -314,18 +314,25 @@ namespace BlazorWasm.MiniPOS.Services
 
         public async Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime)
         {
+            return await SaleReport(dateTime, dateTime);
+        }
+
+        public async Task<SaleReportResponseDataModel> SaleReport(DateTime from, DateTime to)
+        {
             var lst = await _storage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new();
-            var searchDate = Convert.ToDateTime(dateTime.ToString("MM/dd/yyyy"));
-            //DateTime searchDate = dateTime;
-            var saleReport = lst.Where(x =>
-                Convert.ToDateTime(x.sale_date.ToString("MM/dd/yyyy")) == searchDate).ToList();
+            
+            var startDate = from.Date;
+            var endDate = to.Date;
+
+            var saleReport = lst.Where(x => x.sale_date.Date >= startDate && x.sale_date.Date <= endDate)
+                               .OrderByDescending(x => x.sale_date)
+                               .ToList();
+
             var count = saleReport.Count();
             var rowCount = 5;
-            var totalPageNo = count / rowCount;
-            var result = count % rowCount;
-            if (result > 0)
-                totalPageNo++;
+            var totalPageNo = (int)Math.Ceiling((double)count / rowCount);
+
             return new SaleReportResponseDataModel
             {
                 lstSaleReport = saleReport,
@@ -336,18 +343,21 @@ namespace BlazorWasm.MiniPOS.Services
             };
         }
 
-        public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime)
+        public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime from, DateTime to)
         {
             var lst = await _storage.GetItemAsync<List<SaleVoucherHeadDataModel>>("Tbl_SaleVoucherHead");
             lst ??= new();
-            var searchDate = Convert.ToDateTime(dateTime.ToString("MM/dd/yyyy"));
-            var saleReport = lst.Where(x =>
-                Convert.ToDateTime(x.sale_date.ToString("MM/dd/yyyy")) == searchDate).ToList();
+            
+            var startDate = from.Date;
+            var endDate = to.Date;
+
+            var saleReport = lst.Where(x => x.sale_date.Date >= startDate && x.sale_date.Date <= endDate)
+                               .OrderByDescending(x => x.sale_date)
+                               .ToList();
+
             var count = saleReport.Count();
-            var totalPageNo = count / pageSize;
-            var result = count % pageSize;
-            if (result > 0)
-                totalPageNo++;
+            var totalPageNo = (int)Math.Ceiling((double)count / pageSize);
+
             return new SaleReportResponseDataModel
             {
                 CurrentPageNo = pageNo,
@@ -356,6 +366,11 @@ namespace BlazorWasm.MiniPOS.Services
                 TotalPageNo = totalPageNo,
                 TotalRowCount = count
             };
+        }
+
+        public async Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime)
+        {
+            return await SaleReportPagination(pageNo, pageSize, dateTime, dateTime);
         }
 
         public async Task<List<BestProductReportModel>> BestProductReport()

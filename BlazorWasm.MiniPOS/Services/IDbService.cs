@@ -38,6 +38,8 @@ namespace BlazorWasm.MiniPOS.Services
         Task<QtyOfTopFiveProductsByYearModel> QtyOfTopFiveProductsByYear();
         Task<PastSevenDaysModel?> PastSevenDays();
         Task<SaleReportResponseDataModel> SaleReport(DateTime dateTime);
+        Task<SaleReportResponseDataModel> SaleReport(DateTime from, DateTime to);
+        Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime from, DateTime to);
         Task<SaleReportResponseDataModel> SaleReportPagination(int pageNo, int pageSize, DateTime dateTime);
         Task SetProduct(ProductDataModel model);
         Task SetProductCategory(ProductCategoryDataModel model);

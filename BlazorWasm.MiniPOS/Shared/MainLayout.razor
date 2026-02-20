@@ -3,9 +3,15 @@
 @inject ChartStateContainer StateContainer
 
 <div class="flex h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden">
+    <!-- Sidebar Overlay (Mobile) -->
+    @if (isSidebarOpen)
+    {
+        <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-20 lg:hidden transition-opacity" @onclick="ToggleSidebar"></div>
+    }
+
     <!-- Sidebar -->
-    <aside class="w-68 bg-[#0f172a] text-slate-400 flex-shrink-0 flex flex-col transition-all duration-300 border-r border-slate-800/40 shadow-2xl z-20">
-        <div class="h-20 flex items-center px-8 bg-[#0f172a] border-b border-slate-800/30">
+    <aside class="max-lg:fixed max-lg:inset-y-0 max-lg:left-0 w-72 bg-white text-slate-600 flex-shrink-0 flex flex-col transition-transform duration-300 border-r border-slate-200/60 shadow-sm z-30 @(isSidebarOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-full")">
+        <div class="h-20 flex items-center px-8 border-b border-slate-100">
             <div class="flex items-center space-x-4">
                 <div class="w-10 h-10 orange-gradient rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -13,52 +19,52 @@
                     </svg>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-xl font-bold text-white tracking-tight leading-none">MiniPOS</span>
-                    <span class="text-[10px] font-semibold text-orange-500 uppercase tracking-widest mt-1">Smart Retail</span>
+                    <span class="text-xl font-black text-slate-900 tracking-tight leading-none">MiniPOS</span>
+                    <span class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mt-1">Smart Retail</span>
                 </div>
             </div>
         </div>
 
-        <nav class="p-6 space-y-1.5 flex-grow overflow-y-auto hide-scrollbar">
+        <nav class="p-6 space-y-2 flex-grow overflow-y-auto hide-scrollbar">
             <NavLink href="" class="@GetNavLinkClass("")" Match="NavLinkMatch.All" @onclick="() => SetPage(EnumPage.Dashboard)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                <span class="font-medium text-sm">Dashboard</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <span class="font-bold text-sm">Dashboard</span>
             </NavLink>
 
             <NavLink href="Sale" class="@GetNavLinkClass("Sale")" @onclick="() => SetPage(EnumPage.Sale)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                <span class="font-medium text-sm">Product Sale</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <span class="font-bold text-sm">Product Sale</span>
             </NavLink>
 
-            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Inventory</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Inventory</div>
             
             <NavLink Match="NavLinkMatch.Prefix" href="setup/product" class="@GetNavLinkClass("setup/product")" @onclick="() => SetPage(EnumPage.Product)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                <span class="font-medium text-sm">Products</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                <span class="font-bold text-sm">Products</span>
             </NavLink>
 
             <NavLink Match="NavLinkMatch.Prefix" href="setup/product-category" class="@GetNavLinkClass("setup/product-category")" @onclick="() => SetPage(EnumPage.ProductCategory)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                <span class="font-medium text-sm">Categories</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                <span class="font-bold text-sm">Categories</span>
             </NavLink>
 
-            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Insights</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Insights</div>
 
             <NavLink href="sale-report" class="@GetNavLinkClass("sale-report")" @onclick="() => SetPage(EnumPage.SaleReport)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                <span class="font-medium text-sm">Sale Reports</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="font-bold text-sm">Sale Reports</span>
             </NavLink>
 
-            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Maintenance</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Maintenance</div>
 
             <NavLink href="settings/db-provider" class="@GetNavLinkClass("settings/db-provider")" @onclick="() => SetPage(EnumPage.DbProvider)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span class="font-medium text-sm">System Config</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="font-bold text-sm">System Config</span>
             </NavLink>
 
             <NavLink href="generate-data" class="@GetNavLinkClass("generate-data")" @onclick="() => SetPage(EnumPage.GenerateData)">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                <span class="font-medium text-sm">Reset Data</span>
+                <svg class="w-5 h-5 mr-3 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span class="font-bold text-sm">Reset Data</span>
             </NavLink>
         </nav>
     </aside>
@@ -68,7 +74,7 @@
         <!-- Top Header -->
         <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-10 flex-shrink-0 z-10">
             <div class="flex items-center">
-                <button class="lg:hidden text-slate-500 hover:text-slate-700 mr-6">
+                <button @onclick="ToggleSidebar" class="lg:hidden text-slate-500 hover:text-slate-700 mr-6 p-2 rounded-lg hover:bg-slate-100 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <h1 class="text-2xl font-bold text-slate-900 tracking-tight animate-fade-in">
@@ -119,24 +125,24 @@
     .nav-item {
         display: flex;
         align-items: center;
-        padding: 0.875rem 1rem;
-        border-radius: 0.875rem;
-        color: #94a3b8; /* slate-400 */
+        padding: 0.875rem 1.25rem;
+        border-radius: 1rem;
+        color: #475569; /* slate-600 */
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        margin-bottom: 0.375rem;
+        margin-bottom: 0.5rem;
     }
     
     .nav-item:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: #f8fafc; /* slate-50 */
+        background-color: #f8fafc; /* slate-50 */
+        color: #0f172a; /* slate-900 */
         transform: translateX(4px);
     }
     
     .nav-item.active {
         background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
         color: #ffffff;
-        font-weight: 600;
-        box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.3);
+        font-weight: 800;
+        box-shadow: 0 10px 20px -5px rgba(234, 88, 12, 0.3);
     }
 
     .nav-item.active svg {
@@ -145,6 +151,7 @@
 
     .nav-item svg {
         transition: color 0.3s;
+        color: #64748b; /* slate-500 */
     }
 
     .nav-item:hover svg {
@@ -154,6 +161,7 @@
 
 @code {
     private bool isLoading = false;
+    private bool isSidebarOpen = false;
     private EnumPage Page = EnumPage.Dashboard;
     private string Title => InsertSpacesBeforeCapitals(Page.ToString());
 
@@ -173,7 +181,13 @@
     private void SetPage(EnumPage page)
     {
         Page = page;
+        isSidebarOpen = false; // Close sidebar on navigation (mobile)
         StateContainer.DashboardShow = true;
+    }
+
+    private void ToggleSidebar()
+    {
+        isSidebarOpen = !isSidebarOpen;
     }
 
     private string GetNavLinkClass(string url)
