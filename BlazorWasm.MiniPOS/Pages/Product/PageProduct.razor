@@ -1,199 +1,137 @@
 @page "/setup/product"
 
-<div class="space-y-12 animate-fade-in max-w-[1500px] mx-auto">
+<div class="space-y-6 animate-fade-in max-w-[1200px] mx-auto pb-8">
     @if (FormType == EnumFormType.List)
     {
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
-                <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">Inventory Intelligence</h2>
-                <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Catalog Oversight • Real-time Valuation</p>
+                <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Products</h2>
+                <p class="text-sm text-slate-500 mt-1">Manage your inventory items and pricing.</p>
             </div>
-            <button @onclick="Create" class="btn-premium px-10 py-4 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
-                <span class="text-sm uppercase tracking-widest">Register Product</span>
+            <button @onclick="Create" class="inline-flex items-center justify-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Product
             </button>
         </div>
 
-        <div class="card-premium shadow-premium-3 !p-0 overflow-hidden border-none bg-white">
-            <div class="overflow-x-auto">
-                <table class="table-premium">
-                    <thead>
-                        <tr class="bg-gray-50/50">
-                            <th class="py-6 px-10">Product Definition</th>
-                            <th class="py-6 px-10">Classification</th>
-                            <th class="py-6 px-10 text-right">Acquisition</th>
-                            <th class="py-6 px-10 text-right">Retail Value</th>
-                            <th class="py-6 px-10 text-right">Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @if (_productResponseModel?.products is { Count: > 0 })
-                        {
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            @if (_productResponseModel?.products == null)
+            {
+                <div class="p-8 text-center text-slate-500 text-sm">Loading products...</div>
+            }
+            else if (!_productResponseModel.products.Any())
+            {
+                <div class="p-12 text-center flex flex-col items-center justify-center">
+                    <svg class="w-12 h-12 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <h3 class="text-lg font-medium text-slate-900 mb-1">No products found</h3>
+                    <p class="text-slate-500 text-sm mb-4">Get started by creating a new product.</p>
+                    <button @onclick="Create" class="text-orange-600 hover:text-orange-700 font-medium text-sm">Create Product &rarr;</button>
+                </div>
+            }
+            else
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Code</th>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Name</th>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Category</th>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Price <span class="text-xs font-normal text-slate-500">(MMK)</span></th>
+                                <th class="px-6 py-3 font-semibold text-slate-700 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
                             @foreach (var item in _productResponseModel.products)
                             {
-                                <tr class="hover:bg-gray-50/80 transition-premium group">
-                                    <td class="py-6 px-10">
-                                        <div class="flex items-center">
-                                            <div class="w-16 h-16 bg-gradient-to-br from-premium-orange-50 to-premium-orange-100 text-premium-orange-600 rounded-2xl flex items-center justify-center mr-6 font-black text-lg shadow-sm group-hover:shadow-premium-orange-sm group-hover:scale-105 transition-all">
-                                                @item.product_name?.Substring(0, 1)
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-gray-900 text-base">@item.product_name</div>
-                                                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-1">Ref: @item.product_code</div>
-                                            </div>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-600 font-mono text-xs">
+                                            @item.product_code
                                         </div>
                                     </td>
-                                    <td class="py-6 px-10">
-                                        <div class="flex">
-                                            <span class="badge-premium px-4 py-1.5 rounded-xl bg-premium-orange-50 text-premium-orange-700 text-[10px] font-black uppercase tracking-widest border-premium-orange-100">
-                                                @item.product_category_code
-                                            </span>
-                                        </div>
+                                    <td class="px-6 py-4 font-medium text-slate-900">@item.product_name</td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-50 text-orange-700">
+                                            @(_lstProductCategory.FirstOrDefault(x => x.product_category_code == item.product_category_code)?.product_category_name ?? item.product_category_code)
+                                        </span>
                                     </td>
-                                    <td class="py-6 px-10 text-right font-black text-gray-400 text-sm">
-                                        @item.product_buying_price.ToString("N0") <small class="text-[9px] opacity-60">MMK</small>
+                                    <td class="px-6 py-4 font-medium text-slate-900">
+                                        @item.product_sale_price.ToString("N0")
                                     </td>
-                                    <td class="py-6 px-10 text-right font-black text-premium-orange-600 text-lg tracking-tight">
-                                        @item.product_sale_price.ToString("N0") <small class="text-[10px] opacity-80">MMK</small>
-                                    </td>
-                                    <td class="py-6 px-10 text-right">
-                                        <div class="flex items-center justify-end space-x-3">
-                                            <button @onclick="() => Edit(item)" class="icon-btn-premium w-10 h-10">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    <td class="px-6 py-4 text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button @onclick="() => Edit(item)" class="p-1 text-slate-400 hover:text-orange-600 transition-colors tooltip-trigger" title="Edit">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                             </button>
-                                            <button @onclick="() => Delete(item)" class="icon-btn-premium w-10 h-10 hover:!bg-red-50 hover:!border-red-200 hover:!text-red-600">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            <button @onclick="() => Delete(item)" class="p-1 text-slate-400 hover:text-red-600 transition-colors tooltip-trigger" title="Delete">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                             }
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            @if (_productResponseModel?.products is { Count: > 0 })
-            {
-                <div class="p-10 border-t-2 border-gray-50 flex justify-center bg-white shadow-inner">
-                    <div class="flex items-center space-x-3">
-                        @{
-                            var pageInfo = _productResponseModel.pageSetting;
-                            var curPage = pageInfo.pageNo;
-                            var totalP = pageInfo.pageCount;
-                        }
-
-                        <button @onclick="() => List(curPage - 1)" 
-                                disabled="@(curPage == 1)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
-                        </button>
-
-                        @for (int i = 1; i <= totalP; i++)
-                        {
-                            var p = i;
-                            <button @onclick="() => List(p)"
-                                    class="w-12 h-12 rounded-2xl border-2 font-black text-sm transition-all @(curPage == p ? "bg-premium-orange-500 border-premium-orange-600 text-white shadow-premium-orange-sm" : "border-gray-100 text-gray-400 hover:border-premium-orange-300 hover:text-premium-orange-600 hover:bg-premium-orange-50/30")">
-                                @p
-                            </button>
-                        }
-
-                        <button @onclick="() => List(curPage + 1)" 
-                                disabled="@(curPage == totalP)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
-                        </button>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             }
         </div>
     }
-    else if (FormType is EnumFormType.Create or EnumFormType.Edit)
+    else
     {
-        <div class="max-w-5xl mx-auto space-y-12">
-            <div class="flex items-center">
-                <button @onclick="Back" class="icon-btn-premium !w-16 !h-16 mr-8 shadow-premium-2 group hover:rotate-12 transition-all">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+        <div class="max-w-2xl mx-auto">
+            <div class="flex items-center mb-6">
+                <button @onclick="Back" class="mr-4 p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 </button>
                 <div>
-                    <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">@(FormType == EnumFormType.Create ? "New Asset Registration" : "Modify Asset Details")</h2>
-                    <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Inventory Specification Mode</p>
+                    <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">@(IsEdit ? "Edit Product" : "New Product")</h2>
+                    <p class="text-sm text-slate-500 mt-1">Fill in the product details.</p>
                 </div>
             </div>
 
-            <div class="card-premium shadow-premium-3 !p-16 relative overflow-hidden bg-white">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-premium-orange-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-60"></div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 relative z-10">
-                    <!-- Basic Info -->
-                    <div class="space-y-10">
-                        <div class="flex items-center space-x-4 mb-2">
-                             <div class="w-8 h-8 bg-premium-orange-100 text-premium-orange-600 rounded-lg flex items-center justify-center font-black text-xs">01</div>
-                             <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest">Identification</h4>
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Serial Number / Code</label>
-                            <input type="text" class="input-premium py-5 px-6 rounded-2xl font-bold" @bind-value="_model.product_code" placeholder="ENTER SYSTEM ID" />
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Asset Nomenclature</label>
-                            <input type="text" class="input-premium py-5 px-6 rounded-2xl font-bold" @bind-value="_model.product_name" placeholder="ENTER PRODUCT NAME" />
-                        </div>
-                        <div class="space-y-3 relative">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Master Category</label>
-                            <div class="relative">
-                                <select class="input-premium py-5 px-6 rounded-2xl font-bold appearance-none bg-no-repeat bg-[right_1.5rem_center] cursor-pointer" 
-                                        style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E');"
-                                        value="@_productCategory.product_category_id"
-                                        @onchange="ProductNameChangeEvent">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                <EditForm Model="_model" OnValidSubmit="HandleSave">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Product Code</label>
+                                <InputText @bind-Value="_model.product_code" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow disabled:bg-slate-50 disabled:text-slate-500" disabled="@IsEdit" />
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Product Name</label>
+                                <InputText @bind-Value="_model.product_name" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow" />
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Category</label>
+                                <InputSelect @bind-Value="_model.product_category_code" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow appearance-none">
+                                    <option value="" disabled selected hidden>Select a category</option>
                                     @foreach (var item in _lstProductCategory)
                                     {
-                                        <option value="@item.product_category_id">@item.product_category_name</option>
+                                        <option value="@item.product_category_code">@item.product_category_name</option>
                                     }
-                                </select>
+                                </InputSelect>
                             </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Price <span class="text-slate-400 font-normal">(MMK)</span></label>
+                                <InputNumber @bind-Value="_model.product_sale_price" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow" />
+                            </div>
+                        </div>
+
+                        <div class="pt-6 border-t border-slate-100 flex justify-end space-x-3">
+                            <button type="button" @onclick="Back" class="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                                Save Product
+                            </button>
                         </div>
                     </div>
-
-                    <!-- Pricing Info -->
-                    <div class="space-y-10">
-                        <div class="flex items-center space-x-4 mb-2">
-                             <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-black text-xs">02</div>
-                             <h4 class="text-xs font-black text-gray-400 uppercase tracking-widest">Financial Meta</h4>
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Acquisition Cost (MMK)</label>
-                            <div class="relative">
-                                <input type="number" class="input-premium py-5 px-6 rounded-2xl font-black text-gray-500" @bind-value="_model.product_buying_price" />
-                                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-gray-300 tracking-widest">MMK</div>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Retail Unit Price (MMK)</label>
-                             <div class="relative">
-                                <input type="number" class="input-premium py-5 px-6 rounded-2xl font-black text-premium-orange-600 bg-premium-orange-50/20" @bind-value="_model.product_sale_price" />
-                                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-premium-orange-300 tracking-widest">MMK</div>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Registration Timestamp</label>
-                            <input type="text" class="input-premium py-5 px-6 rounded-2xl !bg-gray-50/50 !border-gray-100 text-gray-400 font-bold" @bind-value="_model.product_creation_date" disabled />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-20 pt-10 border-t-2 border-gray-50 flex flex-col sm:flex-row justify-end gap-5 relative z-10">
-                    <button @onclick="Back" class="px-10 py-5 bg-gray-50 text-gray-500 rounded-[1.25rem] font-black text-xs uppercase tracking-widest hover:bg-gray-100 transition-all active:scale-95">Discard Changes</button>
-                    <button @onclick="@(FormType == EnumFormType.Create ? Save : Update)" 
-                            class="btn-premium px-12 py-5 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
-                        <span class="text-sm uppercase tracking-widest">@(FormType == EnumFormType.Create ? "Authorize Registration" : "Sync Modifications")</span>
-                    </button>
-                </div>
+                </EditForm>
             </div>
         </div>
     }
 </div>
-
-<style>
-    /* Product page specific styles removed - using global premium classes */
-</style>

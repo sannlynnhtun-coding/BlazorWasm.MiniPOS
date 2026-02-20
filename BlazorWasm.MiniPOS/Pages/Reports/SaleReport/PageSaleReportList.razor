@@ -1,79 +1,78 @@
-<style>
-    /* Legacy styles removed - using global premium design system */
-</style>
-
 @if (Type == EnumFormType.List)
 {
-    <div class="space-y-12 animate-fade-in max-w-[1400px] mx-auto">
-        <div class="card-premium shadow-premium-3 !p-0 overflow-hidden border-none bg-white">
+    <div class="space-y-6 animate-fade-in max-w-[1200px] mx-auto pb-8">
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="table-premium">
-                    <thead>
-                        <tr class="bg-gray-50/50">
-                            <th class="py-6 px-10">Voucher Reference</th>
-                            <th class="py-6 px-10">Economic Value</th>
-                            <th class="py-6 px-10">Execution Timestamp</th>
-                            <th class="py-6 px-10 text-right">Verification</th>
+                <table class="w-full text-left text-sm whitespace-nowrap">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold text-slate-700">Voucher Reference</th>
+                            <th class="px-6 py-4 font-semibold text-slate-700">Amount (MMK)</th>
+                            <th class="px-6 py-4 font-semibold text-slate-700">Date & Time</th>
+                            <th class="px-6 py-4 font-semibold text-slate-700 text-right">Details</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @foreach (var item in Model.lstSaleReport)
+                    <tbody class="divide-y divide-slate-100">
+                        @if (Model?.lstSaleReport != null)
                         {
-                            DateTime = item.sale_date;
-                            <tr class="hover:bg-gray-50/80 transition-premium group">
-                                <td class="py-6 px-10">
-                                    <div class="flex items-center">
-                                        <div class="w-12 h-12 bg-white border border-gray-100 text-gray-400 rounded-xl flex items-center justify-center mr-5 shadow-sm group-hover:border-premium-orange-200 group-hover:text-premium-orange-500 transition-all font-black text-xs">
-                                            #V
+                            @foreach (var item in Model.lstSaleReport)
+                            {
+                                DateTime = item.sale_date;
+                                <tr class="hover:bg-slate-50/50 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="w-8 h-8 rounded bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">
+                                                V
+                                            </div>
+                                            <span class="font-medium text-slate-900 font-mono">@item.sale_voucher_no</span>
                                         </div>
-                                        <div class="font-black text-gray-900 text-base tracking-tight">@item.sale_voucher_no</div>
-                                    </div>
-                                </td>
-                                <td class="py-6 px-10 font-black text-premium-orange-600 text-lg tracking-tighter">
-                                    @item.sale_total_amount.ToString("N0") <small class="text-[10px] opacity-80 font-bold">MMK</small>
-                                </td>
-                                <td class="py-6 px-10 font-black text-gray-400 text-xs uppercase tracking-widest">
-                                    @item.sale_date.ToString("MMM dd, yyyy • HH:mm")
-                                </td>
-                                <td class="py-6 px-10 text-right">
-                                    <button @onclick="() => Deatil(item)" class="btn-premium !py-2.5 !px-5 text-[10px] uppercase tracking-[0.15em] font-black group-hover:scale-105 transition-all">
-                                        View Details
-                                    </button>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="font-semibold text-slate-900">@item.sale_total_amount.ToString("N0")</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="text-slate-600">@item.sale_date.ToString("MMM dd, yyyy \u2022 HH:mm")</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <button @onclick="() => Deatil(item)" class="inline-flex items-center px-3 py-1.5 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-md transition-colors shadow-sm">
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
             </div>
             
-            @if (Model != null)
+            @if (Model != null && Model.TotalPageNo > 1)
             {
-                <div class="p-10 border-t-2 border-gray-50 flex justify-center bg-white shadow-inner">
-                    <div class="flex items-center space-x-3">
+                <div class="px-6 py-4 border-t border-slate-200 flex justify-center bg-slate-50/50">
+                    <div class="flex items-center space-x-2">
                         @{
                             var curPage = Model.CurrentPageNo;
                             var totalP = Model.TotalPageNo;
                         }
 
                         <button @onclick="() => PageChanged(curPage - 1)" 
-                                disabled="@(curPage == 1)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+                                disabled="@(curPage <= 1)"
+                                class="p-2 border border-slate-200 rounded-lg text-slate-500 hover:bg-white hover:text-slate-700 bg-transparent disabled:opacity-50 disabled:bg-slate-100 disabled:cursor-not-allowed transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                         </button>
 
                         @for (int i = 1; i <= totalP; i++)
                         {
                             var p = i;
                             <button @onclick="() => PageChanged(p)"
-                                    class="w-12 h-12 rounded-2xl border-2 font-black text-sm transition-all @(curPage == p ? "bg-premium-orange-500 border-premium-orange-600 text-white shadow-premium-orange-sm" : "border-gray-100 text-gray-400 hover:border-premium-orange-300 hover:text-premium-orange-600 hover:bg-premium-orange-50/30")">
+                                    class="w-9 h-9 flex items-center justify-center rounded-lg border text-sm font-medium transition-colors @(curPage == p ? "bg-orange-600 border-orange-600 text-white" : "border-slate-200 text-slate-600 hover:border-orange-300 hover:bg-orange-50 bg-white")">
                                 @p
                             </button>
                         }
 
                         <button @onclick="() => PageChanged(curPage + 1)" 
-                                disabled="@(curPage == totalP)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
+                                disabled="@(curPage >= totalP)"
+                                class="p-2 border border-slate-200 rounded-lg text-slate-500 hover:bg-white hover:text-slate-700 bg-transparent disabled:opacity-50 disabled:bg-slate-100 disabled:cursor-not-allowed transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         </button>
                     </div>
                 </div>
@@ -83,74 +82,75 @@
 }
 else if (Type == EnumFormType.Report)
 {
-    <div class="max-w-2xl mx-auto space-y-10 animate-fade-in py-10">
-        <div class="flex items-center justify-between mb-2">
-            <button @onclick="Back" class="icon-btn-premium !w-14 !h-14 shadow-premium-2 group hover:scale-110 transition-all">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+    <div class="max-w-xl mx-auto space-y-6 animate-fade-in pb-10">
+        <div class="flex items-center justify-between mb-4">
+            <button @onclick="Back" class="p-2 -ml-2 text-slate-500 hover:text-slate-900 transition-colors rounded-lg hover:bg-slate-100 flex items-center text-sm font-medium">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                Back to List
             </button>
-            <div class="text-right">
-                <h3 class="text-lg font-black text-gray-900 tracking-tight">Voucher Inspection</h3>
-                <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-widest mt-1">Live Audit Mode</p>
-            </div>
         </div>
 
-        <div class="card-premium shadow-premium-4 !p-0 bg-white border-none overflow-hidden relative">
-            <div class="h-3 bg-gradient-to-r from-premium-orange-400 to-premium-orange-600"></div>
-            <div class="p-12 space-y-12">
-                <div class="flex flex-col items-center text-center space-y-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-premium-orange-50 to-premium-orange-100/50 text-premium-orange-600 rounded-[2rem] flex items-center justify-center shadow-inner rotate-3">
-                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+            <!-- Receipt Header -->
+            <div class="px-8 pt-8 pb-6 border-b border-dashed border-slate-200 text-center">
+                <div class="w-12 h-12 bg-orange-50 text-orange-600 mx-auto rounded-xl flex items-center justify-center mb-4">
+                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">MiniPOS Store</h3>
+                <p class="text-sm text-slate-500 mt-1">Sale Receipt</p>
+                
+                <div class="flex justify-between items-center mt-6 text-xs font-mono text-slate-500 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                    <div class="text-left">
+                        <span class="block font-sans text-[10px] uppercase tracking-wider mb-0.5 text-slate-400">Order Ref</span>
+                        #TRX-@DateTime.Ticks.ToString().Substring(0, Math.Min(DateTime.Ticks.ToString().Length, 8))
                     </div>
-                    <div>
-                        <h4 class="text-2xl font-outfit font-black text-gray-900 tracking-tight">Premium<span class="text-premium-orange-500">POS</span> Elite</h4>
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2">Analytical Voucher Summary</p>
+                    <div class="text-right">
+                        <span class="block font-sans text-[10px] uppercase tracking-wider mb-0.5 text-slate-400">Date</span>
+                        @DateTime.ToString("MMM dd, yyyy")
                     </div>
                 </div>
+            </div>
 
-                <div class="grid grid-cols-2 gap-8 py-8 border-y-2 border-gray-50 border-dashed">
-                    <div class="space-y-1">
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Metadata Hash</span>
-                        <p class="text-sm font-black text-gray-900">#TRX-@DateTime.Ticks.ToString().Substring(0, 8)</p>
-                    </div>
-                    <div class="space-y-1 text-right">
-                        <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Verification Node</span>
-                        <p class="text-sm font-black text-gray-900">@DateTime.ToString("MMM dd, yyyy")</p>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
+            <!-- Receipt Items -->
+            <div class="px-8 py-6 space-y-4">
+                @if (Detail != null)
+                {
                     @foreach (var item in Detail)
                     {
-                        <div class="flex justify-between items-start group">
-                            <div class="space-y-1">
-                                <p class="text-sm font-black text-gray-900 group-hover:text-premium-orange-600 transition-colors">@item.product_name</p>
-                                <p class="text-[10px] text-gray-400 font-bold">@item.product_qty x @item.product_price.ToString("N0")</p>
+                        <div class="flex justify-between items-start text-sm">
+                            <div class="flex-1">
+                                <p class="font-medium text-slate-900">@item.product_name</p>
+                                <p class="text-slate-500 text-xs mt-0.5">@item.product_qty  \&times;  @item.product_price.ToString("N0")</p>
                             </div>
-                            <div class="text-right font-black text-gray-900 text-sm">
-                                @((item.product_price * item.product_qty).ToString("N0")) <small class="text-[9px] opacity-40">MMK</small>
+                            <div class="font-medium text-slate-900 text-right">
+                                @((item.product_price * item.product_qty).ToString("N0"))
                             </div>
                         </div>
                     }
-                </div>
+                }
+            </div>
 
-                <div class="pt-10 space-y-5 border-t-2 border-gray-50 border-dashed">
-                    <div class="p-8 bg-premium-orange-50 rounded-[2.5rem] flex justify-between items-center text-premium-orange-900 overflow-hidden relative">
-                         <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-premium-orange-100/50 rounded-full blur-2xl"></div>
-                         <div class="flex flex-col relative z-10">
-                            <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Collective Total</span>
-                            <span class="text-3xl font-outfit font-black tracking-tighter">@(Detail.Select(x => x.product_qty * x.product_price).Sum().ToString("N0"))</span>
-                         </div>
+            <!-- Receipt Total -->
+            <div class="px-8 pb-8 pt-6 border-t border-dashed border-slate-200 bg-slate-50/50">
+                <div class="flex justify-between items-end">
+                    <span class="text-sm font-medium text-slate-500 uppercase tracking-widest">Total Amount</span>
+                    <div class="text-right">
+                        <span class="text-2xl font-bold text-orange-600">
+                            @(Detail?.Select(x => x.product_qty * x.product_price).Sum().ToString("N0") ?? "0")
+                        </span>
+                        <span class="text-xs font-medium text-slate-500 ml-1">MMK</span>
                     </div>
                 </div>
             </div>
-            <div class="absolute top-1/2 -left-3 w-6 h-6 bg-gray-50 rounded-full -translate-y-1/2 shadow-inner"></div>
-            <div class="absolute top-1/2 -right-3 w-6 h-6 bg-gray-50 rounded-full -translate-y-1/2 shadow-inner"></div>
+            
+            <!-- Receipt Cutouts -->
+            <div class="absolute left-0 top-[200px] w-3 h-6 bg-slate-50 rounded-r-full border-y border-r border-slate-200 -ml-[1px]"></div>
+            <div class="absolute right-0 top-[200px] w-3 h-6 bg-slate-50 rounded-l-full border-y border-l border-slate-200 -mr-[1px]"></div>
         </div>
     </div>
 }
 
 @code {
-
     [Parameter]
     public SaleReportResponseDataModel? Model { get; set; }
 
@@ -182,5 +182,4 @@ else if (Type == EnumFormType.Report)
         Type = EnumFormType.List;
         await OnBackClick.InvokeAsync();
     }
-
 }

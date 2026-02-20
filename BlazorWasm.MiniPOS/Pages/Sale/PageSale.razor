@@ -1,167 +1,121 @@
 @page "/Sale"
 
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-10 animate-fade-in h-[calc(100vh-140px)]">
-    <!-- Left Side: Product Grid (Spacious Selection) -->
-    <div class="xl:col-span-8 flex flex-col h-full overflow-hidden">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div class="h-[calc(100vh-80px)] flex flex-col md:flex-row gap-6 pb-6 animate-fade-in overflow-hidden">
+    <!-- Left Side: Product Grid (50%) -->
+    <div class="flex-1 md:basis-1/2 flex flex-col bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
             <div>
-                <h2 class="text-2xl font-outfit font-black text-gray-900 tracking-tight">Product Selection</h2>
-                <p class="text-xs text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Elite Inventory • @(_lstProduct?.Count ?? 0) Curated Items</p>
+                <h2 class="text-lg font-semibold text-slate-900">Products</h2>
+                <p class="text-xs text-orange-900/40 mt-0.5">@(_lstProduct?.Count ?? 0) items available</p>
             </div>
-            <div class="relative w-full md:w-80">
-                <input type="text" placeholder="Filter by name or code..." class="input-premium py-3.5 pl-12 pr-5 text-sm border-2 border-gray-100 shadow-sm" />
-                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <div class="relative w-72">
+                <input type="text" placeholder="Search products..." class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500" />
+                <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 overflow-y-auto pr-4 pb-8 custom-scrollbar">
-            @if (_lstProduct is not null)
-            {
-                @foreach (var item in _lstProduct)
+        <div class="p-6 overflow-y-auto hide-scrollbar flex-1">
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                @if (_lstProduct is not null)
                 {
-                    var qty = GetQty(item.product_id);
-                    var isActive = qty > 0;
-                    
-                    <button @onclick="() => AddProductToSale(item.product_id)" 
-                            class="group relative flex flex-col justify-between p-6 rounded-[2rem] border-2 transition-all duration-500 active:scale-95 h-52 text-left shadow-premium-1 hover:shadow-premium-2 overflow-hidden
-                                   @(isActive ? "bg-gradient-to-br from-premium-orange-500 to-premium-orange-700 border-premium-orange-600 !shadow-premium-orange-sm" : "bg-white border-transparent hover:border-premium-orange-200")">
+                    @foreach (var item in _lstProduct)
+                    {
+                        var qty = GetQty(item.product_id);
+                        var isActive = qty > 0;
                         
-                        <!-- Premium Background Pattern for Active -->
-                        @if (isActive)
-                        {
-                            <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-                            <div class="absolute -left-4 top-4 w-16 h-16 bg-white/5 rounded-full blur-2xl"></div>
-                        }
+                        <button @onclick="() => AddProductToSale(item.product_id)" 
+                                class="relative flex flex-col p-4 rounded-xl border transition-all text-left overflow-hidden h-40 
+                                       @(isActive ? "border-orange-500 bg-orange-50/50 shadow-sm" : "border-slate-200 bg-white hover:border-orange-300 hover:shadow-sm")">
+                            
+                            @if (isActive)
+                            {
+                                <div class="absolute top-3 right-3 w-6 h-6 bg-orange-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow">
+                                    @qty
+                                </div>
+                            }
 
-                        <!-- Quantity Badge (Luxury Style) -->
-                        @if (isActive)
-                        {
-                            <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-md text-white rounded-2xl flex items-center justify-center text-sm font-black shadow-lg border border-white/30 animate-scale-in">
-                                @qty
-                            </div>
-                        }
-
-                        <div class="relative z-10">
-                            <div class="text-[10px] font-black uppercase tracking-[0.2em] mb-2 @(isActive ? "text-premium-orange-100" : "text-gray-400")">#@(item.product_code?.Length > 4 ? item.product_code.Substring(item.product_code.Length - 4) : item.product_code)</div>
-                            <div class="font-outfit font-black text-lg @(isActive ? "text-white" : "text-gray-900") leading-[1.3] line-clamp-2">
+                            <div class="text-[10px] font-medium text-orange-900/40 mb-1 line-clamp-1">#@(item.product_code ?? "UNK")</div>
+                            <div class="font-medium text-slate-900 line-clamp-2 leading-tight flex-1">
                                 @item.product_name
                             </div>
-                        </div>
-                        
-                        <div class="relative z-10 flex items-center justify-between mt-auto pt-6 border-t @(isActive ? "border-white/10" : "border-gray-50")">
-                             <div class="flex flex-col">
-                                <span class="text-[9px] font-black uppercase tracking-widest @(isActive ? "text-premium-orange-200" : "text-gray-400")">Unit Price</span>
-                                <span class="text-xl font-outfit font-black @(isActive ? "text-white" : "text-premium-orange-600") tracking-tighter">
-                                    @item.product_sale_price.ToString("N0")
-                                    <small class="text-[10px] opacity-80 font-bold ml-1">MMK</small>
-                                </span>
-                             </div>
-                             <div class="w-10 h-10 rounded-xl flex items-center justify-center @(isActive ? "bg-white text-premium-orange-600 shadow-xl" : "bg-gray-50 text-gray-300 group-hover:bg-premium-orange-50 group-hover:text-premium-orange-500") transition-all">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
-                             </div>
-                        </div>
-                    </button>
+                            
+                            <div class="mt-2 flex items-end justify-between w-full">
+                                 <div class="font-semibold text-orange-600">
+                                     @item.product_sale_price.ToString("N0") <span class="text-[10px] text-slate-500 font-normal">MMK</span>
+                                 </div>
+                            </div>
+                        </button>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 
-    <!-- Right Side: Current Sale (Premium Sidebar) -->
-    <div class="xl:col-span-4 flex flex-col h-full overflow-hidden">
-        <div class="card-premium flex flex-col h-full overflow-hidden shadow-premium-3 !p-0">
-            <!-- Cart Header -->
-            <div class="px-8 py-8 border-b-2 border-gray-100 flex items-center justify-between bg-white relative">
-                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-premium-orange-400 to-premium-orange-600"></div>
-                <div>
-                    <h3 class="text-xl font-outfit font-black text-gray-900 tracking-tight">Active Voucher</h3>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-1.5 flex items-center">
-                        <span class="w-2 h-2 bg-green-500 rounded-full mr-2 shadow-sm animate-pulse"></span>
-                        @(_lstProductSale?.lstProductSale?.Count ?? 0) Selections
-                    </p>
-                </div>
-                <button @onclick="() => _lstProductSale = new ProductSaleResponseDataModel()" class="icon-btn-premium !bg-red-50 hover:!bg-red-100 !text-red-500 !border-red-100">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
-                </button>
-            </div>
-            
-            <!-- Cart Items -->
-            <div class="flex-1 overflow-y-auto p-10 space-y-5 custom-scrollbar bg-gray-50/30">
-                @if (_lstProductSale?.lstProductSale?.Any() == true)
+    <!-- Right Side: Current Sale Cart (50%) -->
+    <div class="flex-1 md:basis-1/2 flex flex-col bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex-shrink-0">
+        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50">
+            <h3 class="text-lg font-semibold text-slate-900">Current Order</h3>
+            <p class="text-xs text-orange-900/40 mt-0.5">
+                @(_lstProductSale?.lstProductSale?.Count ?? 0) items in cart
+            </p>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto p-4 space-y-2 hide-scrollbar bg-slate-50/30">
+            @if (_lstProductSale?.lstProductSale?.Any() == true)
+            {
+                @foreach (var item in _lstProductSale.lstProductSale)
                 {
-                    @foreach (var item in _lstProductSale.lstProductSale)
-                    {
-                        <div class="flex flex-col p-6 rounded-3xl bg-white border border-gray-100 group transition-all duration-500 hover:shadow-premium-1 relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-1 h-full bg-premium-orange-500/10 group-hover:bg-premium-orange-500 transition-all"></div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-5">
-                                    <div class="w-12 h-12 bg-premium-orange-50 text-premium-orange-600 rounded-2xl flex items-center justify-center text-sm font-black shadow-sm group-hover:scale-110 transition-transform">
-                                        @item.product_qty
-                                    </div>
-                                    <div>
-                                        <div class="text-sm font-black text-gray-900 line-clamp-1">@item.product_name</div>
-                                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">@item.product_price.ToString("N0") Per Unit</div>
-                                    </div>
-                                </div>
-                                <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="icon-btn-premium !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M6 18L18 6M6 6l12 12"/></svg>
-                                </button>
-                            </div>
-                            <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between items-end">
-                                 <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest">Calculated Subtotal</div>
-                                 <div class="text-sm font-black text-gray-900 font-outfit tracking-tight">@item.product_total_price.ToString("N0") <small class="text-[9px] opacity-60">MMK</small></div>
-                            </div>
+                    <div class="group flex items-center bg-white border border-slate-200 rounded-lg p-3 hover:border-slate-300 transition-colors">
+                        <div class="w-8 h-8 bg-orange-100 text-orange-700 rounded-md flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">
+                            @item.product_qty
                         </div>
-                    }
-                }
-                else
-                {
-                    <div class="flex flex-col items-center justify-center h-full text-center p-12 space-y-6">
-                        <div class="w-24 h-24 bg-white rounded-[2.5rem] flex items-center justify-center shadow-premium-1 border border-gray-100">
-                             <div class="w-12 h-12 bg-premium-orange-50 text-premium-orange-300 rounded-2xl flex items-center justify-center">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                             </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium text-slate-900 truncate">@item.product_name</div>
+                            <div class="text-xs text-slate-500">@item.product_price.ToString("N0") <span class="text-[9px]">MMK</span></div>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-900 font-black tracking-tight">Voucher is empty</p>
-                            <p class="text-xs text-gray-400 font-medium mt-1">Start by selecting products from the inventory list</p>
+                        <div class="flex flex-col items-end pl-3 flex-shrink-0">
+                            <div class="text-sm font-semibold text-slate-900">@item.product_total_price.ToString("N0")</div>
+                            <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="text-slate-300 hover:text-red-500 transition-colors mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                            </button>
                         </div>
                     </div>
                 }
-            </div>
-
-            <!-- Total Summary -->
-            <div class="mt-auto p-10 border-t-2 border-gray-100 bg-white shadow-xl shadow-black/[0.02]">
-                <div class="space-y-4 mb-8">
-                    <div class="flex justify-between items-center px-2">
-                        <span class="text-[11px] text-gray-400 font-black uppercase tracking-[0.1em]">Cart Subtotal</span>
-                        <span class="text-sm font-black text-gray-900">@_grandTotal.ToString("N0") <small class="text-[10px] text-gray-400 font-bold ml-1">MMK</small></span>
-                    </div>
-                    <div class="flex justify-between items-center px-2">
-                        <span class="text-[11px] text-gray-400 font-black uppercase tracking-[0.1em]">Imperial Tax (0%)</span>
-                        <span class="text-sm font-black text-gray-900">0 <small class="text-[10px] text-gray-400 font-bold ml-1">MMK</small></span>
-                    </div>
-                    <div class="divider-premium opacity-50 my-1"></div>
-                    <div class="flex justify-between items-center p-6 bg-premium-orange-50 rounded-[2rem] border border-premium-orange-100/50 mt-4">
-                        <span class="text-xs font-black text-premium-orange-800 uppercase tracking-widest">Grand Total</span>
-                        <div class="text-right">
-                            <div class="text-3xl font-outfit font-black text-premium-orange-600 leading-none tracking-tighter">@_grandTotal.ToString("N0")</div>
-                            <div class="text-[10px] text-premium-orange-400 font-bold uppercase tracking-[0.2em] mt-2">Myanmar Kyat</div>
-                        </div>
-                    </div>
+            }
+            else
+            {
+                <div class="flex flex-col items-center justify-center h-full text-slate-400 py-16">
+                    <svg class="w-12 h-12 mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    <p class="text-sm font-medium text-slate-500">Cart is empty</p>
+                    <p class="text-xs text-slate-400 mt-1">Click a product to add</p>
                 </div>
+            }
+        </div>
 
-                <button @onclick="Save" disabled="@(!(_lstProductSale?.lstProductSale?.Any() ?? false))" class="btn-premium w-full py-5 text-sm uppercase tracking-widest font-black shadow-premium-orange-lg hover:shadow-premium-orange active:scale-[0.98] disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
-                    <span>Finalize Checkout</span>
-                </button>
+        <div class="p-5 border-t border-slate-200 bg-white">
+            <div class="space-y-2 mb-5">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-500">Subtotal</span>
+                    <span class="text-slate-900 font-medium">@_grandTotal.ToString("N0") <span class="text-xs text-slate-500">MMK</span></span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-slate-500">Tax</span>
+                    <span class="text-slate-900 font-medium">0 <span class="text-xs text-slate-500">MMK</span></span>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                    <span class="text-base font-semibold text-slate-900">Total</span>
+                    <span class="text-2xl font-bold text-orange-600">@_grandTotal.ToString("N0") <span class="text-sm font-medium text-orange-400">MMK</span></span>
+                </div>
             </div>
+
+            <button @onclick="Save" disabled="@(!(_lstProductSale?.lstProductSale?.Any() ?? false))" 
+                    class="w-full py-3 px-4 bg-orange-600 hover:bg-orange-700 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                Checkout
+            </button>
         </div>
     </div>
 </div>
-
-<style>
-    /* Sale page specific styles removed - using global premium classes */
-</style>
 
 @code {
     private int GetQty(Guid productId) => _lstProductSale?.lstProductSale?.FirstOrDefault(x => x.product_id == productId)?.product_qty ?? 0;

@@ -6,6 +6,7 @@ namespace BlazorWasm.MiniPOS.Pages.ProductCategory
     {
         private ProductCategoryResponseModel? _productCategoryResponseModel;
         private EnumFormType FormType { get; set; } = EnumFormType.List;
+        private bool IsEdit => FormType == EnumFormType.Edit;
         private ProductCategoryDataModel _model = new();
 
         protected override async Task OnInitializedAsync()
@@ -49,6 +50,12 @@ namespace BlazorWasm.MiniPOS.Pages.ProductCategory
             _model = new();
             await List();
             FormType = EnumFormType.List;
+        }
+
+        async Task HandleSave()
+        {
+            if (IsEdit) await Update();
+            else await Save();
         }
 
         async Task Edit(ProductCategoryDataModel product)

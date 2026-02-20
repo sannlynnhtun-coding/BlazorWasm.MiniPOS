@@ -1,142 +1,115 @@
 @page "/setup/product-category"
 
-<div class="space-y-12 animate-fade-in max-w-[1200px] mx-auto">
+<div class="space-y-6 animate-fade-in max-w-[1200px] mx-auto pb-8">
     @if (FormType == EnumFormType.List)
     {
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
-                <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">Category Architecture</h2>
-                <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Inventory Grouping • Systematic Classification</p>
+                <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Categories</h2>
+                <p class="text-sm text-slate-500 mt-1">Organize your inventory with categories.</p>
             </div>
-            <button @onclick="Create" class="btn-premium px-10 py-4 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
-                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
-                <span class="text-sm uppercase tracking-widest">Define Category</span>
+            <button @onclick="Create" class="inline-flex items-center justify-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Add Category
             </button>
         </div>
 
-        <div class="card-premium shadow-premium-3 !p-0 overflow-hidden border-none bg-white">
-            <div class="overflow-x-auto">
-                <table class="table-premium">
-                    <thead>
-                        <tr class="bg-gray-50/50">
-                            <th class="py-6 px-10">Classification Identity</th>
-                            <th class="py-6 px-10">Established Date</th>
-                            <th class="py-6 px-10 text-right">Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        @if (_productCategoryResponseModel?.productCategories is { Count: > 0 })
-                        {
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            @if (_productCategoryResponseModel?.productCategories == null)
+            {
+                <div class="p-8 text-center text-slate-500 text-sm">Loading categories...</div>
+            }
+            else if (!_productCategoryResponseModel.productCategories.Any())
+            {
+                <div class="p-12 text-center flex flex-col items-center justify-center">
+                    <svg class="w-12 h-12 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    <h3 class="text-lg font-medium text-slate-900 mb-1">No categories found</h3>
+                    <p class="text-slate-500 text-sm mb-4">Get started by creating a new product category.</p>
+                    <button @onclick="Create" class="text-orange-600 hover:text-orange-700 font-medium text-sm">Create Category &rarr;</button>
+                </div>
+            }
+            else
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Code</th>
+                                <th class="px-6 py-3 font-semibold text-slate-700">Category Name</th>
+                                <th class="px-6 py-3 font-semibold text-slate-700 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
                             @foreach (var item in _productCategoryResponseModel.productCategories)
                             {
-                                <tr class="hover:bg-gray-50/80 transition-premium group">
-                                    <td class="py-6 px-10">
-                                        <div class="flex items-center">
-                                            <div class="w-16 h-16 bg-gradient-to-br from-purple-50 to-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mr-6 font-black text-lg shadow-sm group-hover:scale-105 transition-all">
-                                                @item.product_category_name?.Substring(0, 1)
-                                            </div>
-                                            <div>
-                                                <div class="font-black text-gray-900 text-base">@item.product_category_name</div>
-                                                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mt-1">ID: @item.product_category_code</div>
-                                            </div>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4 w-32">
+                                        <div class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-600 font-mono text-xs">
+                                            @item.product_category_code
                                         </div>
                                     </td>
-                                    <td class="py-6 px-10">
-                                        <div class="text-xs font-black text-gray-500 uppercase tracking-widest">
-                                            @item.product_category_creation_date.ToString("MMMM dd, yyyy")
-                                        </div>
-                                    </td>
-                                    <td class="py-6 px-10 text-right">
-                                        <div class="flex items-center justify-end space-x-3">
-                                            <button @onclick="() => Edit(item)" class="icon-btn-premium w-10 h-10">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                    <td class="px-6 py-4 font-medium text-slate-900">@item.product_category_name</td>
+                                    <td class="px-6 py-4 text-right">
+                                        <div class="flex items-center justify-end space-x-2">
+                                            <button @onclick="() => Edit(item)" class="p-1 text-slate-400 hover:text-orange-600 transition-colors" title="Edit">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                             </button>
-                                            <button @onclick="() => Delete(item)" class="icon-btn-premium w-10 h-10 hover:!bg-red-50 hover:!border-red-200 hover:!text-red-600">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                            <button @onclick="() => Delete(item)" class="p-1 text-slate-400 hover:text-red-600 transition-colors" title="Delete">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                             }
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            @if (_productCategoryResponseModel?.productCategories is { Count: > 0 })
-            {
-                <div class="p-10 border-t-2 border-gray-50 flex justify-center bg-white shadow-inner">
-                    <div class="flex items-center space-x-3">
-                        @{
-                            var pageInfo = _productCategoryResponseModel.pageSetting;
-                            var curPage = pageInfo.pageNo;
-                            var totalP = pageInfo.pageCount;
-                        }
-
-                        <button @onclick="() => List(curPage - 1)" 
-                                disabled="@(curPage == 1)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
-                        </button>
-
-                        @for (int i = 1; i <= totalP; i++)
-                        {
-                            var p = i;
-                            <button @onclick="() => List(p)"
-                                    class="w-12 h-12 rounded-2xl border-2 font-black text-sm transition-all @(curPage == p ? "bg-premium-orange-500 border-premium-orange-600 text-white shadow-premium-orange-sm" : "border-gray-100 text-gray-400 hover:border-premium-orange-300 hover:text-premium-orange-600 hover:bg-premium-orange-50/30")">
-                                @p
-                            </button>
-                        }
-
-                        <button @onclick="() => List(curPage + 1)" 
-                                disabled="@(curPage == totalP)"
-                                class="icon-btn-premium w-12 h-12 disabled:opacity-30 disabled:cursor-not-allowed">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
-                        </button>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             }
         </div>
     }
-    else if (FormType is EnumFormType.Create or EnumFormType.Edit)
+    else
     {
-        <div class="max-w-3xl mx-auto space-y-12">
-            <div class="flex items-center">
-                <button @onclick="Back" class="icon-btn-premium !w-16 !h-16 mr-8 shadow-premium-2 group hover:rotate-12 transition-all">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+        <div class="max-w-2xl mx-auto">
+            <div class="flex items-center mb-6">
+                <button @onclick="Back" class="mr-4 p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 </button>
                 <div>
-                    <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">@(FormType == EnumFormType.Create ? "New Logic Pattern" : "Modify Logic Pattern")</h2>
-                    <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Category Specification Mode</p>
+                    <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">@(IsEdit ? "Edit Category" : "New Category")</h2>
+                    <p class="text-sm text-slate-500 mt-1">Manage category details.</p>
                 </div>
             </div>
 
-            <div class="card-premium shadow-premium-3 !p-16 relative overflow-hidden bg-white">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-purple-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-60"></div>
-                
-                <div class="space-y-10 relative z-10">
-                    <div class="space-y-4">
-                        <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Category Identifier</label>
-                        <input type="text" class="input-premium py-5 px-6 rounded-2xl font-bold" @bind-value="_model.product_category_code" placeholder="E.g. ELECT-01" />
-                    </div>
-                    <div class="space-y-4">
-                        <label class="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Group Nomenclature</label>
-                        <input type="text" class="input-premium py-5 px-6 rounded-2xl font-black text-lg" @bind-value="_model.product_category_name" placeholder="E.g. High-End Electronics" />
-                    </div>
-                </div>
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+                <EditForm Model="_model" OnValidSubmit="HandleSave">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5 flex items-center">
+                                    Code
+                                </label>
+                                <InputText @bind-Value="_model.product_category_code" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow disabled:bg-slate-50 disabled:text-slate-500" disabled="@IsEdit" />
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5 flex items-center">
+                                    Name
+                                </label>
+                                <InputText @bind-Value="_model.product_category_name" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow" />
+                            </div>
+                        </div>
 
-                <div class="mt-20 pt-10 border-t-2 border-gray-50 flex flex-col sm:flex-row justify-end gap-5 relative z-10">
-                    <button @onclick="Back" class="px-10 py-5 bg-gray-50 text-gray-500 rounded-[1.25rem] font-black text-xs uppercase tracking-widest hover:bg-gray-100 transition-all active:scale-95">Discard Changes</button>
-                    <button @onclick="@(FormType == EnumFormType.Create ? Save : Update)" 
-                            class="btn-premium px-12 py-5 shadow-premium-orange-lg hover:-translate-y-1 active:scale-95 transition-all">
-                        <span class="text-sm uppercase tracking-widest">@(FormType == EnumFormType.Create ? "Authorize Definition" : "Sync Pattern")</span>
-                    </button>
-                </div>
+                        <div class="pt-6 border-t border-slate-100 flex justify-end space-x-3">
+                            <button type="button" @onclick="Back" class="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-slate-200">
+                                Cancel
+                            </button>
+                            <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                                Save Category
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
             </div>
         </div>
     }
 </div>
-
-<style>
-    /* Product category page specific styles removed - using global premium classes */
-</style>

@@ -1,72 +1,72 @@
 @page "/settings/db-provider"
 
-<div class="max-w-4xl mx-auto py-8 animate-fade-in">
-    <div class="mb-8">
-        <h2 class="text-3xl font-outfit font-bold text-gray-900 tracking-tight">Storage Settings</h2>
-        <p class="text-gray-600 mt-2 font-medium">Select your preferred database provider for local data persistence.</p>
+<div class="max-w-4xl mx-auto space-y-8 animate-fade-in pb-10">
+    <div class="mb-6">
+        <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Storage Settings</h2>
+        <p class="text-sm text-slate-500 mt-1">Select your preferred database provider for local data persistence.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- IndexedDB -->
-        <div class="card-premium p-6 cursor-pointer transition-premium border-2 shadow-premium-2 @(StorageService.CurrentType == StorageType.IndexedDb ? "!border-premium-orange-500 ring-4 ring-premium-orange-500/10 !shadow-premium-orange" : "border-transparent hover:border-gray-200 hover:shadow-premium-3")"
+        <div class="bg-white rounded-xl border-2 transition-all cursor-pointer p-6 shadow-sm @(StorageService.CurrentType == StorageType.IndexedDb ? "border-indigo-500 ring-2 ring-indigo-50" : "border-slate-200 hover:border-indigo-300 hover:shadow-md")"
              @onclick="() => ChangeStorage(StorageType.IndexedDb)">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-premium-orange-100 to-premium-orange-200 rounded-xl flex items-center justify-center text-premium-orange-700 shadow-premium-1">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zM4 11h16M4 15h16" />
                     </svg>
                 </div>
                 @if (StorageService.CurrentType == StorageType.IndexedDb)
                 {
-                    <span class="badge-premium !bg-gradient-to-br !from-premium-orange-500 !to-premium-orange-600 !text-white !shadow-premium-orange">Active</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Active</span>
                 }
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 tracking-tight">IndexedDB</h3>
-            <p class="text-gray-600 text-sm leading-relaxed font-medium">Recommended for larger datasets. Persists data locally in the browser's database, even after closing the tab.</p>
+            <h3 class="text-lg font-semibold text-slate-900 mb-2">IndexedDB</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">Recommended for larger datasets. Persists data locally in the browser's database securely.</p>
         </div>
 
         <!-- Session Storage -->
-        <div class="card-premium p-6 cursor-pointer transition-premium border-2 shadow-premium-2 @(StorageService.CurrentType == StorageType.SessionStorage ? "!border-premium-orange-500 ring-4 ring-premium-orange-500/10 !shadow-premium-orange" : "border-transparent hover:border-gray-200 hover:shadow-premium-3")"
+        <div class="bg-white rounded-xl border-2 transition-all cursor-pointer p-6 shadow-sm @(StorageService.CurrentType == StorageType.SessionStorage ? "border-indigo-500 ring-2 ring-indigo-50" : "border-slate-200 hover:border-indigo-300 hover:shadow-md")"
              @onclick="() => ChangeStorage(StorageType.SessionStorage)">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-gray-700 shadow-premium-1">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <div class="w-12 h-12 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 @if (StorageService.CurrentType == StorageType.SessionStorage)
                 {
-                    <span class="badge-premium !bg-gradient-to-br !from-premium-orange-500 !to-premium-orange-600 !text-white !shadow-premium-orange">Active</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Active</span>
                 }
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 tracking-tight">Session Storage</h3>
-            <p class="text-gray-600 text-sm leading-relaxed font-medium">Temporary storage that lasts only until the browser tab is closed. Ideal for quick demos or ephemeral data.</p>
+            <h3 class="text-lg font-semibold text-slate-900 mb-2">Session Storage</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">Temporary storage that lasts only until the browser tab is closed. Ideal for quick demos.</p>
         </div>
 
         <!-- Local Storage -->
-        <div class="card-premium p-6 cursor-pointer transition-premium border-2 shadow-premium-2 @(StorageService.CurrentType == StorageType.LocalStorage ? "!border-premium-orange-500 ring-4 ring-premium-orange-500/10 !shadow-premium-orange" : "border-transparent hover:border-gray-200 hover:shadow-premium-3")"
+        <div class="bg-white rounded-xl border-2 transition-all cursor-pointer p-6 shadow-sm @(StorageService.CurrentType == StorageType.LocalStorage ? "border-indigo-500 ring-2 ring-indigo-50" : "border-slate-200 hover:border-indigo-300 hover:shadow-md")"
              @onclick="() => ChangeStorage(StorageType.LocalStorage)">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center text-gray-700 shadow-premium-1">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <div class="w-12 h-12 bg-slate-100 text-slate-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                     </svg>
                 </div>
                 @if (StorageService.CurrentType == StorageType.LocalStorage)
                 {
-                    <span class="badge-premium !bg-gradient-to-br !from-premium-orange-500 !to-premium-orange-600 !text-white !shadow-premium-orange">Active</span>
+                    <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-indigo-100 text-indigo-700">Active</span>
                 }
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-2 tracking-tight">Local Storage</h3>
-            <p class="text-gray-600 text-sm leading-relaxed font-medium">Browser-level persistence. Similar to IndexedDB but with a smaller capacity limit (usually around 5-10MB).</p>
+            <h3 class="text-lg font-semibold text-slate-900 mb-2">Local Storage</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">Browser-level persistence. Easy to use but has a smaller capacity limit (5-10MB).</p>
         </div>
     </div>
 
     @if (isUpdating)
     {
-        <div class="mt-8 card-premium p-5 !bg-gradient-to-br !from-premium-orange-50 !to-orange-50 border-2 !border-premium-orange-200 flex items-center space-x-4 animate-fade-in shadow-premium-orange">
-            <div class="w-6 h-6 border-2 border-premium-orange-500 border-t-transparent rounded-full animate-spin"></div>
-            <span class="text-premium-orange-900 font-bold font-outfit">Applying changes and reinitializing database...</span>
+        <div class="mt-8 bg-indigo-50 p-4 rounded-xl border border-indigo-100 flex items-center space-x-3 text-indigo-700 font-medium text-sm animate-pulse">
+            <svg class="w-5 h-5 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            <span>Applying changes and reinitializing database...</span>
         </div>
     }
 </div>
@@ -81,10 +81,9 @@
         isUpdating = true;
         StateHasChanged();
         
-        await Task.Delay(800); // UI feel
+        await Task.Delay(600);
         StorageService.SetStorageType(type);
         
-        // Force a page reload to reset state
         nav.NavigateTo(nav.Uri, forceLoad: true);
     }
 }

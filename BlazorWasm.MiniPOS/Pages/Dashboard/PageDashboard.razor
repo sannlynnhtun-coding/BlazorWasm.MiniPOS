@@ -2,99 +2,69 @@
 @implements IDisposable
 @inject ChartStateContainer StateContainer
 
-<div class="space-y-12 animate-fade-in">
-    <!-- KPI Cards Grid - Increased Gap and Premium Scale -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="space-y-6 animate-fade-in">
+    <!-- KPI Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Total Sales Card -->
-        <div class="card-premium group relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-2 h-full bg-premium-orange-500 rounded-l-2xl"></div>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Revenue Performance</p>
-                    <h3 class="text-4xl font-outfit font-black text-gray-900 tracking-tight">@GrandTotal.ToString("N0") <small class="text-xs font-bold text-gray-400">MMK</small></h3>
-                </div>
-                <div class="w-16 h-16 bg-premium-orange-50 text-premium-orange-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-premium-orange-500 group-hover:text-white transition-all duration-500 group-hover:rotate-6 group-hover:scale-110">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </div>
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500 mb-1">Total Revenue</p>
+                <h3 class="text-2xl font-semibold text-slate-900">@GrandTotal.ToString("N0") <span class="text-sm font-normal text-slate-500">MMK</span></h3>
             </div>
-            <div class="mt-8 flex items-center space-x-3">
-                <span class="text-green-600 font-black text-xs flex items-center bg-green-50 px-2.5 py-1.5 rounded-xl border border-green-100/50">
-                    <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3z"/></svg>
-                    +12.5%
-                </span>
-                <span class="text-gray-400 text-[11px] font-bold uppercase tracking-wider">vs yesterday</span>
+            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
         </div>
 
         <!-- Total Products Card -->
-        <div class="card-premium group relative overflow-hidden">
-             <div class="absolute top-0 left-0 w-2 h-full bg-blue-500 rounded-l-2xl"></div>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Inventory Size</p>
-                    <h3 class="text-4xl font-outfit font-black text-gray-900 tracking-tight">@ProductCount</h3>
-                </div>
-                <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 group-hover:rotate-6 group-hover:scale-110">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                </div>
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500 mb-1">Total Products</p>
+                <h3 class="text-2xl font-semibold text-slate-900">@ProductCount</h3>
             </div>
-            <div class="mt-8 text-[11px] text-gray-400 font-bold uppercase tracking-wider">
-                Active in distribution
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
         </div>
 
         <!-- Categories Card -->
-        <div class="card-premium group relative overflow-hidden">
-             <div class="absolute top-0 left-0 w-2 h-full bg-purple-500 rounded-l-2xl"></div>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Product Segments</p>
-                    <h3 class="text-4xl font-outfit font-black text-gray-900 tracking-tight">@CategoryCount</h3>
-                </div>
-                <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-purple-500 group-hover:text-white transition-all duration-500 group-hover:rotate-6 group-hover:scale-110">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                </div>
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500 mb-1">Categories</p>
+                <h3 class="text-2xl font-semibold text-slate-900">@CategoryCount</h3>
             </div>
-            <div class="mt-8 text-[11px] text-gray-400 font-bold uppercase tracking-wider">
-                Optimized Catalog
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             </div>
         </div>
 
         <!-- Recent Sales Card -->
-        <div class="card-premium group relative overflow-hidden">
-             <div class="absolute top-0 left-0 w-2 h-full bg-green-500 rounded-l-2xl"></div>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-3">Daily Throughput</p>
-                    <h3 class="text-4xl font-outfit font-black text-gray-900 tracking-tight">@VoucherCount</h3>
-                </div>
-                <div class="w-16 h-16 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-green-500 group-hover:text-white transition-all duration-500 group-hover:rotate-6 group-hover:scale-110">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                </div>
+        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-slate-500 mb-1">Vouchers</p>
+                <h3 class="text-2xl font-semibold text-slate-900">@VoucherCount</h3>
             </div>
-            <div class="mt-8 text-[11px] text-gray-400 font-bold uppercase tracking-wider">
-                Vouchers processed
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
             </div>
         </div>
     </div>
 
-    <!-- Charts Grid (Spacious) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- Charts Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Main Chart -->
-        <div class="lg:col-span-8 card-premium shadow-premium-3 !p-10">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-2xl font-outfit font-black text-gray-900 tracking-tight">Monthly Performance</h3>
-                    <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-2">Annual Revenue Analytics</p>
+                    <h3 class="text-lg font-semibold text-slate-900">Monthly Performance</h3>
                 </div>
-                <!-- Chart Selector -->
-                <div class="flex bg-gray-50/80 p-1.5 rounded-2xl border border-gray-100 shadow-inner">
-                    <button class="px-8 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all @(chartName == "BasicColumnChart" ? "bg-white text-premium-orange-600 shadow-premium-sm" : "text-gray-400 hover:text-gray-600")" @onclick='() => SetChart("BasicColumnChart")'>Columns</button>
-                    <button class="px-8 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all @(chartName == "FiveYearLineChart" ? "bg-white text-premium-orange-600 shadow-premium-sm" : "text-gray-400 hover:text-gray-600")" @onclick='() => SetChart("FiveYearLineChart")'>Trend</button>
+                <div class="flex space-x-2 bg-slate-100 p-1 rounded-lg">
+                    <button class="px-4 py-1.5 rounded-md text-xs font-semibold transition-all @(chartName == "BasicColumnChart" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("BasicColumnChart")'>Columns</button>
+                    <button class="px-4 py-1.5 rounded-md text-xs font-semibold transition-all @(chartName == "FiveYearLineChart" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("FiveYearLineChart")'>Trend</button>
                 </div>
             </div>
             
-            <div class="h-[450px] rounded-3xl bg-gray-50/30 border border-gray-100/50 p-6 overflow-hidden">
+            <div class="h-[360px] w-full">
                 @if (chartName == "BasicColumnChart" && Series is not null)
                 {
                     <PageBasicColumnChart Id="BasicColumnChart" Title="" Series="Series" />
@@ -105,83 +75,70 @@
                 }
                 else
                 {
-                    <div class="flex items-center justify-center h-full">
-                        <div class="skeleton-premium w-full h-full rounded-2xl"></div>
+                    <div class="flex items-center justify-center h-full text-slate-400 text-sm">
+                        Loading chart data...
                     </div>
                 }
             </div>
         </div>
 
-        <!-- Sidebar Widgets -->
-        <div class="lg:col-span-4 space-y-8">
-            <!-- Best Sellers Widget -->
-            <div class="card-premium shadow-premium-2 !p-10">
-                <div class="mb-10">
-                    <h3 class="text-xl font-outfit font-black text-gray-900 tracking-tight">Elite Products</h3>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Top performance tier</p>
-                </div>
-                @if (SixMostSoldProducts is not null)
-                {
-                    <div class="space-y-4">
-                        @foreach (var prod in SixMostSoldProducts.Take(5))
-                        {
-                            <div class="flex items-center justify-between p-4 rounded-2xl hover:bg-gray-50 transition-premium group border border-transparent hover:border-gray-100">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-premium-orange-50 to-premium-orange-100 text-premium-orange-600 rounded-2xl flex items-center justify-center text-sm font-black mr-4 shadow-sm group-hover:shadow-premium-orange-sm transition-all group-hover:scale-105">
-                                        @prod.name?.Substring(0, 1)
-                                    </div>
-                                    <div>
-                                        <div class="text-sm font-black text-gray-800">@prod.name</div>
-                                        <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">Best Seller</div>
-                                    </div>
+        <!-- Top Products Widget -->
+        <div class="lg:col-span-1 bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col">
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold text-slate-900">Top Items</h3>
+            </div>
+            @if (SixMostSoldProducts is not null)
+            {
+                <div class="space-y-4 flex-1">
+                    @foreach (var prod in SixMostSoldProducts.Take(5))
+                    {
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-slate-50 border border-slate-100 text-slate-600 rounded-full flex items-center justify-center text-sm font-semibold">
+                                    @prod.name?.Substring(0, 1)
                                 </div>
-                                <div class="text-xs font-black text-gray-900 bg-white shadow-sm border border-gray-100 px-4 py-2 rounded-xl">@prod.data.FirstOrDefault() <small class="text-[8px] opacity-60 ml-1">Sold</small></div>
+                                <div>
+                                    <div class="text-sm font-medium text-slate-900">@prod.name</div>
+                                </div>
                             </div>
-                        }
-                    </div>
-                }
-                <div class="mt-12 p-6 rounded-2xl bg-gray-50/50 border border-gray-100">
-                     <PagePastSevenDaysChart Id="WeeklyChart" Title="Weekly Trend" PastSevenDaysData="PastSevenDaysData" />
+                            <div class="text-sm font-semibold text-slate-700">@prod.data.FirstOrDefault()</div>
+                        </div>
+                    }
                 </div>
-            </div>
-
-            <!-- Ad/Promo Widget -->
-            <div class="card-premium bg-premium-orange-500 text-white border-none overflow-hidden relative shadow-premium-orange-lg !p-10 group">
-                <div class="relative z-10">
-                    <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-md">
-                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2.5"/></svg>
-                    </div>
-                    <h3 class="text-2xl font-outfit font-black mb-3 tracking-tight">Scale Instantly</h3>
-                    <p class="text-sm text-premium-orange-50/80 mb-8 leading-relaxed font-medium">Generate intelligent reports and predictive analytics with Imperial AI benchmarks.</p>
-                    <button class="w-full py-4 bg-white text-premium-orange-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-premium-orange-50 transition-all shadow-xl shadow-black/10 active:scale-95">Access Elite Analytics</button>
-                </div>
-                <!-- Premium Patterns -->
-                <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-                <div class="absolute -left-6 top-6 w-24 h-24 bg-premium-orange-300/30 rounded-full blur-2xl"></div>
-            </div>
+            }
+            else
+            {
+                <div class="flex items-center justify-center h-full text-slate-400 text-sm">Loading items...</div>
+            }
         </div>
     </div>
 
     <!-- Secondary Charts Section -->
-    <div class="grid grid-cols-1 gap-8">
-        <div class="card-premium shadow-premium-3 !p-12">
-             <div class="mb-10">
-                <h3 class="text-2xl font-outfit font-black text-gray-900 tracking-tight">Revenue Trend</h3>
-                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-2">Comprehensive 3-Year Historical Comparison</p>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+             <div class="mb-6">
+                <h3 class="text-lg font-semibold text-slate-900">Revenue Trend</h3>
              </div>
              @if (MonthlyRevenueReportForThreeYears is not null)
              {
-                 <div class="rounded-3xl overflow-hidden bg-gray-50/30 border border-gray-100/50 p-8 h-[500px]">
+                 <div class="h-[300px]">
                      <PageMonthlyRevenueReportForThreeYearsChart Id="ThreeYearRevenue" Title="" MonthlyRevenueReportForThreeYears="MonthlyRevenueReportForThreeYears" />
+                 </div>
+             }
+        </div>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+             <div class="mb-6">
+                <h3 class="text-lg font-semibold text-slate-900">Weekly Summary</h3>
+             </div>
+             @if (PastSevenDaysData is not null)
+             {
+                 <div class="h-[300px]">
+                     <PagePastSevenDaysChart Id="WeeklyChart" Title="" PastSevenDaysData="PastSevenDaysData" />
                  </div>
              }
         </div>
     </div>
 </div>
-
-<style>
-    /* Dashboard specific styles removed - using global premium classes */
-</style>
 
 @code {
     private List<ProductInfo>? Series;
