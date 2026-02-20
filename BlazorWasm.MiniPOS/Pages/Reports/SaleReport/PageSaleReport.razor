@@ -13,21 +13,21 @@
 {
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 animate-fade-in max-w-[1400px] mx-auto">
         <div>
-            <h2 class="text-3xl font-outfit font-black text-gray-900 tracking-tight">Business Intelligence</h2>
-            <p class="text-[10px] text-premium-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Data-Driven Insights • Revenue Tracking</p>
+            <h2 class="text-4xl font-black text-slate-900 tracking-tight">Intelligence</h2>
+            <p class="text-[10px] text-orange-500 font-bold uppercase tracking-[0.2em] mt-2 opacity-80">Data-Driven Insights • Revenue Tracking</p>
         </div>
         
-        <div class="card-premium !py-4 !px-8 flex items-center gap-6 shadow-premium-2 bg-white/80 backdrop-blur-md border-gray-100">
+        <div class="glass-card !py-4 !px-8 flex flex-col sm:flex-row items-center gap-6 bg-white/80 hover:transform-none">
             <div class="flex items-center gap-4">
-                <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Temporal Bound:</span>
-                <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-gray-900 text-sm cursor-pointer hover:text-premium-orange-500 transition-colors" 
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Report Date:</span>
+                <input type="date" class="bg-transparent border-none focus:ring-0 font-black text-slate-900 text-sm cursor-pointer hover:text-orange-500 transition-colors" 
                        value="@SelectedDate?.ToString("yyyy-MM-dd")" 
                        @onchange="@(e => SelectedDate = DateTime.TryParse(e.Value?.ToString(), out var d) ? d : null)" />
             </div>
-            <div class="w-px h-8 bg-gray-100"></div>
-            <button @onclick="DatePicker" class="btn-premium !py-2.5 !px-6 shadow-premium-orange-sm hover:scale-105 active:scale-95 transition-all">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <span class="text-[10px] uppercase tracking-widest font-black">Generate Report</span>
+            <div class="hidden sm:block w-px h-8 bg-slate-100"></div>
+            <button @onclick="DatePicker" class="px-8 py-3 orange-gradient text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-orange-500/20 active:scale-95 flex items-center">
+                <svg class="w-4 h-4 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                Generate Report
             </button>
         </div>
     </div>

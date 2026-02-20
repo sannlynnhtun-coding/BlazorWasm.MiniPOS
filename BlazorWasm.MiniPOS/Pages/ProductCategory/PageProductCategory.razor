@@ -1,61 +1,68 @@
 @page "/setup/product-category"
 
-<div class="space-y-6 animate-fade-in max-w-[1200px] mx-auto pb-8">
+<div class="space-y-8 animate-fade-in max-w-[1200px] mx-auto pb-8">
     @if (FormType == EnumFormType.List)
     {
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
             <div>
-                <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Categories</h2>
-                <p class="text-sm text-slate-500 mt-1">Organize your inventory with categories.</p>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Categories</h2>
+                <p class="text-sm text-slate-500 mt-2 font-medium">Manage and organize your product catalog.</p>
             </div>
-            <button @onclick="Create" class="inline-flex items-center justify-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Add Category
+            <button @onclick="Create" class="inline-flex items-center justify-center px-6 py-3 orange-gradient text-white text-sm font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-orange-500/20 active:scale-95">
+                <svg class="w-4 h-4 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                New Category
             </button>
         </div>
 
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="glass-card bg-white overflow-hidden hover:transform-none">
             @if (_productCategoryResponseModel?.productCategories == null)
             {
-                <div class="p-8 text-center text-slate-500 text-sm">Loading categories...</div>
+                <div class="p-20 text-center">
+                    <div class="w-10 h-10 border-4 border-orange-100 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Loading records</p>
+                </div>
             }
             else if (!_productCategoryResponseModel.productCategories.Any())
             {
-                <div class="p-12 text-center flex flex-col items-center justify-center">
-                    <svg class="w-12 h-12 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    <h3 class="text-lg font-medium text-slate-900 mb-1">No categories found</h3>
-                    <p class="text-slate-500 text-sm mb-4">Get started by creating a new product category.</p>
-                    <button @onclick="Create" class="text-orange-600 hover:text-orange-700 font-medium text-sm">Create Category &rarr;</button>
+                <div class="p-20 text-center flex flex-col items-center justify-center">
+                    <div class="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-slate-200 mb-6">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">No categories yet</h3>
+                    <p class="text-slate-500 text-sm mb-8 max-w-xs mx-auto">Start by creating your first category to organize your products efficiently.</p>
+                    <button @onclick="Create" class="text-orange-600 hover:text-orange-700 font-black text-xs uppercase tracking-widest flex items-center gap-2">Create Now <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></button>
                 </div>
             }
             else
             {
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm whitespace-nowrap">
-                        <thead class="bg-slate-50 border-b border-slate-200">
-                            <tr>
-                                <th class="px-6 py-3 font-semibold text-slate-700">Code</th>
-                                <th class="px-6 py-3 font-semibold text-slate-700">Category Name</th>
-                                <th class="px-6 py-3 font-semibold text-slate-700 text-right">Actions</th>
+                        <thead>
+                            <tr class="bg-slate-50/50 border-b border-slate-100">
+                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px]">Identifier</th>
+                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px]">Description</th>
+                                <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px] text-right">Aesthetics</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-slate-50">
                             @foreach (var item in _productCategoryResponseModel.productCategories)
                             {
-                                <tr class="hover:bg-slate-50/50 transition-colors">
-                                    <td class="px-6 py-4 w-32">
-                                        <div class="inline-flex items-center px-2 py-1 rounded bg-slate-100 text-slate-600 font-mono text-xs">
+                                <tr class="hover:bg-orange-50/30 transition-colors animate-fade-in">
+                                    <td class="px-8 py-6 w-40">
+                                        <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-mono text-xs font-bold border border-slate-200/50">
                                             @item.product_category_code
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 font-medium text-slate-900">@item.product_category_name</td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end space-x-2">
-                                            <button @onclick="() => Edit(item)" class="p-1 text-slate-400 hover:text-orange-600 transition-colors" title="Edit">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                    <td class="px-8 py-6">
+                                        <span class="font-bold text-slate-900 text-base">@item.product_category_name</span>
+                                    </td>
+                                    <td class="px-8 py-6 text-right">
+                                        <div class="flex items-center justify-end space-x-3">
+                                            <button @onclick="() => Edit(item)" class="p-2 text-slate-300 hover:text-orange-600 transition-all hover:bg-orange-100 rounded-lg" title="Edit">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                             </button>
-                                            <button @onclick="() => Delete(item)" class="p-1 text-slate-400 hover:text-red-600 transition-colors" title="Delete">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
+                                            <button @onclick="() => Delete(item)" class="p-2 text-slate-300 hover:text-red-600 transition-all hover:bg-red-50 rounded-lg" title="Delete">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </div>
                                     </td>
@@ -69,42 +76,44 @@
     }
     else
     {
-        <div class="max-w-2xl mx-auto">
-            <div class="flex items-center mb-6">
-                <button @onclick="Back" class="mr-4 p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors focus:outline-none">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                </button>
-                <div>
-                    <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">@(IsEdit ? "Edit Category" : "New Category")</h2>
-                    <p class="text-sm text-slate-500 mt-1">Manage category details.</p>
+        <div class="max-w-3xl mx-auto animate-slide-up">
+            <div class="flex items-center justify-between mb-10">
+                <div class="flex items-center">
+                    <button @onclick="Back" class="mr-6 p-3 rounded-xl text-slate-400 hover:bg-white hover:text-slate-900 border border-transparent hover:border-slate-200 transition-all shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    </button>
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-900 tracking-tight">@(IsEdit ? "Update Category" : "New Category")</h2>
+                        <p class="text-sm text-slate-500 mt-2 font-medium">Define category properties.</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+            <div class="glass-card bg-white p-10 hover:transform-none">
                 <EditForm Model="_model" OnValidSubmit="HandleSave">
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1.5 flex items-center">
-                                    Code
+                    <div class="space-y-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                                    Access Code
                                 </label>
-                                <InputText @bind-Value="_model.product_category_code" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow disabled:bg-slate-50 disabled:text-slate-500" disabled="@IsEdit" />
+                                <InputText @bind-Value="_model.product_category_code" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all disabled:opacity-60" disabled="@IsEdit" />
                             </div>
                             
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1.5 flex items-center">
-                                    Name
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">
+                                    Display Name
                                 </label>
-                                <InputText @bind-Value="_model.product_category_name" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-shadow" />
+                                <InputText @bind-Value="_model.product_category_name" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all" placeholder="e.g. Beverages" />
                             </div>
                         </div>
 
-                        <div class="pt-6 border-t border-slate-100 flex justify-end space-x-3">
-                            <button type="button" @onclick="Back" class="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-slate-200">
-                                Cancel
+                        <div class="pt-10 border-t border-slate-100 flex justify-end items-center gap-6">
+                            <button type="button" @onclick="Back" class="text-xs font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-colors">
+                                Discard
                             </button>
-                            <button type="submit" class="px-5 py-2.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
-                                Save Category
+                            <button type="submit" class="px-8 py-3.5 orange-gradient text-white text-sm font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-orange-500/20 active:scale-95">
+                                @(IsEdit ? "Update Category" : "Save Category")
                             </button>
                         </div>
                     </div>

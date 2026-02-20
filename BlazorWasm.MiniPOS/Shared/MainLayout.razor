@@ -2,107 +2,108 @@
 @inherits LayoutComponentBase
 @inject ChartStateContainer StateContainer
 
-<div class="flex h-screen bg-slate-100 font-sans text-slate-900 overflow-hidden">
+<div class="flex h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden">
     <!-- Sidebar -->
-    <aside class="w-64 bg-slate-900 text-slate-400 flex-shrink-0 flex flex-col transition-all duration-300">
-        <div class="h-16 flex items-center px-6 bg-slate-950 border-b border-slate-800/50">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-orange-500/10 rounded flex items-center justify-center border border-orange-500/20">
-                    <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+    <aside class="w-68 bg-[#0f172a] text-slate-400 flex-shrink-0 flex flex-col transition-all duration-300 border-r border-slate-800/40 shadow-2xl z-20">
+        <div class="h-20 flex items-center px-8 bg-[#0f172a] border-b border-slate-800/30">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 orange-gradient rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                 </div>
-                <span class="text-lg font-bold text-orange-500 tracking-tight">MiniPOS</span>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-white tracking-tight leading-none">MiniPOS</span>
+                    <span class="text-[10px] font-semibold text-orange-500 uppercase tracking-widest mt-1">Smart Retail</span>
+                </div>
             </div>
         </div>
 
-        <nav class="p-4 space-y-1 flex-grow overflow-y-auto hide-scrollbar">
+        <nav class="p-6 space-y-1.5 flex-grow overflow-y-auto hide-scrollbar">
             <NavLink href="" class="@GetNavLinkClass("")" Match="NavLinkMatch.All" @onclick="() => SetPage(EnumPage.Dashboard)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 <span class="font-medium text-sm">Dashboard</span>
             </NavLink>
 
             <NavLink href="Sale" class="@GetNavLinkClass("Sale")" @onclick="() => SetPage(EnumPage.Sale)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                 <span class="font-medium text-sm">Product Sale</span>
             </NavLink>
 
-            <div class="pt-6 pb-2 px-3 text-xs font-semibold text-orange-400/50 uppercase tracking-wider">Inventory</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Inventory</div>
             
             <NavLink Match="NavLinkMatch.Prefix" href="setup/product" class="@GetNavLinkClass("setup/product")" @onclick="() => SetPage(EnumPage.Product)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 <span class="font-medium text-sm">Products</span>
             </NavLink>
 
             <NavLink Match="NavLinkMatch.Prefix" href="setup/product-category" class="@GetNavLinkClass("setup/product-category")" @onclick="() => SetPage(EnumPage.ProductCategory)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 <span class="font-medium text-sm">Categories</span>
             </NavLink>
 
-            <div class="pt-6 pb-2 px-3 text-xs font-semibold text-orange-400/50 uppercase tracking-wider">Reports</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Insights</div>
 
             <NavLink href="sale-report" class="@GetNavLinkClass("sale-report")" @onclick="() => SetPage(EnumPage.SaleReport)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                <span class="font-medium text-sm">Sale Report</span>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="font-medium text-sm">Sale Reports</span>
             </NavLink>
 
-            <div class="pt-6 pb-2 px-3 text-xs font-semibold text-orange-400/50 uppercase tracking-wider">Settings</div>
+            <div class="pt-8 pb-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Maintenance</div>
 
             <NavLink href="settings/db-provider" class="@GetNavLinkClass("settings/db-provider")" @onclick="() => SetPage(EnumPage.DbProvider)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <span class="font-medium text-sm">DB Provider</span>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span class="font-medium text-sm">System Config</span>
             </NavLink>
 
-            <div class="pt-6 pb-2 px-3 text-xs font-semibold text-orange-400/50 uppercase tracking-wider">Utilities</div>
-
             <NavLink href="generate-data" class="@GetNavLinkClass("generate-data")" @onclick="() => SetPage(EnumPage.GenerateData)">
-                <svg class="w-5 h-5 mr-3 text-orange-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                <span class="font-medium text-sm">Data Generator</span>
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span class="font-medium text-sm">Reset Data</span>
             </NavLink>
         </nav>
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50">
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
         <!-- Top Header -->
-        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 flex-shrink-0 z-10">
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex items-center justify-between px-10 flex-shrink-0 z-10">
             <div class="flex items-center">
-                <button class="lg:hidden text-slate-500 hover:text-slate-700 mr-4">
+                <button class="lg:hidden text-slate-500 hover:text-slate-700 mr-6">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <h1 class="text-xl font-semibold text-slate-900 tracking-tight">
+                <h1 class="text-2xl font-bold text-slate-900 tracking-tight animate-fade-in">
                     @Title
                 </h1>
             </div>
 
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-8">
                 <!-- Search -->
-                <div class="hidden md:flex items-center px-4 py-2 bg-slate-100/80 rounded-lg w-72 border border-slate-200 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 transition-all">
+                <div class="hidden md:flex items-center px-4 py-2.5 bg-slate-100 rounded-xl w-80 border border-slate-200/60 focus-within:border-orange-500/50 focus-within:ring-4 focus-within:ring-orange-500/10 transition-all duration-300">
                     <svg class="w-4 h-4 text-slate-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <input type="text" placeholder="Search..." class="bg-transparent border-none p-0 focus:ring-0 text-sm flex-1 text-slate-700 placeholder-slate-400 outline-none" />
+                    <input type="text" placeholder="Search anything..." class="bg-transparent border-none p-0 focus:ring-0 text-sm flex-1 text-slate-700 placeholder-slate-400 outline-none" />
                 </div>
 
                 <!-- Profile -->
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-4">
                     <div class="text-right hidden sm:block">
-                        <div class="text-sm font-medium text-slate-700">Admin User</div>
-                        <div class="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Administrator</div>
+                        <div class="text-sm font-bold text-slate-900 leading-tight">Sann Lynn Htun</div>
+                        <div class="text-[10px] font-bold text-orange-600 uppercase tracking-widest mt-1">Super Admin</div>
                     </div>
-                    <div class="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-sm shadow-sm border border-orange-200 cursor-pointer hover:bg-orange-200 transition-colors">
-                        A
+                    <div class="w-11 h-11 rounded-2xl orange-gradient flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-orange-500/20 cursor-pointer hover:scale-105 transition-transform">
+                        S
                     </div>
                 </div>
             </div>
         </header>
 
         <!-- Page Body -->
-        <main class="flex-1 overflow-y-auto hide-scrollbar p-8">
-            <div class="max-w-7xl mx-auto h-full space-y-8">
+        <main class="flex-1 overflow-y-auto hide-scrollbar p-10 bg-[#f8fafc]">
+            <div class="max-w-[1400px] mx-auto h-full">
                 @if (isLoading)
                 {
-                    <div class="flex flex-col items-center justify-center h-full space-y-4">
-                        <div class="w-8 h-8 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
-                        <p class="text-slate-500 font-medium text-sm animate-pulse">Loading...</p>
+                    <div class="flex flex-col items-center justify-center h-full space-y-6">
+                        <div class="w-12 h-12 border-[5px] border-orange-100 border-t-orange-600 rounded-full animate-spin"></div>
+                        <p class="text-slate-500 font-bold text-sm tracking-widest uppercase animate-pulse">Processing</p>
                     </div>
                 }
                 else
@@ -118,23 +119,36 @@
     .nav-item {
         display: flex;
         align-items: center;
-        padding: 0.625rem 0.875rem;
-        border-radius: 0.5rem;
+        padding: 0.875rem 1rem;
+        border-radius: 0.875rem;
         color: #94a3b8; /* slate-400 */
-        transition: all 0.2s ease-in-out;
-        margin-bottom: 0.25rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 0.375rem;
     }
     
     .nav-item:hover {
-        background-color: #1e293b; /* slate-800 */
+        background-color: rgba(255, 255, 255, 0.05);
         color: #f8fafc; /* slate-50 */
+        transform: translateX(4px);
     }
     
     .nav-item.active {
-        background-color: #ea580c; /* orange-600 */
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
         color: #ffffff;
-        font-weight: 500;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        font-weight: 600;
+        box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.3);
+    }
+
+    .nav-item.active svg {
+        color: #ffffff !important;
+    }
+
+    .nav-item svg {
+        transition: color 0.3s;
+    }
+
+    .nav-item:hover svg {
+        color: #f97316;
     }
 </style>
 

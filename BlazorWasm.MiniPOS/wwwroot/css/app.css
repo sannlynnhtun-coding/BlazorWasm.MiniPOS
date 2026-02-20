@@ -61,13 +61,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #e2e8f0;
     border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #f97316;
-    /* orange-500 */
+    background-clip: content-box;
 }
 
 .hide-scrollbar::-webkit-scrollbar {

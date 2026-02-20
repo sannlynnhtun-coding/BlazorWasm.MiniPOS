@@ -1,41 +1,48 @@
 ﻿@page "/best-product-report"
 
-<div class="mb-8">
-    <h2 class="text-3xl font-outfit font-bold text-gray-800">Best Sellers Report</h2>
-    <p class="text-gray-500 mt-2">Top selling products by quantity.</p>
+<div class="mb-10 animate-fade-in max-w-[1200px] mx-auto">
+    <h2 class="text-4xl font-black text-slate-900 tracking-tight">Best Sellers</h2>
+    <p class="text-sm text-slate-500 mt-2 font-medium">Top selling products by volume.</p>
 </div>
 
-<div class="glass-card overflow-hidden">
-    <table class="w-full text-left">
-        <thead class="bg-gray-50 border-b border-gray-100">
-            <tr>
-                <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product Name</th>
-                <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Total Sold</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-            @if (_lstBestProductReport != null)
-            {
-                @foreach (var item in _lstBestProductReport)
+<div class="glass-card bg-white overflow-hidden hover:transform-none max-w-[1200px] mx-auto animate-slide-up">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm whitespace-nowrap">
+            <thead>
+                <tr class="bg-slate-50/50 border-b border-slate-100">
+                    <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px]">Product Catalog</th>
+                    <th class="px-8 py-5 font-black text-slate-400 uppercase tracking-widest text-[10px] text-right">Units Sold</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+                @if (_lstBestProductReport != null)
                 {
-                    <tr class="hover:bg-gray-50/50 transition-colors">
-                        <td class="px-6 py-4 text-sm font-semibold text-gray-800">@item.ProductName</td>
-                        <td class="px-6 py-4 text-sm text-gray-600 text-right">
-                            <span class="bg-premium-orange-100 text-premium-orange-700 px-3 py-1 rounded-full font-bold">@item.ProductQuantity</span>
+                    @foreach (var item in _lstBestProductReport)
+                    {
+                        <tr class="hover:bg-orange-50/30 transition-colors animate-fade-in group">
+                            <td class="px-8 py-6">
+                                <div class="font-bold text-slate-900 text-base">@item.ProductName</div>
+                            </td>
+                            <td class="px-8 py-6 text-right">
+                                <span class="inline-flex items-center px-4 py-1.5 rounded-xl orange-gradient text-white font-black text-xs shadow-lg shadow-orange-500/20">
+                                    @item.ProductQuantity
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="px-8 py-20 text-center">
+                            <div class="w-10 h-10 border-4 border-orange-100 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Aggregating Sales Data</p>
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="2" class="px-6 py-12 text-center text-gray-500">
-                        No data available for the best sellers report.
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @code {

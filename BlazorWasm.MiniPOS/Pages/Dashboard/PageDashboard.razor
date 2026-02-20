@@ -2,69 +2,70 @@
 @implements IDisposable
 @inject ChartStateContainer StateContainer
 
-<div class="space-y-6 animate-fade-in">
+<div class="space-y-8 animate-fade-in">
     <!-- KPI Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Total Sales Card -->
-        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-slate-500 mb-1">Total Revenue</p>
-                <h3 class="text-2xl font-semibold text-slate-900">@GrandTotal.ToString("N0") <span class="text-sm font-normal text-slate-500">MMK</span></h3>
+        <div class="glass-card p-8 flex items-center justify-between group">
+            <div class="space-y-2">
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Revenue</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">@GrandTotal.ToString("N0") <span class="text-xs font-bold text-orange-500 ml-1">MMK</span></h3>
             </div>
-            <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="w-14 h-14 orange-gradient text-white rounded-2xl flex items-center justify-center shadow-xl shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
         </div>
 
         <!-- Total Products Card -->
-        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-slate-500 mb-1">Total Products</p>
-                <h3 class="text-2xl font-semibold text-slate-900">@ProductCount</h3>
+        <div class="glass-card p-8 flex items-center justify-between group">
+            <div class="space-y-2">
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Active Items</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">@ProductCount</h3>
             </div>
-            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </div>
         </div>
 
         <!-- Categories Card -->
-        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-slate-500 mb-1">Categories</p>
-                <h3 class="text-2xl font-semibold text-slate-900">@CategoryCount</h3>
+        <div class="glass-card p-8 flex items-center justify-between group">
+            <div class="space-y-2">
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Categories</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">@CategoryCount</h3>
             </div>
-            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             </div>
         </div>
 
         <!-- Recent Sales Card -->
-        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-slate-500 mb-1">Vouchers</p>
-                <h3 class="text-2xl font-semibold text-slate-900">@VoucherCount</h3>
+        <div class="glass-card p-8 flex items-center justify-between group">
+            <div class="space-y-2">
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Sales</p>
+                <h3 class="text-3xl font-extrabold text-slate-900 tracking-tight">@VoucherCount</h3>
             </div>
-            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            <div class="w-14 h-14 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
             </div>
         </div>
     </div>
 
     <!-- Charts Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Chart -->
-        <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-            <div class="flex items-center justify-between mb-6">
+        <div class="lg:col-span-2 glass-card p-8 bg-white hover:transform-none">
+            <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h3 class="text-lg font-semibold text-slate-900">Monthly Performance</h3>
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Monthly Performance</h3>
+                    <p class="text-xs text-slate-500 mt-1 font-medium">Revenue and sales distribution</p>
                 </div>
-                <div class="flex space-x-2 bg-slate-100 p-1 rounded-lg">
-                    <button class="px-4 py-1.5 rounded-md text-xs font-semibold transition-all @(chartName == "BasicColumnChart" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("BasicColumnChart")'>Columns</button>
-                    <button class="px-4 py-1.5 rounded-md text-xs font-semibold transition-all @(chartName == "FiveYearLineChart" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("FiveYearLineChart")'>Trend</button>
+                <div class="flex space-x-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200/50">
+                    <button class="px-5 py-2 rounded-lg text-xs font-bold transition-all duration-300 @(chartName == "BasicColumnChart" ? "bg-white text-orange-600 shadow-lg shadow-black/5" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("BasicColumnChart")'>Analysis</button>
+                    <button class="px-5 py-2 rounded-lg text-xs font-bold transition-all duration-300 @(chartName == "FiveYearLineChart" ? "bg-white text-orange-600 shadow-lg shadow-black/5" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("FiveYearLineChart")'>Growth</button>
                 </div>
             </div>
             
-            <div class="h-[360px] w-full">
+            <div class="h-[400px] w-full">
                 @if (chartName == "BasicColumnChart" && Series is not null)
                 {
                     <PageBasicColumnChart Id="BasicColumnChart" Title="" Series="Series" />
@@ -75,64 +76,69 @@
                 }
                 else
                 {
-                    <div class="flex items-center justify-center h-full text-slate-400 text-sm">
-                        Loading chart data...
+                    <div class="flex flex-col items-center justify-center h-full text-slate-400 space-y-4">
+                        <div class="w-8 h-8 border-3 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
+                        <p class="text-xs font-bold uppercase tracking-widest">Synchronizing</p>
                     </div>
                 }
             </div>
         </div>
 
         <!-- Top Products Widget -->
-        <div class="lg:col-span-1 bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col">
-            <div class="mb-6">
-                <h3 class="text-lg font-semibold text-slate-900">Top Items</h3>
+        <div class="lg:col-span-1 glass-card p-8 bg-white flex flex-col hover:transform-none">
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-slate-900 tracking-tight">Top Sellers</h3>
+                <p class="text-xs text-slate-500 mt-1 font-medium">High performing inventory</p>
             </div>
             @if (SixMostSoldProducts is not null)
             {
-                <div class="space-y-4 flex-1">
+                <div class="space-y-5 flex-1 overflow-y-auto hide-scrollbar">
                     @foreach (var prod in SixMostSoldProducts.Take(5))
                     {
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 bg-slate-50 border border-slate-100 text-slate-600 rounded-full flex items-center justify-center text-sm font-semibold">
+                        <div class="flex items-center justify-between p-3 rounded-2xl hover:bg-orange-50/50 transition-colors border border-transparent hover:border-orange-100">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 orange-gradient-soft text-orange-700 rounded-2xl flex items-center justify-center text-sm font-bold shadow-sm">
                                     @prod.name?.Substring(0, 1)
                                 </div>
                                 <div>
-                                    <div class="text-sm font-medium text-slate-900">@prod.name</div>
+                                    <div class="text-sm font-bold text-slate-900 leading-tight">@prod.name</div>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Units Sold</div>
                                 </div>
                             </div>
-                            <div class="text-sm font-semibold text-slate-700">@prod.data.FirstOrDefault()</div>
+                            <div class="text-base font-black text-slate-900">@prod.data.FirstOrDefault()</div>
                         </div>
                     }
                 </div>
             }
             else
             {
-                <div class="flex items-center justify-center h-full text-slate-400 text-sm">Loading items...</div>
+                <div class="flex items-center justify-center h-full text-slate-400 text-sm italic font-medium">Analyzing records...</div>
             }
         </div>
     </div>
 
     <!-- Secondary Charts Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-slate-900">Revenue Trend</h3>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-8">
+        <div class="glass-card p-8 bg-white hover:transform-none">
+             <div class="mb-8">
+                <h3 class="text-xl font-bold text-slate-900 tracking-tight">Revenue Stream</h3>
+                <p class="text-xs text-slate-500 mt-1 font-medium">Three-year comparison</p>
              </div>
              @if (MonthlyRevenueReportForThreeYears is not null)
              {
-                 <div class="h-[300px]">
+                 <div class="h-[320px]">
                      <PageMonthlyRevenueReportForThreeYearsChart Id="ThreeYearRevenue" Title="" MonthlyRevenueReportForThreeYears="MonthlyRevenueReportForThreeYears" />
                  </div>
              }
         </div>
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-             <div class="mb-6">
-                <h3 class="text-lg font-semibold text-slate-900">Weekly Summary</h3>
+        <div class="glass-card p-8 bg-white hover:transform-none">
+             <div class="mb-8">
+                <h3 class="text-xl font-bold text-slate-900 tracking-tight">Weekly Pulse</h3>
+                <p class="text-xs text-slate-500 mt-1 font-medium">Last 7 days performance</p>
              </div>
              @if (PastSevenDaysData is not null)
              {
-                 <div class="h-[300px]">
+                 <div class="h-[320px]">
                      <PagePastSevenDaysChart Id="WeeklyChart" Title="" PastSevenDaysData="PastSevenDaysData" />
                  </div>
              }
