@@ -43,7 +43,7 @@
 
         <div class="pt-8 border-t border-slate-100 flex justify-end">
             <button @onclick="GenerateDataByDate" disabled="@_isGenerating" 
-                    class="px-8 py-4 orange-gradient hover:opacity-90 disabled:bg-slate-100 disabled:from-slate-100 disabled:to-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-orange-500/20 active:scale-95 flex items-center justify-center min-w-[200px]">
+                    class="btn btn-primary btn-lg btn--caps min-w-[200px]">
                 @if (_isGenerating)
                 {
                     <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>

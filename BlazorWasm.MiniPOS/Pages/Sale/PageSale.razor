@@ -1,21 +1,25 @@
 @page "/Sale"
 
-<div class="h-[calc(100vh-140px)] flex flex-col md:flex-row gap-8 pb-4 animate-fade-in overflow-hidden">
+<div class="h-full min-h-0 flex flex-col md:flex-row gap-6 pb-4 animate-fade-in overflow-hidden">
     <!-- Left Side: Product Grid (55%) -->
-    <div class="flex-1 md:basis-[55%] flex flex-col glass-card bg-white overflow-hidden hover:transform-none">
-        <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/30">
+    <div class="flex-1 md:basis-[55%] min-h-0 flex flex-col glass-card bg-white overflow-hidden hover:transform-none">
+        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100 bg-slate-50/30 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 flex-shrink-0">
             <div>
-                <h2 class="text-xl font-black text-slate-900 tracking-tight">Products</h2>
+                <h2 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Products</h2>
                 <p class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">@(_lstProduct?.Count ?? 0) available</p>
             </div>
-            <div class="relative w-80">
-                <input type="text" placeholder="Search products..." class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all font-medium placeholder-slate-400" />
-                <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <div class="w-full sm:w-80">
+                <div class="search-shell">
+                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" placeholder="Search products..." class="search-input" />
+                </div>
             </div>
         </div>
 
-        <div class="p-8 overflow-y-auto custom-scrollbar flex-1 bg-white/50 max-h-[500px]">
-            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="p-5 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar flex-1 min-h-0 bg-white/50">
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
                 @if (_productResponseModel?.products is not null)
                 {
                     @foreach (var item in _productResponseModel.products)
@@ -61,36 +65,24 @@
         <!-- Pagination Controls (Sale Page) -->
         @if (_productResponseModel?.pageSetting != null && _productResponseModel.pageSetting.pageCount > 1)
         {
-            <div class="px-8 py-4 border-t border-slate-100 bg-slate-50/30 flex items-center justify-between">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                    Page <span class="text-slate-900">@_productResponseModel.pageSetting.pageNo</span> of <span class="text-slate-900">@_productResponseModel.pageSetting.pageCount</span>
-                </span>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-200 @(_productResponseModel.pageSetting.pageNo <= 1 ? "bg-slate-100 text-slate-300 cursor-not-allowed" : "bg-white text-slate-600 hover:bg-orange-50 hover:text-orange-600 border border-slate-200 shadow-sm active:scale-95")"
-                            disabled="@(_productResponseModel.pageSetting.pageNo <= 1)"
-                            @onclick="() => List(_productResponseModel.pageSetting.pageNo - 1)">
-                        Previous
-                    </button>
-                    <button class="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-all duration-200 @(_productResponseModel.pageSetting.pageNo >= _productResponseModel.pageSetting.pageCount ? "bg-slate-100 text-slate-300 cursor-not-allowed" : "bg-white text-slate-600 hover:bg-orange-50 hover:text-orange-600 border border-slate-200 shadow-sm active:scale-95")"
-                            disabled="@(_productResponseModel.pageSetting.pageNo >= _productResponseModel.pageSetting.pageCount)"
-                            @onclick="() => List(_productResponseModel.pageSetting.pageNo + 1)">
-                        Next
-                    </button>
-                </div>
+            <div class="px-5 sm:px-6 lg:px-8 py-3 sm:py-4 border-t border-slate-100 bg-slate-50/30">
+                <Pagination CurrentPage="@_productResponseModel.pageSetting.pageNo"
+                            TotalPages="@_productResponseModel.pageSetting.pageCount"
+                            OnPageChanged="@(p => List(p))" />
             </div>
         }
     </div>
 
     <!-- Right Side: Current Sale Cart (45%) -->
-    <div class="flex-1 md:basis-[45%] flex flex-col glass-card bg-white overflow-hidden flex-shrink-0 hover:transform-none">
-        <div class="px-8 py-6 border-b border-slate-100 bg-slate-50/30 flex-shrink-0">
-            <h3 class="text-xl font-black text-slate-900 tracking-tight">Active Order</h3>
+    <div class="flex-1 md:basis-[45%] min-h-0 flex flex-col glass-card bg-white overflow-hidden flex-shrink-0 hover:transform-none">
+        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100 bg-slate-50/30 flex-shrink-0">
+            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Active Order</h3>
             <p class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">
                 @(_lstProductSale?.lstProductSale?.Count ?? 0) types in cart
             </p>
         </div>
         
-        <div class="flex-1 overflow-y-auto p-8 space-y-5 custom-scrollbar bg-slate-50/20">
+        <div class="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5 custom-scrollbar bg-slate-50/20">
             @if (_lstProductSale?.lstProductSale?.Any() == true)
             {
                 @foreach (var item in _lstProductSale.lstProductSale)
@@ -105,7 +97,7 @@
                         </div>
                         <div class="flex flex-col items-end pl-4 flex-shrink-0 border-l border-slate-50 ml-4">
                             <div class="text-base font-black text-slate-900 tracking-tighter">@item.product_total_price.ToString("N0")</div>
-                            <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="text-slate-200 hover:text-red-500 hover:bg-red-50 rounded-lg p-1.5 transition-all mt-2 group-hover:opacity-100 opacity-0">
+                            <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="btn btn-danger btn-icon mt-2 opacity-0 group-hover:opacity-100 transition-all">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                             </button>
                         </div>
@@ -126,8 +118,8 @@
             }
         </div>
 
-        <div class="p-10 border-t border-slate-100 bg-white flex-shrink-0 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.08)]">
-            <div class="space-y-4 mb-10">
+        <div class="p-6 sm:p-8 lg:p-10 border-t border-slate-100 bg-white flex-shrink-0 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.08)]">
+            <div class="space-y-4 mb-7 sm:mb-8 lg:mb-10">
                 <div class="flex justify-between items-center px-1">
                     <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Subtotal</span>
                     <span class="text-sm font-black text-slate-900">@_grandTotal.ToString("N0") <span class="text-[8px] font-bold text-slate-400 ml-1 uppercase">MMK</span></span>
@@ -139,7 +131,7 @@
                     </div>
                     <span class="text-sm font-black text-slate-900">0 <span class="text-[8px] font-bold text-slate-400 ml-1 uppercase">MMK</span></span>
                 </div>
-                <div class="pt-8 border-t border-dashed border-slate-200 flex justify-between items-center px-1">
+                <div class="pt-6 sm:pt-7 lg:pt-8 border-t border-dashed border-slate-200 flex justify-between items-center px-1">
                     <div class="flex flex-col">
                          <span class="text-xs font-black text-slate-900 uppercase tracking-[0.2em] mb-1">Due Amount</span>
                          <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Inc. Local Taxes</span>
@@ -151,10 +143,9 @@
                 </div>
             </div>
 
-            <button @onclick="Save" disabled="@(!(_lstProductSale?.lstProductSale?.Any() ?? false))" 
-                    class="w-full py-6 px-8 orange-gradient hover:shadow-orange-500/40 disabled:bg-slate-50 disabled:from-slate-50 disabled:to-slate-50 disabled:text-slate-300 disabled:cursor-not-allowed text-white text-[10px] font-black uppercase tracking-[0.4em] rounded-[1.5rem] transition-all flex items-center justify-center gap-4 shadow-2xl shadow-orange-500/25 active:scale-95 group relative overflow-hidden">
-                <div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-                <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <button @onclick="Save" disabled="@(!(_lstProductSale?.lstProductSale?.Any() ?? false))"
+                    class="w-full btn btn-primary btn-lg btn--caps">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 Finalize Sale
             </button>
         </div>

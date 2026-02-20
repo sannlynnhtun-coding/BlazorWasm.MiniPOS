@@ -80,3 +80,162 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+/* --- Premium button system (shared across pages) --- */
+:root {
+    --brand-orange-500: #f97316;
+    --brand-orange-600: #ea580c;
+    --slate-900: #0f172a;
+    --slate-700: #334155;
+    --slate-500: #64748b;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+}
+
+.btn {
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    padding: 0.75rem 1rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--slate-700);
+    background: transparent;
+    transition: transform 160ms ease, box-shadow 220ms ease, background-color 200ms ease, border-color 200ms ease, color 200ms ease, filter 200ms ease;
+    user-select: none;
+    cursor: pointer;
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.16);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+    filter: none;
+    transform: none;
+}
+
+.btn--caps {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.625rem;
+}
+
+.btn-sm {
+    padding: 0.55rem 0.75rem;
+    border-radius: 1rem;
+}
+
+.btn-md {
+    padding: 0.75rem 1rem;
+}
+
+.btn-lg {
+    padding: 1rem 1.25rem;
+    border-radius: 1.5rem;
+}
+
+.btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-orange-500) 0%, var(--brand-orange-600) 100%);
+    color: #ffffff;
+    box-shadow: 0 18px 40px -20px rgba(234, 88, 12, 0.55);
+}
+
+.btn-primary:hover:not(:disabled) {
+    filter: brightness(1.02);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(226, 232, 240, 0.9);
+    color: var(--slate-700);
+    box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.25);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #fff7ed;
+    border-color: rgba(253, 186, 116, 0.9);
+    color: #c2410c;
+}
+
+.btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--slate-500);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: rgba(241, 245, 249, 0.9);
+    border-color: rgba(226, 232, 240, 0.75);
+    color: var(--slate-900);
+}
+
+.btn-danger {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #be123c;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #ffe4e6;
+    border-color: #fda4af;
+}
+
+/* --- Search (unique + consistent) --- */
+.search-shell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: rgba(241, 245, 249, 0.85);
+    border: 1px solid rgba(226, 232, 240, 0.75);
+    border-radius: 1.25rem;
+    transition: box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+
+.search-shell:focus-within {
+    border-color: rgba(249, 115, 22, 0.55);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.search-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: rgba(100, 116, 139, 0.9);
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.search-input::placeholder {
+    color: rgba(148, 163, 184, 1);
+    font-weight: 600;
+}

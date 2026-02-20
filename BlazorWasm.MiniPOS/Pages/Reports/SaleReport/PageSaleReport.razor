@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="hidden md:block w-px h-10 bg-slate-200"></div>
-                <button @onclick="GenerateReport" class="px-10 py-4 orange-gradient text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all shadow-xl shadow-orange-500/20 hover:scale-[1.02] active:scale-95 flex items-center group">
-                    <svg class="w-4 h-4 mr-3 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <button @onclick="GenerateReport" class="btn btn-primary btn-lg btn--caps">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     Evaluate
                 </button>
             </div>
@@ -103,15 +103,12 @@
         </div>
     </div>
 }
-@if (_saleReport != null)
-{
-    <PageSaleReportList Model="_saleReport" OnDetailClick="Detail" OnBackClick="Back" />
-}
+<PageSaleReportList Model="_saleReport" OnDetailClick="Detail" OnBackClick="Back" />
 
 @code {
     private DateTime? FromDate { get; set; } = DateTime.Today;
     private DateTime? ToDate { get; set; } = DateTime.Today;
-    private SaleReportResponseDataModel? _saleReport = new();
+    private SaleReportResponseDataModel? _saleReport;
     private EnumFormType Type { get; set; } = EnumFormType.List;
 
     private async Task GenerateReport()

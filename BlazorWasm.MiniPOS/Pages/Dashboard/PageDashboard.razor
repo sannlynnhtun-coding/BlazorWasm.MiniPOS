@@ -60,8 +60,14 @@
                     <p class="text-xs text-slate-500 mt-1 font-medium">Revenue and sales distribution</p>
                 </div>
                 <div class="flex space-x-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200/50">
-                    <button class="px-5 py-2 rounded-lg text-xs font-bold transition-all duration-300 @(chartName == "BasicColumnChart" ? "bg-white text-orange-600 shadow-lg shadow-black/5" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("BasicColumnChart")'>Analysis</button>
-                    <button class="px-5 py-2 rounded-lg text-xs font-bold transition-all duration-300 @(chartName == "FiveYearLineChart" ? "bg-white text-orange-600 shadow-lg shadow-black/5" : "text-slate-500 hover:text-slate-700")" @onclick='() => SetChart("FiveYearLineChart")'>Growth</button>
+                    <button class="btn btn-sm @(chartName == "BasicColumnChart" ? "btn-secondary" : "btn-ghost")"
+                            @onclick='() => SetChart("BasicColumnChart")'>
+                        Analysis
+                    </button>
+                    <button class="btn btn-sm @(chartName == "FiveYearLineChart" ? "btn-secondary" : "btn-ghost")"
+                            @onclick='() => SetChart("FiveYearLineChart")'>
+                        Growth
+                    </button>
                 </div>
             </div>
             

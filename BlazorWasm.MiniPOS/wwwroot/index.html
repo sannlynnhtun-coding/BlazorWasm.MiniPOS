@@ -48,21 +48,49 @@
             --primary-orange-dark: #ea580c;
         }
 
-        .loading-container {
+        .loading-shell {
+            height: 100vh;
+            display: flex;
+            background: #f8fafc; /* match main app body */
+            color: #0f172a;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .loading-sidebar {
+            width: 18rem; /* matches `w-72` sidebar */
+            background: #ffffff;
+            border-right: 1px solid rgba(226, 232, 240, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .loading-sidebar-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            box-shadow: 0 10px 20px -5px rgba(234, 88, 12, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .loading-main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            background-color: #0f172a;
-            color: white;
-            font-family: 'Outfit', sans-serif;
+            gap: 18px;
+            padding: 2rem;
         }
 
         .loading-svg {
             width: 80px;
             height: 80px;
-            margin-bottom: 20px;
         }
 
         .loading-text {
@@ -76,6 +104,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: shine 2s linear infinite;
+        }
+
+        .loading-subtext {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(100, 116, 139, 0.95);
         }
 
         @keyframes shine {
@@ -175,16 +211,28 @@
 
 <body>
     <div id="app">
-        <div class="loading-container">
-            <svg class="loading-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" stroke="#1e293b" stroke-width="8" />
-                <circle cx="50" cy="50" r="45" stroke="#f97316" stroke-width="8" stroke-linecap="round"
-                    stroke-dasharray="283" stroke-dashoffset="210">
-                    <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s"
-                        repeatCount="indefinite" />
-                </circle>
-            </svg>
-            <div class="loading-text">MiniPOS Loading</div>
+        <div class="loading-shell">
+            <aside class="loading-sidebar" aria-hidden="true">
+                <div class="loading-sidebar-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                </div>
+            </aside>
+            <main class="loading-main">
+                <svg class="loading-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="50" cy="50" r="45" stroke="#e2e8f0" stroke-width="8" />
+                    <circle cx="50" cy="50" r="45" stroke="#f97316" stroke-width="8" stroke-linecap="round"
+                        stroke-dasharray="283" stroke-dashoffset="210">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s"
+                            repeatCount="indefinite" />
+                    </circle>
+                </svg>
+                <div class="loading-text">MiniPOS Loading</div>
+                <div class="loading-subtext">Preparing workspace</div>
+            </main>
         </div>
     </div>
 

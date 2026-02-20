@@ -1,0 +1,84 @@
+@using Microsoft.AspNetCore.Components
+
+<nav class="flex flex-col sm:flex-row items-center justify-between gap-4" aria-label="Pagination">
+    <div class="flex items-center gap-2">
+        <button class="btn btn-secondary btn-sm btn--caps btn-icon"
+                disabled="@(CurrentPage <= 1)"
+                @onclick="() => ChangePage(CurrentPage - 1)"
+                aria-label="Previous page">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+
+        <button class="btn btn-secondary btn-sm btn--caps btn-icon"
+                disabled="@(CurrentPage >= TotalPages)"
+                @onclick="() => ChangePage(CurrentPage + 1)"
+                aria-label="Next page">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-2">
+        @foreach (var p in GetPages(MaxButtonsMobile))
+        {
+            <button class="btn btn-icon @(p == CurrentPage ? "btn-primary" : "btn-secondary") sm:hidden"
+                    @onclick="() => ChangePage(p)"
+                    aria-current="@(p == CurrentPage ? "page" : null)"
+                    aria-label="@($"Page {p}")">
+                @p
+            </button>
+        }
+
+        @foreach (var p in GetPages(MaxButtonsDesktop))
+        {
+            <button class="btn btn-icon @(p == CurrentPage ? "btn-primary" : "btn-secondary") hidden sm:inline-flex"
+                    @onclick="() => ChangePage(p)"
+                    aria-current="@(p == CurrentPage ? "page" : null)"
+                    aria-label="@($"Page {p}")">
+                @p
+            </button>
+        }
+    </div>
+</nav>
+
+@code {
+    [Parameter] public int CurrentPage { get; set; } = 1;
+    [Parameter] public int TotalPages { get; set; } = 1;
+    [Parameter] public EventCallback<int> OnPageChanged { get; set; }
+
+    [Parameter] public int MaxButtonsDesktop { get; set; } = 9;
+    [Parameter] public int MaxButtonsMobile { get; set; } = 5;
+
+    private async Task ChangePage(int page)
+    {
+        if (TotalPages <= 1) return;
+        if (page < 1 || page > TotalPages) return;
+        if (page == CurrentPage) return;
+        await OnPageChanged.InvokeAsync(page);
+    }
+
+    private IEnumerable<int> GetPages(int maxButtons)
+    {
+        if (TotalPages <= 0) yield break;
+
+        maxButtons = Math.Max(1, Math.Min(maxButtons, TotalPages));
+
+        var half = maxButtons / 2;
+        var start = CurrentPage - half;
+        if (start < 1) start = 1;
+
+        var end = start + maxButtons - 1;
+        if (end > TotalPages)
+        {
+            end = TotalPages;
+            start = Math.Max(1, end - maxButtons + 1);
+        }
+
+        for (var p = start; p <= end; p++)
+            yield return p;
+    }
+}
+

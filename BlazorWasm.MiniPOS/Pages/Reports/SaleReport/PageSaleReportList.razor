@@ -1,7 +1,5 @@
 @if (Type == EnumFormType.List)
 {
-@if (Type == EnumFormType.List)
-{
     <div class="space-y-8 animate-fade-in max-w-[1200px] mx-auto pb-8">
         <div class="glass-card bg-white overflow-hidden hover:transform-none">
             <div class="overflow-x-auto">
@@ -15,7 +13,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
-                        @if (Model?.lstSaleReport != null)
+                        @if (Model?.lstSaleReport?.Any() == true)
                         {
                             @foreach (var item in Model.lstSaleReport)
                             {
@@ -39,13 +37,27 @@
                                         </div>
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        <button @onclick="() => Deatil(item)" class="inline-flex items-center px-6 py-3 bg-white border border-slate-200 hover:border-orange-500 hover:text-orange-600 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-sm hover:shadow-md active:scale-95 group-hover:bg-orange-50/50">
-                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <button @onclick="() => Deatil(item)" class="btn btn-secondary btn-md btn--caps">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                             Audit Log
                                         </button>
                                     </td>
                                 </tr>
                             }
+                        }
+                        else if (Model != null)
+                        {
+                            <tr>
+                                <td colspan="4" class="px-8 py-20 text-center">
+                                    <div class="w-16 h-16 bg-slate-50 border border-slate-100 rounded-2xl mx-auto mb-6 flex items-center justify-center text-slate-300">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </div>
+                                    <p class="text-xs font-black text-slate-600 uppercase tracking-widest">No transactions found</p>
+                                    <p class="text-[11px] font-medium text-slate-400 mt-3">Try adjusting the date range and evaluate again.</p>
+                                </td>
+                            </tr>
                         }
                         else
                         {
@@ -63,22 +75,10 @@
             <!-- Pagination footer -->
             @if (Model != null && Model.TotalPageNo > 1)
             {
-                <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/30 flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-500">
-                        Page <span class="text-slate-900">@Model.CurrentPageNo</span> of <span class="text-slate-900">@Model.TotalPageNo</span>
-                    </span>
-                    <div class="flex space-x-2">
-                        <button class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 @(Model.CurrentPageNo <= 1 ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 border border-slate-200/60 shadow-sm")"
-                                disabled="@(Model.CurrentPageNo <= 1)"
-                                @onclick="() => PageChanged(Model.CurrentPageNo - 1)">
-                            Previous
-                        </button>
-                        <button class="px-3 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 @(Model.CurrentPageNo >= Model.TotalPageNo ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 border border-slate-200/60 shadow-sm")"
-                                disabled="@(Model.CurrentPageNo >= Model.TotalPageNo)"
-                                @onclick="() => PageChanged(Model.CurrentPageNo + 1)">
-                            Next
-                        </button>
-                    </div>
+                <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/30">
+                    <Pagination CurrentPage="@Model.CurrentPageNo"
+                                TotalPages="@Model.TotalPageNo"
+                                OnPageChanged="PageChanged" />
                 </div>
             }
         </div>
@@ -88,8 +88,8 @@ else if (Type == EnumFormType.Report)
 {
     <div class="max-w-xl mx-auto space-y-8 animate-slide-up pb-12">
         <div class="flex items-center justify-between mb-2">
-            <button @onclick="Back" class="p-3 -ml-3 text-slate-400 hover:text-slate-900 transition-all rounded-xl hover:bg-white border border-transparent hover:border-slate-200 flex items-center text-xs font-black uppercase tracking-widest shadow-sm group">
-                <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+            <button @onclick="Back" class="btn btn-ghost btn-md btn--caps">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 Audit Log
             </button>
         </div>
@@ -106,19 +106,21 @@ else if (Type == EnumFormType.Report)
                     
                     <div class="grid grid-cols-2 gap-4 mt-10">
                         <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-100 flex flex-col items-start">
-                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Audit Ref</span>
-                            <span class="text-xs font-black text-slate-900 font-mono">#@DateTime.Ticks.ToString().Substring(0, 8)</span>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Voucher No</span>
+                            <span class="text-xs font-black text-slate-900 font-mono">
+                                #@(SelectedHead?.sale_voucher_no.ToString().Substring(0, 8) ?? "--------")
+                            </span>
                         </div>
                         <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-100 flex flex-col items-start">
                             <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Timestamp</span>
-                            <span class="text-xs font-black text-slate-900">@DateTime.ToString("MMM dd, yyyy")</span>
+                            <span class="text-xs font-black text-slate-900">@DateTime.ToString("MMM dd, yyyy • HH:mm")</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Receipt Items -->
                 <div class="px-10 py-8 space-y-6">
-                    @if (Detail != null)
+                    @if (Detail?.Any() == true)
                     {
                         @foreach (var item in Detail)
                         {
@@ -132,6 +134,13 @@ else if (Type == EnumFormType.Report)
                                 </div>
                             </div>
                         }
+                    }
+                    else
+                    {
+                        <div class="py-10 text-center">
+                            <p class="text-xs font-black text-slate-600 uppercase tracking-widest">No line items</p>
+                            <p class="text-[11px] font-medium text-slate-400 mt-3">This voucher has no recorded detail rows.</p>
+                        </div>
                     }
                 </div>
 
@@ -155,13 +164,13 @@ else if (Type == EnumFormType.Report)
         </div>
     </div>
 }
-}
 
 @code {
     [Parameter]
     public SaleReportResponseDataModel? Model { get; set; }
 
     private List<SaleVoucherDetailDataModel>? Detail { get; set; } = new();
+    private SaleVoucherHeadDataModel? SelectedHead { get; set; }
     private EnumFormType Type { get; set; } = EnumFormType.List;
     private DateTime DateTime { get; set; }
 
@@ -180,6 +189,8 @@ else if (Type == EnumFormType.Report)
     async Task Deatil(SaleVoucherHeadDataModel data)
     {
         Type = EnumFormType.Report;
+        SelectedHead = data;
+        DateTime = data.sale_date;
         Detail = await db.GetVoucherDetail(data.sale_voucher_head_id);
         await OnDetailClick.InvokeAsync(data);
     }
@@ -187,6 +198,7 @@ else if (Type == EnumFormType.Report)
     async Task Back()
     {
         Type = EnumFormType.List;
+        SelectedHead = null;
         await OnBackClick.InvokeAsync();
     }
 }
