@@ -8,6 +8,19 @@
     <title>Blazor WASM - Mini-POS</title>
     <base href="/" />
 
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem("minipos-theme");
+                var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+                var useDark = stored ? stored === "dark" : prefersDark;
+                document.documentElement.classList.toggle("dark", useDark);
+            } catch {
+                // ignore
+            }
+        })();
+    </script>
+
     <!-- favicon: orange shopping bag SVG -->
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ea580c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z'/%3E%3Cline x1='3' y1='6' x2='21' y2='6'/%3E%3Cpath d='M16 10a4 4 0 01-8 0'/%3E%3C/svg%3E" />
@@ -20,7 +33,6 @@
     <meta property="og:image" content="https://blazor-wasm-mini-pos-v2.netlify.app/logo.png">
     <meta name="twitter:image" content="https://blazor-wasm-mini-pos-v2.netlify.app/logo.png">
 
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
 
     <link href="manifest.json" rel="manifest" />

@@ -3,36 +3,36 @@
 <div class="space-y-8 animate-fade-in max-w-[1200px] mx-auto pb-8">
     @if (FormType == EnumFormType.List)
     {
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Products</h2>
-                <p class="text-sm text-slate-500 mt-2 font-medium">Manage your inventory items and dynamic pricing.</p>
+                <h2 class="text-3xl font-bold text-foreground tracking-tight">Products</h2>
+                <p class="text-sm text-muted-foreground mt-2 font-medium">Manage your inventory items and dynamic pricing.</p>
             </div>
-            <button @onclick="Create" class="btn btn-primary btn-md btn--caps">
-                <svg class="w-4 h-4 mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            <button @onclick="Create" class="btn btn-primary font-bold px-6">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                 New Product
             </button>
         </div>
 
-        <div class="glass-card bg-white overflow-hidden hover:transform-none">
+        <div class="bg-card rounded-lg border border-border overflow-hidden shadow-sm">
             @if (_productResponseModel?.products == null)
             {
                 <div class="p-20 text-center">
-                    <div class="w-10 h-10 border-4 border-orange-100 border-t-orange-500 rounded-full animate-spin mx-auto mb-4"></div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Synchronizing catalog</p>
+                    <div class="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                    <p class="text-xs font-bold text-muted-foreground uppercase tracking-widest">Synchronizing catalog</p>
                 </div>
             }
             else if (!_productResponseModel.products.Any())
             {
                 <div class="p-20 text-center flex flex-col items-center justify-center">
-                    <div class="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center text-slate-200 mb-6">
+                    <div class="w-20 h-20 bg-muted rounded-xl flex items-center justify-center text-muted-foreground/30 mb-6">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">No products found</h3>
-                    <p class="text-slate-500 text-sm mb-8 max-w-xs mx-auto">Get started by creating your first product to populate your point of sale.</p>
-                    <button @onclick="Create" class="btn btn-secondary btn-sm btn--caps">
+                    <h3 class="text-xl font-bold text-foreground mb-2">No products found</h3>
+                    <p class="text-muted-foreground text-sm mb-8 max-w-xs mx-auto">Get started by creating your first product to populate your point of sale.</p>
+                    <button @onclick="Create" class="btn btn-secondary font-bold px-6">
                         Add Product
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </button>
                 </div>
             }
@@ -41,40 +41,40 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm whitespace-nowrap">
                         <thead>
-                            <tr class="bg-slate-50/50 border-b border-slate-100">
-                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">SKU / Code</th>
-                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">Product Info</th>
-                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">Category</th>
-                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px]">Price (MMK)</th>
-                                <th class="px-6 py-4 font-black text-slate-400 uppercase tracking-widest text-[10px] text-right">Actions</th>
+                            <tr class="bg-muted/50 border-b border-border">
+                                <th class="px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px]">SKU / Code</th>
+                                <th class="px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Product Info</th>
+                                <th class="px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Category</th>
+                                <th class="px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px]">Price (MMK)</th>
+                                <th class="px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px] text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-50">
+                        <tbody class="divide-y divide-border">
                             @foreach (var item in _productResponseModel.products)
                             {
-                                <tr class="hover:bg-orange-50/30 transition-colors animate-fade-in group">
-                                    <td class="px-6 py-4 border-b border-slate-50/50">
-                                        <div class="inline-flex items-center px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-mono text-[11px] font-bold border border-slate-200/50 group-hover:bg-white transition-colors">
+                                <tr class="hover:bg-accent/50 transition-colors animate-fade-in group">
+                                    <td class="px-6 py-5">
+                                        <div class="inline-flex items-center px-2 py-1 rounded-md bg-muted text-muted-foreground font-mono text-[10px] font-bold border border-border group-hover:bg-background transition-colors">
                                             @item.product_code
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-slate-50/50">
-                                        <div class="font-bold text-slate-900 text-sm leading-tight">@item.product_name</div>
+                                    <td class="px-6 py-5">
+                                        <div class="font-bold text-foreground text-sm leading-tight">@item.product_name</div>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-slate-50/50">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-widest bg-orange-100 text-orange-700 border border-orange-200/50">
+                                    <td class="px-6 py-5">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary border border-primary/20">
                                             @(_lstProductCategory.FirstOrDefault(x => x.product_category_code == item.product_category_code)?.product_category_name ?? item.product_category_code)
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-slate-50/50">
-                                        <div class="font-black text-slate-900 text-sm">@item.product_sale_price.ToString("N0")</div>
+                                    <td class="px-6 py-5">
+                                        <div class="font-bold text-foreground text-sm">@item.product_sale_price.ToString("N0")</div>
                                     </td>
-                                    <td class="px-6 py-4 border-b border-slate-50/50 text-right">
+                                    <td class="px-6 py-5 text-right">
                                         <div class="flex items-center justify-end space-x-2">
-                                            <button @onclick="() => Edit(item)" class="btn btn-ghost btn-icon" title="Edit">
+                                            <button @onclick="() => Edit(item)" class="p-2 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors" title="Edit">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                             </button>
-                                            <button @onclick="() => Delete(item)" class="btn btn-danger btn-icon" title="Delete">
+                                            <button @onclick="() => Delete(item)" class="p-2 rounded-md border border-border text-muted-foreground hover:text-destructive hover:border-destructive/50 transition-colors" title="Delete">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </div>
@@ -88,7 +88,7 @@
                 <!-- Pagination footer -->
                 @if (_productResponseModel?.pageSetting != null && _productResponseModel.pageSetting.pageCount > 1)
                 {
-                    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/30">
+                    <div class="px-6 py-4 border-t border-border bg-muted/20">
                         <Pagination CurrentPage="@_productResponseModel.pageSetting.pageNo"
                                     TotalPages="@_productResponseModel.pageSetting.pageCount"
                                     OnPageChanged="@(p => List(p))" />
@@ -99,60 +99,60 @@
     }
     else
     {
-        <div class="max-w-4xl mx-auto animate-slide-up">
-            <div class="flex items-center justify-between mb-10">
-                <div class="flex items-center">
-                    <button @onclick="Back" class="btn btn-ghost btn-icon mr-6" aria-label="Back">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        <div class="max-w-3xl mx-auto animate-slide-up">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-6">
+                    <button @onclick="Back" class="p-2.5 rounded-md border border-border text-muted-foreground hover:text-foreground transition-colors" aria-label="Back">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                     </button>
                     <div>
-                        <h2 class="text-3xl font-black text-slate-900 tracking-tight">@(IsEdit ? "Update Product" : "New Product")</h2>
-                        <p class="text-sm text-slate-500 mt-2 font-medium">Configure product attributes and pricing.</p>
+                        <h2 class="text-2xl font-bold text-foreground tracking-tight">@(IsEdit ? "Update Product" : "New Product")</h2>
+                        <p class="text-sm text-muted-foreground mt-1 font-medium">Configure product attributes and pricing.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card bg-white p-10 hover:transform-none">
+            <div class="bg-card rounded-lg border border-border p-8 shadow-sm">
                 <EditForm Model="_model" OnValidSubmit="HandleSave">
-                    <div class="space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">SKU Code</label>
-                                <InputText @bind-Value="_model.product_code" class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all disabled:opacity-60" disabled="@IsEdit" />
+                                <label class="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">SKU Code</label>
+                                <InputText @bind-Value="_model.product_code" class="w-full px-4 py-2.5 bg-muted rounded-md border border-input text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all disabled:opacity-60" disabled="@IsEdit" />
                             </div>
                             
                             <div class="space-y-2">
-                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Product Name</label>
-                                <InputText @bind-Value="_model.product_name" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all" placeholder="e.g. Premium Coffee" />
+                                <label class="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Product Name</label>
+                                <InputText @bind-Value="_model.product_name" class="w-full px-4 py-2.5 bg-background rounded-md border border-input text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="e.g. Premium Coffee" />
                             </div>
 
                             <div class="space-y-2">
-                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Classification</label>
+                                <label class="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Classification</label>
                                 <div class="relative">
-                                    <InputSelect @bind-Value="_model.product_category_code" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all appearance-none">
+                                    <InputSelect @bind-Value="_model.product_category_code" class="w-full px-4 py-2.5 bg-background rounded-md border border-input text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all appearance-none cursor-pointer">
                                         <option value="" disabled selected hidden>Choose a category</option>
                                         @foreach (var item in _lstProductCategory)
                                         {
                                             <option value="@item.product_category_code">@item.product_category_name</option>
                                         }
                                     </InputSelect>
-                                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-muted-foreground">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="space-y-2">
-                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Sale Price (MMK)</label>
-                                <InputNumber @bind-Value="_model.product_sale_price" class="w-full px-5 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/50 transition-all" />
+                                <label class="text-[10px] font-bold text-muted-foreground uppercase tracking-widest ml-1">Sale Price (MMK)</label>
+                                <InputNumber @bind-Value="_model.product_sale_price" class="w-full px-4 py-2.5 bg-background rounded-md border border-input text-sm font-bold text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
                             </div>
                         </div>
 
-                        <div class="pt-10 border-t border-slate-100 flex justify-end items-center gap-6">
-                            <button type="button" @onclick="Back" class="btn btn-ghost btn-sm btn--caps">
+                        <div class="pt-6 border-t border-border flex justify-end items-center gap-4">
+                            <button type="button" @onclick="Back" class="btn btn-ghost font-bold px-6">
                                 Discard
                             </button>
-                            <button type="submit" class="btn btn-primary btn-md btn--caps">
+                            <button type="submit" class="btn btn-primary font-bold px-6">
                                 @(IsEdit ? "Update Product" : "Save Product")
                             </button>
                         </div>

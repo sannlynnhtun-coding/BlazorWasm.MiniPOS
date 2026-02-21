@@ -2,11 +2,11 @@
 
 <div class="h-full min-h-0 flex flex-col md:flex-row gap-6 pb-4 animate-fade-in overflow-hidden">
     <!-- Left Side: Product Grid (55%) -->
-    <div class="flex-1 md:basis-[55%] min-h-0 flex flex-col glass-card bg-white overflow-hidden hover:transform-none">
-        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100 bg-slate-50/30 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 flex-shrink-0">
+    <div class="flex-1 md:basis-[55%] min-h-0 flex flex-col bg-card rounded-lg border border-border overflow-hidden">
+        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-border bg-muted/30 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 flex-shrink-0">
             <div>
-                <h2 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Products</h2>
-                <p class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">@(_lstProduct?.Count ?? 0) available</p>
+                <h2 class="text-lg sm:text-xl font-bold text-foreground tracking-tight">Products</h2>
+                <p class="text-[10px] font-bold text-primary uppercase tracking-widest mt-1">@(_lstProduct?.Count ?? 0) available</p>
             </div>
             <div class="w-full sm:w-80">
                 <div class="search-shell">
@@ -18,8 +18,8 @@
             </div>
         </div>
 
-        <div class="p-5 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar flex-1 min-h-0 bg-white/50">
-            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+        <div class="p-5 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar flex-1 min-h-0 bg-card/50">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 @if (_productResponseModel?.products is not null)
                 {
                     @foreach (var item in _productResponseModel.products)
@@ -28,32 +28,32 @@
                         var isActive = qty > 0;
                         
                         <button @onclick="() => AddProductToSale(item.product_id)" 
-                                class="group relative flex flex-col p-6 rounded-[2rem] border transition-all duration-500 text-left overflow-hidden h-48
-                                       @(isActive ? "border-orange-500 bg-orange-50/40 shadow-2xl shadow-orange-500/10 -translate-y-1" : "border-slate-100 bg-white hover:border-orange-200 hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-2")">
+                                class="group relative flex flex-col p-6 rounded-lg border transition-all duration-300 text-left overflow-hidden h-48
+                                       @(isActive ? "border-primary bg-primary/5 shadow-lg shadow-primary/10" : "border-border bg-card hover:border-primary/50 hover:bg-accent/50 hover:shadow-md")">
                             
                             @if (isActive)
                             {
-                                <div class="absolute top-5 right-5 flex items-center gap-2 animate-scale-in">
-                                    <div class="px-2.5 h-7 orange-gradient text-white rounded-full flex items-center justify-center text-[10px] font-black shadow-lg shadow-orange-500/30">
+                                <div class="absolute top-4 right-4 flex items-center gap-2 animate-scale-in">
+                                    <div class="px-2.5 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm">
                                         @qty
                                     </div>
-                                    <div class="w-7 h-7 bg-white rounded-full flex items-center justify-center text-orange-500 shadow-sm border border-orange-100">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                    <div class="w-6 h-6 bg-background rounded-full flex items-center justify-center text-primary shadow-sm border border-primary/20">
+                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                                     </div>
                                 </div>
                             }
 
-                            <div class="text-[9px] font-black text-slate-400 mb-3 uppercase tracking-[0.2em] line-clamp-1 opacity-60 group-hover:opacity-100 transition-opacity">#@(item.product_code ?? "UNK")</div>
-                            <div class="font-black text-slate-900 text-base line-clamp-2 leading-tight flex-1 group-hover:text-orange-600 transition-colors duration-300">
+                            <div class="text-[9px] font-bold text-muted-foreground mb-2 uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">#@(item.product_code ?? "UNK")</div>
+                            <div class="font-bold text-foreground text-base line-clamp-2 leading-snug flex-1 group-hover:text-primary transition-colors">
                                 @item.product_name
                             </div>
                             
                             <div class="mt-4 flex items-end justify-between w-full">
-                                 <div class="font-black text-xl text-slate-900 tracking-tighter">
-                                     @item.product_sale_price.ToString("N0") <span class="text-[10px] text-slate-400 font-bold ml-1 uppercase tracking-widest">MMK</span>
+                                 <div class="font-bold text-xl text-foreground tracking-tight">
+                                     @item.product_sale_price.ToString("N0") <span class="text-[10px] text-muted-foreground font-medium ml-1 uppercase">MMK</span>
                                  </div>
-                                 <div class="w-8 h-8 rounded-xl bg-slate-50 text-slate-400 group-hover:bg-orange-500 group-hover:text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                                 <div class="w-8 h-8 rounded-md bg-secondary text-secondary-foreground group-hover:bg-primary group-hover:text-primary-foreground flex items-center justify-center transition-all group-hover:scale-105">
+                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                                  </div>
                             </div>
                         </button>
@@ -62,43 +62,45 @@
             </div>
         </div>
 
-        <!-- Pagination Controls (Sale Page) -->
+        <!-- Pagination Controls -->
         @if (_productResponseModel?.pageSetting != null && _productResponseModel.pageSetting.pageCount > 1)
         {
-            <div class="px-5 sm:px-6 lg:px-8 py-3 sm:py-4 border-t border-slate-100 bg-slate-50/30">
+            <div class="px-5 sm:px-6 lg:px-8 py-3 sm:py-4 border-t border-border bg-muted/20">
                 <Pagination CurrentPage="@_productResponseModel.pageSetting.pageNo"
                             TotalPages="@_productResponseModel.pageSetting.pageCount"
+                            MaxButtonsMobile="5"
+                            MaxButtonsDesktop="5"
                             OnPageChanged="@(p => List(p))" />
             </div>
         }
     </div>
 
     <!-- Right Side: Current Sale Cart (45%) -->
-    <div class="flex-1 md:basis-[45%] min-h-0 flex flex-col glass-card bg-white overflow-hidden flex-shrink-0 hover:transform-none">
-        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100 bg-slate-50/30 flex-shrink-0">
-            <h3 class="text-lg sm:text-xl font-black text-slate-900 tracking-tight">Active Order</h3>
-            <p class="text-[10px] font-bold text-orange-500 uppercase tracking-widest mt-1">
-                @(_lstProductSale?.lstProductSale?.Count ?? 0) types in cart
+    <div class="flex-1 md:basis-[45%] min-h-0 flex flex-col bg-card rounded-lg border border-border overflow-hidden">
+        <div class="px-5 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-border bg-muted/30">
+            <h3 class="text-lg sm:text-xl font-bold text-foreground tracking-tight">Active Order</h3>
+            <p class="text-[10px] font-bold text-primary uppercase tracking-widest mt-1">
+                @(_lstProductSale?.lstProductSale?.Count ?? 0) items in cart
             </p>
         </div>
         
-        <div class="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5 custom-scrollbar bg-slate-50/20">
+        <div class="flex-1 min-h-0 overflow-y-auto p-5 sm:p-6 lg:p-8 space-y-3 custom-scrollbar bg-accent/5">
             @if (_lstProductSale?.lstProductSale?.Any() == true)
             {
                 @foreach (var item in _lstProductSale.lstProductSale)
                 {
-                    <div class="group flex items-center bg-white border border-slate-100 rounded-[1.5rem] p-5 hover:border-orange-300 hover:shadow-2xl hover:shadow-black/5 transition-all duration-300 animate-slide-up">
-                        <div class="w-12 h-12 bg-slate-50 text-slate-900 border border-slate-100 rounded-xl flex items-center justify-center text-xs font-black mr-5 flex-shrink-0 group-hover:bg-orange-50 group-hover:text-orange-600 group-hover:border-orange-200 transition-colors">
+                    <div class="group flex items-center bg-card border border-border rounded-lg p-4 hover:border-primary/30 hover:shadow-sm transition-all animate-slide-up">
+                        <div class="w-10 h-10 bg-muted text-foreground border border-border rounded-md flex items-center justify-center text-xs font-bold mr-4 flex-shrink-0 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20 transition-colors">
                             @item.product_qty
                         </div>
                         <div class="flex-1 min-w-0">
-                            <div class="text-[13px] font-black text-slate-900 truncate">@item.product_name</div>
-                            <div class="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">@item.product_price.ToString("N0") <span class="text-[8px]">MMK</span> / unit</div>
+                            <div class="text-[13px] font-bold text-foreground truncate">@item.product_name</div>
+                            <div class="text-[10px] font-medium text-muted-foreground mt-0.5 uppercase tracking-wide">@item.product_price.ToString("N0") <span class="text-[8px]">MMK</span></div>
                         </div>
-                        <div class="flex flex-col items-end pl-4 flex-shrink-0 border-l border-slate-50 ml-4">
-                            <div class="text-base font-black text-slate-900 tracking-tighter">@item.product_total_price.ToString("N0")</div>
-                            <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="btn btn-danger btn-icon mt-2 opacity-0 group-hover:opacity-100 transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
+                        <div class="flex flex-col items-end pl-4 flex-shrink-0 border-l border-border ml-4">
+                            <div class="text-sm font-bold text-foreground">@item.product_total_price.ToString("N0")</div>
+                            <button @onclick="() => DeleteProductSale(item.product_sale_id)" class="text-destructive hover:text-destructive/80 mt-1 opacity-0 group-hover:opacity-100 transition-all p-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 01-1 1v3M4 7h16"/></svg>
                             </button>
                         </div>
                     </div>
@@ -106,67 +108,48 @@
             }
             else
             {
-                <div class="flex flex-col items-center justify-center h-full text-slate-400 py-20 space-y-6">
-                    <div class="w-24 h-24 bg-slate-100 rounded-[2.5rem] flex items-center justify-center text-slate-200 shadow-inner">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                <div class="flex flex-col items-center justify-center h-full text-muted-foreground py-20 space-y-4">
+                    <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground/50 border border-border/50">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     </div>
                     <div class="text-center">
-                        <p class="text-sm font-black text-slate-600 uppercase tracking-[0.2em]">Inventory Awaiting</p>
-                        <p class="text-[11px] text-slate-400 mt-2 font-medium italic">Begin items selection to populate</p>
+                        <p class="text-[11px] font-bold uppercase tracking-widest">Cart is empty</p>
+                        <p class="text-[10px] text-muted-foreground/70 mt-1">Select items to start a sale</p>
                     </div>
                 </div>
             }
         </div>
 
-        <div class="p-6 sm:p-8 lg:p-10 border-t border-slate-100 bg-white flex-shrink-0 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.08)]">
-            <div class="space-y-4 mb-7 sm:mb-8 lg:mb-10">
-                <div class="flex justify-between items-center px-1">
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Subtotal</span>
-                    <span class="text-sm font-black text-slate-900">@_grandTotal.ToString("N0") <span class="text-[8px] font-bold text-slate-400 ml-1 uppercase">MMK</span></span>
+        <div class="p-6 sm:p-8 border-t border-border bg-card">
+            <div class="space-y-3 mb-6">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-muted-foreground font-medium">Subtotal</span>
+                    <span class="font-bold text-foreground">@_grandTotal.ToString("N0") <span class="text-[10px] text-muted-foreground ml-1">MMK</span></span>
                 </div>
-                <div class="flex justify-between items-center px-1">
-                    <div class="flex items-center gap-2">
-                         <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Processing Fee</span>
-                         <span class="px-2 py-0.5 rounded-md bg-green-50 text-green-600 text-[8px] font-black uppercase tracking-widest border border-green-100">Zero</span>
-                    </div>
-                    <span class="text-sm font-black text-slate-900">0 <span class="text-[8px] font-bold text-slate-400 ml-1 uppercase">MMK</span></span>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-muted-foreground font-medium">Fee</span>
+                    <span class="text-primary font-bold">Free</span>
                 </div>
-                <div class="pt-6 sm:pt-7 lg:pt-8 border-t border-dashed border-slate-200 flex justify-between items-center px-1">
+                <div class="pt-4 border-t border-dashed border-border flex justify-between items-end">
                     <div class="flex flex-col">
-                         <span class="text-xs font-black text-slate-900 uppercase tracking-[0.2em] mb-1">Due Amount</span>
-                         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Inc. Local Taxes</span>
+                         <span class="text-xs font-bold text-foreground uppercase tracking-widest mb-1">Total Due</span>
+                         <span class="text-[9px] font-medium text-muted-foreground uppercase">Inc. Taxes</span>
                     </div>
                     <div class="text-right">
-                        <span class="text-4xl font-black text-slate-900 tracking-tighter">@_grandTotal.ToString("N0")</span>
-                        <span class="text-[10px] font-black text-orange-500 ml-2 uppercase tracking-[0.2em]">MMK</span>
+                        <span class="text-3xl font-bold text-foreground tracking-tight">@_grandTotal.ToString("N0")</span>
+                        <span class="text-[10px] font-bold text-primary ml-1 uppercase">MMK</span>
                     </div>
                 </div>
             </div>
 
             <button @onclick="Save" disabled="@(!(_lstProductSale?.lstProductSale?.Any() ?? false))"
-                    class="w-full btn btn-primary btn-lg btn--caps">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                Finalize Sale
+                    class="w-full btn btn-primary btn-lg font-bold tracking-widest uppercase">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                Complete Transaction
             </button>
         </div>
     </div>
 </div>
-
-<style>
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 5px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #e2e8f0;
-        border-radius: 10px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #f97316;
-    }
-</style>
 
 @code {
     private int GetQty(Guid productId) => _lstProductSale?.lstProductSale?.FirstOrDefault(x => x.product_id == productId)?.product_qty ?? 0;

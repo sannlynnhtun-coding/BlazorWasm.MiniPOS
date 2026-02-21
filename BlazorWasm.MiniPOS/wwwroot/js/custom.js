@@ -54,66 +54,117 @@ async function openDb() {
 window.applyHighchartsTheme = function () {
     const hc = window.Highcharts;
     if (!hc) return false;
-    if (window.__miniPosHighchartsThemeApplied) return true;
 
-    // Highcharts Premium Orange Theme
-    hc.theme = {
-        colors: ['#f97316', '#fb923c', '#fdba74', '#fed7aa', '#ffedd5', '#ea580c', '#c2410c', '#9a3412', '#7c2d12'],
-        chart: {
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-            style: {
-                fontFamily: 'Outfit, sans-serif'
-            }
-        },
-        title: {
-            style: {
-                color: '#1f2937',
-                fontWeight: 'bold'
-            }
-        },
-        subtitle: {
-            style: {
-                color: '#6b7280'
-            }
-        },
-        xAxis: {
-            lineColor: '#e5e7eb',
-            tickColor: '#e5e7eb',
-            labels: {
-                style: {
-                    color: '#6b7280'
-                }
-            }
-        },
-        yAxis: {
-            gridLineColor: '#f3f4f6',
-            labels: {
-                style: {
-                    color: '#6b7280'
-                }
-            },
-            title: {
-                style: {
-                    color: '#6b7280'
-                }
-            }
-        },
-        legend: {
-            itemStyle: {
-                color: '#4b5563'
-            },
-            itemHoverStyle: {
-                color: '#1f2937'
-            }
-        },
-        credits: {
-            enabled: false
+    const root = document.documentElement;
+    const themeKey = root.classList.contains("dark") ? "dark" : "light";
+    if (window.__miniPosHighchartsThemeKey === themeKey) return true;
+
+    const getCssVar = (name) => {
+        try {
+            return getComputedStyle(root).getPropertyValue(name).trim();
+        } catch {
+            return "";
         }
     };
 
+    const toHsl = (raw, alpha) => {
+        if (!raw) return "";
+        const parts = raw.split(/\s+/).filter(Boolean);
+        if (parts.length < 3) return "";
+        const [h, s, l] = parts;
+        return alpha === undefined
+            ? `hsl(${h}, ${s}, ${l})`
+            : `hsla(${h}, ${s}, ${l}, ${alpha})`;
+    };
+
+    const palette = [];
+    for (let i = 1; i <= 9; i++) {
+        const v = getCssVar(`--chart-${i}`);
+        if (v) palette.push(v);
+    }
+
+    const colors = palette.length
+        ? palette
+        : ['#f97316', '#fb923c', '#fdba74', '#fed7aa', '#ffedd5', '#ea580c', '#c2410c', '#9a3412', '#7c2d12'];
+
+    const foreground = toHsl(getCssVar("--foreground"));
+    const mutedForeground = toHsl(getCssVar("--muted-foreground"));
+    const border = toHsl(getCssVar("--border"));
+    const grid = toHsl(getCssVar("--border"), 0.45);
+
+    hc.theme = {
+        colors,
+        chart: {
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            style: { fontFamily: "Outfit, sans-serif" }
+        },
+        title: {
+            style: { color: foreground || "#1f2937", fontWeight: "bold" }
+        },
+        subtitle: {
+            style: { color: mutedForeground || "#6b7280" }
+        },
+        xAxis: {
+            lineColor: border || "#e5e7eb",
+            tickColor: border || "#e5e7eb",
+            gridLineColor: grid || "#f3f4f6",
+            labels: { style: { color: mutedForeground || "#6b7280" } }
+        },
+        yAxis: {
+            gridLineColor: grid || "#f3f4f6",
+            labels: { style: { color: mutedForeground || "#6b7280" } },
+            title: { style: { color: mutedForeground || "#6b7280" } }
+        },
+        legend: {
+            itemStyle: { color: mutedForeground || "#4b5563" },
+            itemHoverStyle: { color: foreground || "#1f2937" }
+        },
+        credits: { enabled: false }
+    };
+
     hc.setOptions(hc.theme);
-    window.__miniPosHighchartsThemeApplied = true;
+    window.__miniPosHighchartsThemeKey = themeKey;
     return true;
+};
+
+window.setMiniPosTheme = function (theme) {
+    try {
+        const root = document.documentElement;
+        const isDark = theme === "dark";
+        root.classList.toggle("dark", isDark);
+        localStorage.setItem("minipos-theme", isDark ? "dark" : "light");
+
+        // Update Highcharts (new + existing charts)
+        if (window.Highcharts) {
+            window.applyHighchartsTheme();
+            const t = window.Highcharts.theme || {};
+            const charts = window.Highcharts.charts || [];
+            charts.forEach((c) => {
+                if (!c) return;
+                c.update({
+                    colors: t.colors,
+                    chart: t.chart,
+                    title: t.title,
+                    subtitle: t.subtitle,
+                    xAxis: t.xAxis,
+                    yAxis: t.yAxis,
+                    legend: t.legend
+                }, true, true, false);
+            });
+        }
+    } catch {
+        // ignore
+    }
+};
+
+window.toggleMiniPosTheme = function () {
+    try {
+        const root = document.documentElement;
+        const isDark = root.classList.contains("dark");
+        window.setMiniPosTheme(isDark ? "light" : "dark");
+    } catch {
+        // ignore
+    }
 };
 
 window.renderHighchartsColumn = function (containerId, title, categories, seriesData) {

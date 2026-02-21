@@ -1,3 +1,210 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Keep existing brand orange (Tailwind orange-500) */
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 32.1% 91.4%;
+    --input: 214.3 32.1% 91.4%;
+    --ring: 24.6 95% 53.1%;
+
+    --radius: 0.75rem;
+
+    /* Chart palette (tokenized, hex for Highcharts) */
+    --chart-1: #f97316;
+    --chart-2: #fb923c;
+    --chart-3: #fdba74;
+    --chart-4: #fed7aa;
+    --chart-5: #ffedd5;
+    --chart-6: #ea580c;
+    --chart-7: #c2410c;
+    --chart-8: #9a3412;
+    --chart-9: #7c2d12;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 24.6 95% 53.1%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Buttons (shadcn-like) */
+  .btn {
+    -webkit-tap-highlight-color: transparent;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background;
+    @apply disabled:pointer-events-none disabled:opacity-50 select-none;
+    @apply h-10 px-4 py-2;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-outline {
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-danger {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+  }
+
+  .btn-sm {
+    @apply h-9 rounded-md px-3 text-xs;
+  }
+
+  .btn-lg {
+    @apply h-11 rounded-md px-8 text-sm;
+  }
+
+  .btn-icon {
+    @apply h-10 w-10 p-0;
+  }
+
+  .btn--caps {
+    @apply uppercase tracking-widest font-bold text-xs;
+  }
+
+  /* Inputs */
+  .input {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm;
+    @apply ring-offset-background placeholder:text-muted-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Card primitives (optional but handy) */
+  .card {
+    @apply rounded-lg border border-border bg-card text-card-foreground shadow-sm;
+  }
+
+  /* Table primitives */
+  .table {
+    @apply w-full text-sm;
+  }
+  .table-th {
+    @apply px-6 py-4 font-bold text-muted-foreground uppercase tracking-widest text-[10px];
+  }
+  .table-td {
+    @apply px-6 py-4 text-foreground;
+  }
+  .table-row {
+    @apply border-b border-border;
+  }
+
+  /* Search */
+  .search-shell {
+    @apply flex items-center gap-2 px-3 py-2 rounded-md border border-input bg-background/50 backdrop-blur-sm;
+    @apply transition-shadow focus-within:ring-2 focus-within:ring-ring/20 focus-within:border-ring;
+  }
+  .search-icon {
+    @apply w-4 h-4 text-muted-foreground;
+  }
+  .search-input {
+    @apply w-full border-0 bg-transparent p-0 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply focus:outline-none focus:ring-0;
+  }
+
+  /* Scroll helpers */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+    background-clip: content-box;
+  }
+}
