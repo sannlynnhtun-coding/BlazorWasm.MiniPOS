@@ -6,17 +6,20 @@
   "scripts": {
     "build:js": "webpack ./src/index.js --output-path ./wwwroot/js --output-filename index.bundle.js",
     "build:css": "tailwindcss -i ./src/app.css -o ./wwwroot/css/tailwind.css",
-    "build": "npm run build:js && npm run build:css"
+    "build:icons": "node ./src/generate-icons.mjs",
+    "build": "npm run build:js && npm run build:css && npm run build:icons"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "tailwindcss": "^3.3.3",
     "postcss": "^8.4.28",
-    "autoprefixer": "^10.4.15"
+    "autoprefixer": "^10.4.15",
+    "to-ico": "^1.1.5"
   },
   "dependencies": {
     "@code-zhf/export-json-2-excel": "^1.0.3"
