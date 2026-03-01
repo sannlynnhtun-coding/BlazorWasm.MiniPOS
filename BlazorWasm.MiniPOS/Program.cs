@@ -23,6 +23,7 @@ builder.Services.AddScoped<IStorageService, StorageService>();
 
 // IDbService now uses IStorageService to get the current provider
 builder.Services.AddScoped<IDbService, AppDbService>();
+builder.Services.AddScoped<DataSeederService>();
 
 builder.Services.AddSingleton<ChartStateContainer>();
 await builder.Build().RunAsync();

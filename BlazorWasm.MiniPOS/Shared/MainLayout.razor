@@ -1,6 +1,7 @@
 @using System.Text.RegularExpressions
 @inherits LayoutComponentBase
 @inject ChartStateContainer StateContainer
+@inject DataSeederService Seeder
 
 <div class="flex h-screen bg-background font-sans text-foreground overflow-hidden">
     <!-- Sidebar Overlay (Mobile) -->
@@ -178,7 +179,7 @@
     private EnumPage Page = EnumPage.Dashboard;
     private string Title => InsertSpacesBeforeCapitals(Page.ToString());
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         var currentUri = nav.ToBaseRelativePath(nav.Uri);
         
@@ -189,6 +190,8 @@
         else if (currentUri.StartsWith("sale-report", StringComparison.OrdinalIgnoreCase)) Page = EnumPage.SaleReport;
         else if (currentUri.StartsWith("settings/db-provider", StringComparison.OrdinalIgnoreCase)) Page = EnumPage.DbProvider;
         else if (currentUri.StartsWith("generate-data", StringComparison.OrdinalIgnoreCase)) Page = EnumPage.GenerateData;
+
+        await Seeder.SeedIfEmptyAsync();
     }
 
     private void SetPage(EnumPage page)
