@@ -2,47 +2,57 @@ name: Deploy to Vercel
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x' # Adjusted to latest stable, change if needed
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
 
-      - name: Install JS dependencies
-        run: |
-          cd BlazorWasm.MiniPOS
-          npm install
+    - name: Install JS dependencies
+      run: |
+        cd BlazorWasm.MiniPOS
+        npm install
 
-      - name: Run Build Scripts
-        run: |
-          cd BlazorWasm.MiniPOS
-          npm run build
+    - name: Run Build Scripts
+      run: |
+        cd BlazorWasm.MiniPOS
+        npm run build
 
-      - name: Publish Blazor WASM
-        run: dotnet publish BlazorWasm.MiniPOS/BlazorWasm.MiniPOS.csproj -c Release -o release
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: Copy vercel.json to publish output
-        run: cp vercel.json release/wwwroot/
+    - name: Build
+      run: dotnet build --no-restore
 
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./release/wwwroot
+    - name: Publish WasmApp
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: dotnet publish BlazorWasm.MiniPOS/BlazorWasm.MiniPOS.csproj -c Release -o release
+
+    - name: Copy vercel.json to publish output
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: cp vercel.json release/wwwroot/
+
+    - name: Deploy to Vercel
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+        working-directory: ./release/wwwroot
