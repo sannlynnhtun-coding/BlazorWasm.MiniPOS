@@ -1,93 +1,75 @@
-﻿Let’s start by adding a new folder named NpmJS to our project.
+﻿# Mini POS
 
-Create `NpmJS` Folder
+A lightweight, client-side Point of Sale (POS) system built with **Blazor WebAssembly**. This project demonstrates a functional POS application that runs entirely in the browser, leveraging various client-side storage options and modern web technologies.
 
-Open a command in the NpmJS directory and initialize npm by running the following command:
+![POS Dashboard Mockup](https://raw.githubusercontent.com/sannlynnhtun-coding/BlazorWasm.MiniPOS/master/wwwroot/icon-512.png)
 
-```
-npm init -y
-```
+## 🚀 Features
 
-Next, we need to install a JavaScript bundler. In this example, I will be using webpack. Install webpack and the webpack CLI as development dependencies by running the following command:
+- **📊 Dynamic Dashboard**: Real-time sales visualization using Highcharts.
+- **📦 Product Management**: CRUD operations for products and categories.
+- **🛒 Sales Processing**: Easy-to-use checkout interface with voucher generation.
+- **📄 Reporting**: Detailed sales and inventory reports.
+- **💾 Flexible Storage**: Supports multiple storage providers:
+  - **LocalStorage**: Persistent browser storage.
+  - **SessionStorage**: Temporary session-based storage.
+  - **IndexedDB**: Robust client-side database for larger datasets.
+- **📥 Data Export**: Export sales data to Excel format.
+- **🌱 Data Seeding**: Built-in mock data generation for testing and demonstration.
+- **🌓 Modern UI**: Responsive design built with Tailwind CSS.
 
-```
-npm install webpack webpack-cli --save-dev
-```
+## 🛠️ Technologies Used
 
-Next, we need to add a new folder called src, and then create a new JavaScript file named index.js under the src folder. Your structure should look something like this:
+- **Framework**: [Blazor WebAssembly](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor) (.NET 8/9)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Charts**: [Highcharts](https://www.highcharts.com/)
+- **Storage**: [Blazored LocalStorage](https://github.com/Blazored/LocalStorage) & [SessionStorage](https://github.com/Blazored/SessionStorage)
+- **Excel Export**: `@code-zhf/export-json-2-excel`
+- **Deployment**: [GitHub Actions](https://github.com/features/actions) & [Vercel](https://vercel.com/)
 
-Create `src` Folder in NpmJS
+---
 
-Create `index.js` File in `src` Folder
+## ⚙️ Technical Setup
 
-Modify the scripts section of the `package.json` file to add the following build script.
+### Webpack & JS Bundling
 
-```
-"scripts": {
-	"build": "webpack ./src/index.js --output-path ../wwwroot/js --output-filename index.bundle.js"
-},
-```
+The project uses Webpack to bundle JavaScript dependencies (like the Excel export tool).
 
-This build script tells webpack to use the index.js file we created in the src folder as the source file. Then it sets the output directory of the bundled file to be placed in a folder called js under the wwwroot directory of our application. Finally, we are setting the name of the bundled JavaScript file to index.bundle.js.
+1. Navigate to the `NpmJS` directory:
+   ```bash
+   cd BlazorWasm.MiniPOS/NpmJS
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Build the JavaScript bundle:
+   ```bash
+   npm run build
+   ```
+   *Note: The project is configured to run this automatically during the .NET build process.*
 
+### Build & Run
 
-https://www.npmjs.com/package/@code-zhf/export-json-2-excel
-To install `@code-zhf/export-json-2-excel` using npm, open your command line in the NpmJS directory and run the following command:
+To run the project locally:
 
-```
-npm i @code-zhf/export-json-2-excel
-```
+1. Clone the repository.
+2. Open the solution in Visual Studio or use the CLI:
+   ```bash
+   dotnet watch run --project BlazorWasm.MiniPOS/BlazorWasm.MiniPOS.csproj
+   ```
 
-Copy and paste script to our `index.js`
+## 🚢 Deployment
 
+This project is configured for automated deployment to **Vercel** via **GitHub Actions**.
 
-```
-import exportJson2Excel from '@code-zhf/export-json-2-excel';
+- **Workflow**: `.github/workflows/deploy.yml`
+- **Hosting Config**: `vercel.json`
 
-window.exportJsonData = function(fields, data, fileName) {
-    console.log({ fields, data, fileName });
-    //const fields = [
-    //    { title: '产品名称', dataIndex: 'name' },
-    //    { title: '剩余个数', dataIndex: 'value' },
-    //];
-    //const data = [
-    //    { name: '产品1', value: 2 },
-    //    { name: '产品2', value: 21 },
-    //    { name: '产品3', value: 12 },
-    //];
-    /**
-     * exportJson2Excel 接受三个参数
-     * fields 是一个数组，格式为 [{ title, dataIndex }]
-     * data 是一个数组，需要导出的数据
-     * name 导出文件的名称
-     */
-    exportJson2Excel(fields, data, fileName);
-};
-```
+Every push to the `master` branch triggers a build and deployment cycle.
 
-Open your command line in the NpmJS directory and run the following command:
+---
 
-```
-npm run build
-```
+## 📝 License
 
-Modify the csproj to add a pre-build step that will run our npm build script
-
-```
-<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="npm install" WorkingDirectory="NpmJS" />
-    <Exec Command="npm run build" WorkingDirectory="NpmJS" />
-</Target>
-```
-
-```
-<Target Name="BeforeBuild" BeforeTargets="Build">
-	<Exec Command="npm install" WorkingDirectory="NpmJS" />
-	<Exec Command="npm run build" WorkingDirectory="NpmJS" />
-</Target>
-```
-
-After the npm build script has been run and the index.bundle.js file has been generated, we need to update the wwwroot/index.html file to include our newly generated index.bundle.js file just after the blazor.webassembly.js file.
-```
-<script src="js/index.bundle.js"></script>
-```
+This project is open-source and available under the MIT License.
